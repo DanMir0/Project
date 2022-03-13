@@ -1,27 +1,27 @@
 <template>
-  <v-app>
-    <v-app-bar app></v-app-bar>
-
-    <v-main>
-      <v-container> Hello World </v-container>
-    </v-main>
+  <v-app class="app">
+    <div class="app__wrapp">
+      <side-bar> </side-bar>
+      <v-main>
+        <v-container>
+          <router-view></router-view>
+        </v-container>
+      </v-main>
+    </div>
   </v-app>
 </template>
 
 <script>
+import SideBar from "./components/SideBar.vue";
 export default {
   name: "App",
-  components: {},
+  components: { SideBar },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.app__wrapp {
+  display: flex;
+  height: 100vh;
 }
 </style>
