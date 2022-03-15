@@ -1,7 +1,8 @@
 <template>
   <v-app class="app">
+    <debug-panel></debug-panel>
     <div class="app__wrapp">
-      <side-bar> </side-bar>
+      <side-bar></side-bar>
       <v-main>
         <v-container>
           <router-view></router-view>
@@ -13,9 +14,11 @@
 
 <script>
 import SideBar from "./components/SideBar.vue";
+import DebugPanel from "@/components/DebugPanel";
+
 export default {
   name: "App",
-  components: { SideBar },
+  components: {DebugPanel, SideBar},
 };
 </script>
 
