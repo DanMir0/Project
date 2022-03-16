@@ -1,9 +1,9 @@
 <template>
-  <div class="documents">Hi Documents</div>
+  <div class="documents">Hi documents</div>
 </template>
 
 <script>
 export default {
-  name: "Documents",
+  name: "documents",
 };
 </script>

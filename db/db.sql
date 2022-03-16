@@ -73,7 +73,10 @@ create table products
         unique,
     name           INTEGER not null
         unique,
-    measuring_unit TEXT    not null
+    measuring_unit TEXT    not null,
+    contact_info TEXT not null,
+    address TEXT not null,
+    inn INTEGER not null
 );
 
 

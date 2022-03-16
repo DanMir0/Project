@@ -1,33 +1,30 @@
 <template>
   <div class="counterparties">
     <v-data-table
-        :headers="headers"
-        :items="desserts"
-        sort-by="calories"
-        class="elevation-1"
+      :headers="headers"
+      :items="items"
+      sort-by="calories"
+      class="elevation-1"
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>My CRUD</v-toolbar-title>
+          <v-toolbar-title>Контрагенты</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <v-btn @click="newItem()">NEW ITEM</v-btn>
+          <v-btn @click="newItem()">Добавить</v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
-              >Are you sure you want to delete this item?
-              </v-card-title
-              >
+                >Вы уверены, что хотите удалить этот элемент?
+              </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete"
-                >Cancel
-                </v-btn
-                >
+                  >Отмена
+                </v-btn>
                 <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                >OK
-                </v-btn
-                >
+                  >ОК
+                </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -54,11 +51,14 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-      {text: "Id", value: "id"},
-      {text: "Name", align: "start", value: "name",},
-      {text: "Actions", value: "actions", sortable: false, align: "center"},
+      { text: "Id", value: "id" },
+      { text: "Наименование", align: "start", value: "name" },
+      { text: "Контактные данные", align: "start", value: "contact_info" },
+      { text: "Адрес", align: "start", value: "address" },
+      { text: "ИНН", align: "start", value: "inn" },
+      { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
-    desserts: [],
+    items: [],
     editedIndex: -1,
     editedItem: {
       name: "",
@@ -76,12 +76,9 @@ export default {
     },
   }),
 
-  computed: {
-
-  },
+  computed: {},
 
   watch: {
-
     dialogDelete(val) {
       val || this.closeDelete();
     },
@@ -93,26 +90,26 @@ export default {
 
   methods: {
     initialize() {
-      this.desserts =  api.counterparties.list()
+      this.items = api.counterparties.list();
     },
 
     editItem(item) {
-      this.$router.push(`/counterparties/${item.id}`)
+      this.$router.push(`/counterparties/${item.id}`);
     },
 
     newItem() {
-      this.$router.push(`/counterparties/-1`)
+      this.$router.push(`/counterparties/-1`);
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      api.counterparties.delete(this.editedItem.id)
-      this.desserts.splice(this.editedIndex, 1);
+      api.counterparties.delete(this.editedItem.id);
+      this.items.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -134,9 +131,9 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        Object.assign(this.items[this.editedIndex], this.editedItem);
       } else {
-        this.desserts.push(this.editedItem);
+        this.items.push(this.editedItem);
       }
       this.close();
     },
