@@ -18,6 +18,9 @@
             <v-col cols="12" sm="6" md="4">
               <v-text-field v-model="entity.name" label="name"></v-text-field>
             </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field v-model="entity.measuring_unit" label="Единица измерения"></v-text-field>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -44,6 +47,7 @@ export default {
     entity: {},
     defaultItem: {
       name: "Добавить",
+      measuring_unit: "Единица измерения",
     },
   }),
 
@@ -75,7 +79,7 @@ export default {
         api.products.update(this.entity);
       } else {
         let id = api.products.create(this.entity);
-        this.$router.push(`/products/${id}`);
+        this.$router.push(`/product/${id}`);
       }
       //this.$router.push(`/counterparties`)
     },

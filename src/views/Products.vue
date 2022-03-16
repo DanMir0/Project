@@ -52,8 +52,8 @@ export default {
     dialogDelete: false,
     headers: [
       { text: "Id", value: "id" },
-      { text: "Name", align: "start", value: "name" },
-      { text: "Measuring Unit", align: "center", value: "measuring_unit" },
+      { text: "Наименование", align: "start", value: "name" },
+      { text: "Единица измерения", align: "center", value: "measuring_unit" },
       { text: "Actions", value: "actions", sortable: false, align: "center" },
     ],
     items: [],
@@ -96,7 +96,7 @@ export default {
     },
 
     newItem() {
-      this.$router.push(`/products/-1`);
+      this.$router.push(`/product/-1`);
     },
 
     deleteItem(item) {

@@ -1,10 +1,13 @@
 create table counterparties
 (
-    id   INTEGER not null
+  id           INTEGER not null
         primary key autoincrement
         unique,
-    name TEXT    not null
-        unique
+    name         TEXT    not null
+        unique,
+    contact_info text    not null unique,
+    address      text    not null,
+    inn          integer not null unique
 );
 
 
@@ -73,10 +76,7 @@ create table products
         unique,
     name           INTEGER not null
         unique,
-    measuring_unit TEXT    not null,
-    contact_info TEXT not null,
-    address TEXT not null,
-    inn INTEGER not null
+    measuring_unit TEXT    not null
 );
 
 
