@@ -10,16 +10,13 @@
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                  readonly
-                  v-model="entity.id"
-                  label="ID"
+                readonly
+                v-model="entity.id"
+                label="ID"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                  v-model="entity.name"
-                  label="name"
-              ></v-text-field>
+              <v-text-field v-model="entity.name" label="name"></v-text-field>
             </v-col>
           </v-row>
         </v-container>
@@ -42,7 +39,7 @@ import api from "@/services/api";
 export default {
   name: "Counterparty",
   props: {
-    id: {}
+    id: {},
   },
   data: () => ({
     entity: {},
@@ -53,31 +50,35 @@ export default {
 
   computed: {
     formTitle() {
-      return this.id === -1 ? "New Item" : "Edit Item";
+      return this.id == -1 ? "New Item" : "Edit Item";
     },
   },
-
 
   created() {
     this.initialize();
   },
-
+  watch: {
+    id() {
+      this.initialize();
+    },
+  },
   methods: {
     initialize() {
       if (this.id > -1) {
-        this.entity = api.counterparties.show(this.id)
+        this.entity = api.counterparties.show(this.id);
       } else {
-        this.entity = {...this.entity}
+        this.entity = { ...this.defaultItem };
       }
     },
 
     save() {
       if (this.id > -1) {
-        api.counterparties.update(this.entity)
+        api.counterparties.update(this.entity);
       } else {
-        api.counterparties.create(this.entity)
+        let id = api.counterparties.create(this.entity);
+        this.$router.push(`/counterparties/${id}`);
       }
-      this.$router.push(`/counterparties`)
+      //this.$router.push(`/counterparties`)
     },
   },
 };

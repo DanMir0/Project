@@ -11,7 +11,8 @@ export default {
         DB.prepare("UPDATE counterparties SET name=? WHERE id=?").run([model.name, model.id]);
     },
     create(model) {
-        DB.prepare("INSERT INTO counterparties(name) VALUES (?)").run([model.name]);
+        let info =  DB.prepare("INSERT INTO counterparties(name) VALUES (?)").run([model.name]);
+        return info.lastInsertRowid;
     },
     delete(id) {
         DB.prepare("DELETE FROM counterparties WHERE id=?").run([id]);

@@ -77,15 +77,11 @@ export default {
   }),
 
   computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
-    },
+
   },
 
   watch: {
-    dialog(val) {
-      val || this.close();
-    },
+
     dialogDelete(val) {
       val || this.closeDelete();
     },
@@ -97,7 +93,7 @@ export default {
 
   methods: {
     initialize() {
-      this.desserts = api.counterparties.list()
+      this.desserts =  api.counterparties.list()
     },
 
     editItem(item) {
