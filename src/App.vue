@@ -1,12 +1,10 @@
 <template>
   <v-app class="app">
     <debug-panel></debug-panel>
-    <div class="app__wrapp">
+    <div class="app__wrapper">
       <side-bar></side-bar>
-      <v-main>
-        <v-container>
-          <router-view></router-view>
-        </v-container>
+      <v-main class="mx-2">
+        <router-view></router-view>
       </v-main>
     </div>
   </v-app>
@@ -23,7 +21,7 @@ export default {
 </script>
 
 <style>
-.app__wrapp {
+.app__wrapper {
   display: flex;
   height: 100vh;
 }

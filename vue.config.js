@@ -1,4 +1,5 @@
 module.exports = {
+    lintOnSave: false,
     configureWebpack: config => {
         config.externals = {
             'better-sqlite3': 'commonjs better-sqlite3'
