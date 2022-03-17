@@ -43,10 +43,11 @@ export default {
         { title: "Производство", icon: "mdi-call-made", to: "/productions" },
         { title: "Тех карты", icon: "mdi-credit-card-plus", to: "/tech_cards" },
         {
-          title: "Тип документы",
-          icon: "mdi-credit-card-plus",
+          title: "Типы документов",
+          icon: "mdi-file-document-outline",
           to: "/document_types",
         },
+        { title: "Единицы измерения", icon: "mdi-credit-card-plus", to: "/measuring_units" },
       ],
       right: null,
     };

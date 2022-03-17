@@ -1,29 +1,29 @@
 <template>
-  <div class="document__types">
+  <div class="measuring__units">
     <v-data-table
-      :headers="headers"
-      :items="items"
-      sort-by="calories"
-      class="elevation-1"
+        :headers="headers"
+        :items="items"
+        sort-by="calories"
+        class="elevation-1"
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Типы документов</v-toolbar-title>
+          <v-toolbar-title>Единицы измерения</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-btn @click="newItem()">Добавить</v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
-                >Вы уверены, что хотите удалить этот элемент?
+              >Вы уверены, что хотите удалить этот элемент?
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete"
-                  >Отмена
+                >Отмена
                 </v-btn>
                 <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                  >ОК
+                >ОК
                 </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
@@ -46,7 +46,7 @@
 import api from "@/services/api";
 
 export default {
-  name: "DocumentTypes",
+  name: "MeasuringUnits",
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -87,15 +87,15 @@ export default {
 
   methods: {
     initialize() {
-      this.items = api.document_types.list();
+      this.items = api.measuring_units.list();
     },
 
     editItem(item) {
-      this.$router.push(`/document_types/${item.id}`);
+      this.$router.push(`/measuring_units/${item.id}`);
     },
 
     newItem() {
-      this.$router.push(`/document_types/-1`);
+      this.$router.push(`/measuring_units/-1`);
     },
 
     deleteItem(item) {
@@ -105,7 +105,7 @@ export default {
     },
 
     deleteItemConfirm() {
-      api.document_types.delete(this.editedItem.id);
+      api.measuring_units.delete(this.editedItem.id);
       this.items.splice(this.editedIndex, 1);
       this.closeDelete();
     },
