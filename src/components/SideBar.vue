@@ -29,7 +29,7 @@ export default {
     return {
       items: [
         { title: "Главная", icon: "mdi-view-dashboard-outline", to: "/" },
-        { title: "Продукты", icon: "mdi-shopping", to: "/products" },
+        { title: "Товары", icon: "mdi-shopping", to: "/products" },
         {
           title: "Контрагенты",
           icon: "mdi-account-group",
@@ -41,6 +41,12 @@ export default {
           to: "/documents",
         },
         { title: "Производство", icon: "mdi-call-made", to: "/productions" },
+        { title: "Тех карты", icon: "mdi-credit-card-plus", to: "/tech_cards" },
+        {
+          title: "Тип документы",
+          icon: "mdi-credit-card-plus",
+          to: "/document_types",
+        },
       ],
       right: null,
     };
