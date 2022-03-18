@@ -22,10 +22,11 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="entity.contact_info"
-                label="Id товара"
-              ></v-text-field>
+              <v-select
+                  v-model="entity.product_id"
+                  :items="products"
+                  label="Готовый товар"
+              ></v-select>
             </v-col>
           </v-row>
         </v-container>
@@ -51,6 +52,7 @@ export default {
   },
   data: () => ({
     entity: {},
+    products: [],
     defaultItem: {
       name: "Добавить",
       product_id: "Id товара",
@@ -73,6 +75,7 @@ export default {
   },
   methods: {
     initialize() {
+      this.products = api.products.list();
       if (this.id > -1) {
         this.entity = api.tech_cards.show(this.id);
       } else {
