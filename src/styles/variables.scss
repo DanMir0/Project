@@ -1,0 +1,24 @@
+// The vuetify-loader will automatically bootstrap your variables into Vue CLI’s compilation process,
+// overwriting the framework defaults.
+
+$shades: (
+        'black': #2a2a2a,
+        'white': #fff,
+        'transparent': transparent,
+);
+
+/*$primary-shade--light: #5e5669;
+$primary-shade--dark: #e7e3fc;
+$shadow-color--light: $primary-shade--light;
+$shadow-color--dark: #131120;*/
+
+// #region Override Light Theme
+@import '~vuetify/src/styles/styles.sass';
+
+$material-light: map-deep-merge(
+                $material-light,
+                (
+                        'background': #f4f5fa,
+                        'navigation-drawer': #f4f5fa,
+                )
+);

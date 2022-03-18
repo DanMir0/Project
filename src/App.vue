@@ -1,15 +1,13 @@
 <template>
   <v-app class="app">
-    <debug-panel></debug-panel>
-    <div class="app__wrapper">
       <side-bar></side-bar>
       <v-main>
         <v-container fluid>
+          <debug-panel></debug-panel>
           <router-view></router-view>
         </v-container>
       </v-main>
-    </div>
-  </v-app>
+    </v-app>
 </template>
 
 <script>
@@ -23,10 +21,14 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/main";
-
-.app__wrapper {
-  display: flex;
-  height: 100vh;
+.app {
+  /*
+  example of media
+  @media #{map-get($display-breakpoints, 'md-and-down')} {
+    display: none !important;
+  }
+  */
 }
+
+
 </style>
