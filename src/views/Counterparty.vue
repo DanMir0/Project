@@ -60,10 +60,10 @@ export default {
   data: () => ({
     entity: {},
     defaultItem: {
-      name: "Добавить",
-      contact_info: "Контактные данные",
-      address: "Адрес",
-      inn: "ИНН",
+      name: "",
+      contact_info: "",
+      address: "",
+      inn: "",
     },
   }),
 

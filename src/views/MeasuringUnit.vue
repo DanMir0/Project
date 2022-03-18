@@ -26,10 +26,9 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer>
-          <v-btn color="blue darken-1" text @click="back">Назад</v-btn>
-        </v-spacer>
-        <v-btn color="blue darken-1" text @click="save">Сохранить</v-btn>
+        <v-spacer/>
+        <v-btn outlined @click="back">Назад</v-btn>
+        <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -46,7 +45,7 @@ export default {
   data: () => ({
     entity: {},
     defaultItem: {
-      name: "Добавить",
+      name: "",
     },
   }),
 
@@ -67,7 +66,7 @@ export default {
   methods: {
     initialize() {
       if (this.id > -1) {
-        this.entity = api.measuring_unit.show(this.id);
+        this.entity = api.measuring_units.show(this.id);
       } else {
         this.entity = { ...this.defaultItem };
       }
@@ -75,19 +74,18 @@ export default {
 
     save() {
       if (this.id > -1) {
-        api.measuring_unit.update(this.entity);
+        api.measuring_units.update(this.entity);
       } else {
-        let id = api.measuring_unit.create(this.entity);
-        this.$router.push(`/measuring_unit/${id}`);
+        let id = api.measuring_units.create(this.entity);
+        this.$router.push(`/measuring_units/${id}`);
       }
-      //this.$router.push(`/counterparties`)
     },
 
     back() {
       if (this.id > -1) {
-        this.$router.push(`/measuring_unit`);
+        this.$router.push(`/measuring_units`);
       } else {
-        this.$router.push(`/measuring_unit`);
+        this.$router.push(`/measuring_units`);
       }
     },
   },

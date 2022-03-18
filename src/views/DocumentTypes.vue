@@ -11,7 +11,7 @@
           <v-toolbar-title>Типы документов</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <v-btn @click="newItem()">Добавить</v-btn>
+          <v-btn @click="newItem()" color="primary">Добавить</v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"

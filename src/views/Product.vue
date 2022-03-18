@@ -16,20 +16,19 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field v-model="entity.name" label="name"></v-text-field>
+              <v-text-field v-model="entity.name" label="Наименование"></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field v-model="entity.measuring_unit" label="Единица измерения"></v-text-field>
+              <v-text-field v-model="entity.measuring_unit_id" label="Единица измерения"></v-text-field>
             </v-col>
           </v-row>
         </v-container>
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer>
-          <v-btn color="blue darken-1" text @click="back">Назад</v-btn>
-        </v-spacer>
-        <v-btn color="blue darken-1" text @click="save">Сохранить</v-btn>
+        <v-spacer/>
+        <v-btn outlined @click="back">Назад</v-btn>
+        <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -46,8 +45,8 @@ export default {
   data: () => ({
     entity: {},
     defaultItem: {
-      name: "Добавить",
-      measuring_unit: "Единица измерения",
+      name: "",
+      measuring_unit_id: "",
     },
   }),
 
@@ -79,9 +78,8 @@ export default {
         api.products.update(this.entity);
       } else {
         let id = api.products.create(this.entity);
-        this.$router.push(`/product/${id}`);
+        this.$router.push(`/products/${id}`);
       }
-      //this.$router.push(`/counterparties`)
     },
 
     back() {

@@ -33,10 +33,9 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer>
-          <v-btn color="blue darken-1" text @click="back">Назад</v-btn>
-        </v-spacer>
-        <v-btn color="blue darken-1" text @click="save">Сохранить</v-btn>
+        <v-spacer/>
+        <v-btn outlined @click="back">Назад</v-btn>
+        <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -54,8 +53,8 @@ export default {
     entity: {},
     products: [],
     defaultItem: {
-      name: "Добавить",
-      product_id: "Id товара",
+      name: "",
+      product_id: "",
     },
   }),
 
@@ -75,7 +74,6 @@ export default {
   },
   methods: {
     initialize() {
-      this.products = api.products.list();
       if (this.id > -1) {
         this.entity = api.tech_cards.show(this.id);
       } else {

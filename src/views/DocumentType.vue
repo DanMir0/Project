@@ -26,10 +26,9 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer>
-          <v-btn color="blue darken-1" text @click="back">Назад</v-btn>
-        </v-spacer>
-        <v-btn color="blue darken-1" text @click="save">Сохранить</v-btn>
+        <v-spacer/>
+        <v-btn outlined @click="back">Назад</v-btn>
+        <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -46,7 +45,7 @@ export default {
   data: () => ({
     entity: {},
     defaultItem: {
-      name: "Добавить",
+      name: "",
     },
   }),
 
@@ -67,7 +66,7 @@ export default {
   methods: {
     initialize() {
       if (this.id > -1) {
-        this.entity = api.DocumentType.show(this.id);
+        this.entity = api.document_types.show(this.id);
       } else {
         this.entity = { ...this.defaultItem };
       }
@@ -75,19 +74,19 @@ export default {
 
     save() {
       if (this.id > -1) {
-        api.DocumentType.update(this.entity);
+        api.document_types.update(this.entity);
       } else {
-        let id = api.DocumentType.create(this.entity);
-        this.$router.push(`/document_Types/${id}`);
+        let id = api.document_types.create(this.entity);
+        this.$router.push(`/document_types/${id}`);
       }
       //this.$router.push(`/counterparties`)
     },
 
     back() {
       if (this.id > -1) {
-        this.$router.push(`/document_Types`);
+        this.$router.push(`/document_types`);
       } else {
-        this.$router.push(`/document_Types`);
+        this.$router.push(`/document_types`);
       }
     },
   },
