@@ -1,10 +1,12 @@
 module.exports = {
     lintOnSave: false,
+
     configureWebpack: config => {
         config.externals = {
             'better-sqlite3': 'commonjs better-sqlite3'
         };
     },
+
     pluginOptions: {
         electronBuilder: {
             nodeIntegration: true,
@@ -32,5 +34,9 @@ module.exports = {
             },
             externals: ['better-sqlite3'],
         }
-    }
+    },
+
+    transpileDependencies: [
+      'vuetify'
+    ]
 }
