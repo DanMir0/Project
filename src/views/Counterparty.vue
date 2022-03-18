@@ -41,14 +41,9 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer>
-          <v-btn color="blue darken-1" text @click="back">Назад</v-btn>
-        </v-spacer>
-        <!--
-                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-        -->
-
-        <v-btn color="blue darken-1" text @click="save">Сохранить</v-btn>
+        <v-spacer/>
+        <v-btn outlined @click="back">Назад</v-btn>
+        <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -106,11 +101,7 @@ export default {
     },
 
     back() {
-      if (this.id > -1) {
-        this.$router.push(`/counterparties`);
-      } else {
-        this.$router.push(`/counterparties`);
-      }
+      this.$router.push(`/counterparties`);
     },
   },
 };
