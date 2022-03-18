@@ -104,3 +104,17 @@ create table orders_tech_cards
             references tech_cards (id),
     amount       text    not null
 );
+-- auto-generated definition
+create table measuring_units
+(
+    id   integer not null
+        constraint measuring_units_pk
+            primary key autoincrement
+        constraint measuring_units_products_measuring_unit_fk
+            references products (measuring_unit),
+    name text    not null
+);
+
+create unique index measuring_units_name_uindex
+    on measuring_units (name);
+

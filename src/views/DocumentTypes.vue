@@ -1,5 +1,5 @@
 <template>
-  <div class="products">
+  <div class="document__types">
     <v-data-table
       :headers="headers"
       :items="items"
@@ -8,7 +8,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Товары</v-toolbar-title>
+          <v-toolbar-title>Типы документов</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-btn @click="newItem()">Добавить</v-btn>
@@ -46,15 +46,14 @@
 import api from "@/services/api";
 
 export default {
-  name: "Products",
+  name: "DocumentTypes",
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
       { text: "Id", value: "id" },
       { text: "Наименование", align: "start", value: "name" },
-      { text: "Единица измерения", align: "center", value: "measuring_unit" },
-      { text: "Actions", value: "actions", sortable: false, align: "center" },
+      { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
     items: [],
     editedIndex: -1,
@@ -88,15 +87,15 @@ export default {
 
   methods: {
     initialize() {
-      this.items = api.products.list();
+      this.items = api.document_types.list();
     },
 
     editItem(item) {
-      this.$router.push(`/products/${item.id}`);
+      this.$router.push(`/document_types/${item.id}`);
     },
 
     newItem() {
-      this.$router.push(`/products/-1`);
+      this.$router.push(`/document_types/-1`);
     },
 
     deleteItem(item) {
@@ -106,7 +105,7 @@ export default {
     },
 
     deleteItemConfirm() {
-      api.products.delete(this.editedItem.id);
+      api.document_types.delete(this.editedItem.id);
       this.items.splice(this.editedIndex, 1);
       this.closeDelete();
     },

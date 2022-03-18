@@ -35,8 +35,8 @@ export default {
   data() {
     return {
       items: [
-        {title: "Главная", icon: "mdi-view-dashboard-outline", to: "/"},
-        {title: "Продукты", icon: "mdi-shopping", to: "/products"},
+        { title: "Главная", icon: "mdi-view-dashboard-outline", to: "/" },
+        { title: "Товары", icon: "mdi-shopping", to: "/products" },
         {
           title: "Контрагенты",
           icon: "mdi-account-group",
@@ -47,7 +47,14 @@ export default {
           icon: "mdi-file-document-edit-outline",
           to: "/documents",
         },
-        {title: "Производство", icon: "mdi-call-made", to: "/productions"},
+        { title: "Производство", icon: "mdi-call-made", to: "/productions" },
+        { title: "Тех карты", icon: "mdi-credit-card-plus", to: "/tech_cards" },
+        {
+          title: "Типы документов",
+          icon: "mdi-file-document-outline",
+          to: "/document_types",
+        },
+        { title: "Единицы измерения", icon: "mdi-credit-card-plus", to: "/measuring_units" },
       ],
       right: null,
     };
