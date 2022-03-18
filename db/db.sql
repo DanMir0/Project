@@ -1,15 +1,20 @@
 create table counterparties
 (
-  id           INTEGER not null
+    id           INTEGER not null
         primary key autoincrement
         unique,
     name         TEXT    not null
         unique,
-    contact_info text    not null unique,
+    contact_info text    not null,
     address      text    not null,
-    inn          integer not null unique
+    inn          integer not null
 );
 
+create unique index counterparties_contact_info_uindex
+    on counterparties (contact_info);
+
+create unique index counterparties_inn_uindex
+    on counterparties (inn);
 
 create table document_types
 (
@@ -19,7 +24,6 @@ create table document_types
     name TEXT    not null
         unique
 );
-
 
 create table documents
 (
@@ -33,6 +37,47 @@ create table documents
         references counterparties
 );
 
+create table measuring_units
+(
+    id   integer not null
+        constraint measuring_units_pk
+            primary key autoincrement,
+    name text    not null
+);
+
+create unique index measuring_units_name_uindex
+    on measuring_units (name);
+
+create table order_statuses
+(
+    id   INTEGER not null
+        primary key autoincrement
+        unique,
+    name TEXT    not null
+        unique
+);
+
+create table orders
+(
+    id              INTEGER not null
+        primary key autoincrement
+        unique,
+    order_status_id INTEGER not null
+        references order_statuses,
+    counterparty_id integer not null
+        references counterparties
+);
+
+create table products
+(
+    id                INTEGER not null
+        primary key autoincrement
+        unique,
+    name              INTEGER not null
+        unique,
+    measuring_unit_id integer not null
+        references measuring_units
+);
 
 create table documents_products
 (
@@ -46,40 +91,6 @@ create table documents_products
     amount      TEXT    not null
 );
 
-
-create table order_statuses
-(
-    id   INTEGER not null
-        primary key autoincrement
-        unique,
-    name TEXT    not null
-        unique
-);
-
-
-create table orders
-(
-    id              INTEGER not null
-        primary key autoincrement
-        unique,
-    order_status_id INTEGER not null
-        references order_statuses,
-    counterparty_id integer not null
-        references counterparties
-);
-
-
-create table products
-(
-    id             INTEGER not null
-        primary key autoincrement
-        unique,
-    name           INTEGER not null
-        unique,
-    measuring_unit TEXT    not null
-);
-
-
 create table tech_cards
 (
     id         INTEGER not null
@@ -87,9 +98,8 @@ create table tech_cards
     name       TEXT    not null
         unique,
     product_id INTEGER not null
-        references products(id)
+        references products
 );
-
 
 create table orders_tech_cards
 (
@@ -97,24 +107,11 @@ create table orders_tech_cards
         primary key autoincrement
         unique,
     order_id     INTEGER not null
-        constraint production_orders_technical_cards_production_orders_id_fk
-            references tech_cards (id),
+        references orders,
     tech_card_id INTEGER not null
         constraint production_orders_technical_cards_technical_cards_id_fk
             references tech_cards (id),
     amount       text    not null
 );
--- auto-generated definition
-create table measuring_units
-(
-    id   integer not null
-        constraint measuring_units_pk
-            primary key autoincrement
-        constraint measuring_units_products_measuring_unit_fk
-            references products (measuring_unit),
-    name text    not null
-);
 
-create unique index measuring_units_name_uindex
-    on measuring_units (name);
 
