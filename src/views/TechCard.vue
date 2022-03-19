@@ -23,9 +23,9 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-select
-                  v-model="entity.product_id"
-                  :items="products"
-                  label="Готовый товар"
+                v-model="entity.product_id"
+                :items="products"
+                label="Готовый товар"
               ></v-select>
             </v-col>
           </v-row>
@@ -33,7 +33,7 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer/>
+        <v-spacer />
         <v-btn outlined @click="back">Назад</v-btn>
         <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
@@ -74,6 +74,7 @@ export default {
   },
   methods: {
     initialize() {
+      this.products = api.products.list().all();
       if (this.id > -1) {
         this.entity = api.tech_cards.show(this.id);
       } else {
