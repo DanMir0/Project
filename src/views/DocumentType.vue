@@ -26,16 +26,12 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer/>
+        <v-spacer />
         <v-btn outlined @click="back">Назад</v-btn>
         <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
-    <v-alert
-        v-model="alerts"
-        shaped
-        type="success"
-    >Успешно!</v-alert>
+    <v-alert v-model="alerts" shaped type="success">Успешно!</v-alert>
   </div>
 </template>
 
@@ -78,17 +74,12 @@ export default {
       }
     },
 
-    showAlert() {
-      this.alerts != this.alerts
-    },
-
     save() {
       if (this.id > -1) {
         api.document_types.update(this.entity);
       } else {
         let id = api.document_types.create(this.entity);
         this.$router.push(`/document_types/${id}`);
-        alert("Успешно!")
       }
     },
 

@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     initialize() {
-      this.products = api.products.list().all();
+      this.products = api.products.list();
       if (this.id > -1) {
         this.entity = api.tech_cards.show(this.id);
       } else {
