@@ -31,6 +31,11 @@
         <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
+    <v-alert
+        v-model="alerts"
+        shaped
+        type="success"
+    >Успешно!</v-alert>
   </div>
 </template>
 
@@ -39,6 +44,7 @@ import api from "@/services/api";
 
 export default {
   name: "DocumentType",
+  alerts: false,
   props: {
     id: {},
   },
@@ -72,14 +78,18 @@ export default {
       }
     },
 
+    showAlert() {
+      this.alerts != this.alerts
+    },
+
     save() {
       if (this.id > -1) {
         api.document_types.update(this.entity);
       } else {
         let id = api.document_types.create(this.entity);
         this.$router.push(`/document_types/${id}`);
+        alert("Успешно!")
       }
-      //this.$router.push(`/counterparties`)
     },
 
     back() {
