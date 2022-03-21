@@ -25,8 +25,14 @@
               <v-select
                 v-model="entity.product_id"
                 :items="products"
-                label="Готовый товар"
-              ></v-select>
+                item-text="name"
+                item-value="id"
+                label="Готовая продукция"
+              >
+                <template v-slot:item="{ item }"
+                  >{{ item.id }} - {{ item.name }}
+                </template>
+              </v-select>
             </v-col>
           </v-row>
         </v-container>

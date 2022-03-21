@@ -41,11 +41,12 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer/>
+        <v-spacer />
         <v-btn outlined @click="back">Назад</v-btn>
         <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
+    <v-alert border="top" shaped type="success"></v-alert>
   </div>
 </template>
 
