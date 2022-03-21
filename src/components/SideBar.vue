@@ -3,11 +3,21 @@
       class="side-bar"
       app
       floating
+      permanent
       width="260"
   >
     <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title class="text-h6"> СКЛАД</v-list-item-title>
+      <v-list-item-content >
+        <div class="d-flex align-center">
+          <v-avatar color="primary" rounded>
+            <v-icon color="white" large>mdi-store</v-icon>
+          </v-avatar>
+          <div class="ml-3">
+            <v-list-item-title><h2>Склад</h2></v-list-item-title>
+            <v-list-item-subtitle class="caption">версия 0.1</v-list-item-subtitle>
+          </div>
+        </div>
+
       </v-list-item-content>
     </v-list-item>
 
