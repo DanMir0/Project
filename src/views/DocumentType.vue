@@ -31,7 +31,6 @@
         <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
     </v-card>
-    <v-alert v-model="alerts" shaped type="success">Успешно!</v-alert>
   </div>
 </template>
 
