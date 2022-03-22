@@ -88,11 +88,26 @@ create table documents_products
         references documents,
     product_id  INTEGER not null
         references products,
-    amount      REAL    not null
+    quantity    REAL    not null
 );
 
 create unique index documents_products_document_id_product_id_uindex
     on documents_products (document_id, product_id);
+
+create table sqlite_master
+(
+    type     text,
+    name     text,
+    tbl_name text,
+    rootpage int,
+    sql      text
+);
+
+create table sqlite_sequence
+(
+    name,
+    seq
+);
 
 create table tech_cards
 (
@@ -114,9 +129,8 @@ create table orders_tech_cards
     order_id     INTEGER not null
         references orders,
     tech_card_id INTEGER not null
-        constraint production_orders_technical_cards_technical_cards_id_fk
-            references tech_cards,
-    amount       text    not null
+        references tech_cards,
+    quantity     text    not null
 );
 
 create unique index orders_tech_cards_order_id_tech_card_id_uindex
@@ -131,7 +145,7 @@ create table tech_cards_products
         references products,
     tech_card_id integer not null
         references tech_cards,
-    amount       real    not null
+    quantity     real    not null
 );
 
 create unique index tech_cards_products_product_id_tech_card_id_uindex

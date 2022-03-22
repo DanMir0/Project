@@ -25,8 +25,14 @@
               <v-select
                 v-model="entity.product_id"
                 :items="products"
-                label="Готовый товар"
-              ></v-select>
+                item-text="name"
+                item-value="id"
+                label="Готовая продукция"
+              >
+                <template v-slot:item="{ item }"
+                  >{{ item.id }} - {{ item.name }}
+                </template>
+              </v-select>
             </v-col>
           </v-row>
         </v-container>
@@ -37,6 +43,26 @@
         <v-btn outlined @click="back">Назад</v-btn>
         <v-btn color="primary" @click="save">Сохранить</v-btn>
       </v-card-actions>
+      <v-snackbar
+          v-model="snackbar"
+          :timeout="timeout"
+          color="success"
+          shaped
+          top
+      >
+        {{ text }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+              color="blue"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-card>
   </div>
 </template>
@@ -56,6 +82,9 @@ export default {
       name: "",
       product_id: "",
     },
+    snackbar: false,
+    text: "Сохранено!",
+    timeout: 4000,
   }),
 
   computed: {
@@ -74,7 +103,7 @@ export default {
   },
   methods: {
     initialize() {
-      this.products = api.products.list().all();
+      this.products = api.products.list();
       if (this.id > -1) {
         this.entity = api.tech_cards.show(this.id);
       } else {
@@ -83,12 +112,14 @@ export default {
     },
 
     save() {
-      if (this.id > -1) {
-        api.tech_cards.update(this.entity);
-      } else {
-        let id = api.tech_cards.create(this.entity);
-        this.$router.push(`/tech_cards/${id}`);
-      }
+        if (this.id > -1) {
+          api.tech_cards.update(this.entity);
+          this.snackbar = true;
+        } else {
+          let id = api.tech_cards.create(this.entity);
+          this.$router.push(`/tech_cards/${id}`);
+          this.snackbar = true;
+        }
     },
 
     back() {
