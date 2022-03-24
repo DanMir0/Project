@@ -4,6 +4,7 @@
       <v-main>
         <v-container fluid>
           <debug-panel></debug-panel>
+          <snackbar></snackbar>
           <router-view></router-view>
         </v-container>
       </v-main>
@@ -13,10 +14,11 @@
 <script>
 import SideBar from "./components/SideBar.vue";
 import DebugPanel from "@/components/DebugPanel";
+import Snackbar from "@/components/Snackbar";
 
 export default {
   name: "App",
-  components: {DebugPanel, SideBar},
+  components: {Snackbar, DebugPanel, SideBar},
 };
 </script>
 

@@ -4,6 +4,9 @@ import App from "./App.vue";
 import router from "./router"
 import "@fontsource/roboto";
 import vuetify from './plugins/vuetify'
+import dialog from './plugins/dialog'
+
+Vue.use(dialog)
 
 Vue.config.productionTip = false;
 
