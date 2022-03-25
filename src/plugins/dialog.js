@@ -6,7 +6,7 @@ const Plugin = {
 
         Vue.prototype.$dialog = {
             alert(message) {
-                return Plugin.rootInstance.show({message, color: 'red accent-2'})
+                return Plugin.rootInstance.show({message, color: 'error'})
             },
 
             success(message) {
