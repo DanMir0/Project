@@ -1,5 +1,5 @@
 <template>
-  <div class="documents">
+  <div class="order_statuses">
     <v-data-table
         :headers="headers"
         :items="items"
@@ -8,7 +8,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Документы</v-toolbar-title>
+          <v-toolbar-title>Статусы производства</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-btn @click="newItem()" color="primary">Добавить</v-btn>
@@ -46,16 +46,13 @@
 import api from "@/services/api";
 
 export default {
-  name: "Documents",
+  name: "OrderStatuses",
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
       { text: "Id", value: "id" },
-      { text: "Id типу документа", align: "start", value: "document_type_id" },
-      { text: "Реализация", align: "start", value: "implementation" },
-      { text: "Id контрагента", align: "start", value: "counterparty_id" },
-      { text: "Контрагенты", align: "start", value: "counterparty_name" },
+      { text: "Наименование", align: "start", value: "name" },
       { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
     items: [],
@@ -90,15 +87,15 @@ export default {
 
   methods: {
     initialize() {
-      this.items = api.documents.list();
+      this.items = api.order_statuses.list();
     },
 
     editItem(item) {
-      this.$router.push(`/documents/${item.id}`);
+      this.$router.push(`/order_statuses/${item.id}`);
     },
 
     newItem() {
-      this.$router.push(`/documents/-1`);
+      this.$router.push(`/order_statuses/-1`);
     },
 
     deleteItem(item) {
@@ -108,7 +105,7 @@ export default {
     },
 
     deleteItemConfirm() {
-      api.documents.delete(this.editedItem.id);
+      api.order_statuses.delete(this.editedItem.id);
       this.items.splice(this.editedIndex, 1);
       this.closeDelete();
     },

@@ -174,3 +174,7 @@ INSERT INTO products (id, name, measuring_unit_id) VALUES (1, 'Масло', 2);
 INSERT INTO products (id, name, measuring_unit_id) VALUES (2, 'Металл', 1);
 INSERT INTO products (id, name, measuring_unit_id) VALUES (3, 'Трансформатор', 4);
 
+INSERT INTO order_statuses (id, name) VALUES (1, 'новый');
+INSERT INTO order_statuses (id, name) VALUES (2, 'в производстве');
+INSERT INTO order_statuses (id, name) VALUES (3, 'готовый');
+
