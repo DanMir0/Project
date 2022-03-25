@@ -54,7 +54,7 @@ export default {
       { text: "Id", value: "id" },
       { text: "Наименование", align: "start", value: "name" },
       { text: "Единица измерения", align: "center", value: "measuring_unit_id" },
-      { text: "Actions", value: "actions", sortable: false, align: "center" },
+      { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
     items: [],
     editedIndex: -1,
