@@ -7,6 +7,7 @@
       class="elevation-1"
     >
       <template v-slot:top>
+        <v-text-field label="Поиск"></v-text-field>
         <v-toolbar flat>
           <v-toolbar-title>Контрагенты</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
