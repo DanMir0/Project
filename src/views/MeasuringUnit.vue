@@ -1,44 +1,49 @@
 <template>
   <div class="measuring__unit">
     <v-card>
-      <v-card-title>
-        <span class="text-h5">{{ formTitle }}</span>
-      </v-card-title>
+      <v-form v-model="validForm" ref="form">
+        <v-card-title>
+          <span class="text-h5">{{ formTitle }}</span>
+        </v-card-title>
 
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
                   readonly
                   v-model="entity.id"
                   label="ID"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
                   v-model="entity.name"
+                  :rules="[$rules.required]"
                   label="Наименование"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
 
-      <v-card-actions>
-        <v-spacer/>
-        <v-btn outlined @click="back">Назад</v-btn>
-        <v-btn color="primary" @click="save">Сохранить</v-btn>
-      </v-card-actions>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn outlined @click="back">Назад</v-btn>
+          <v-btn color="primary" @click="save">Сохранить</v-btn>
+        </v-card-actions>
+      </v-form>
     </v-card>
   </div>
 </template>
 
 <script>
 import api from "@/services/api";
+import validations from "@/mixins/validations";
 
 export default {
   name: "MeasuringUnit",
+  mixins: [validations],
   props: {
     id: {},
   },
@@ -73,12 +78,20 @@ export default {
     },
 
     save() {
-      if (this.id > -1) {
-        api.measuring_units.update(this.entity);
-      } else {
-        let id = api.measuring_units.create(this.entity);
-        this.$router.push(`/measuring_units/${id}`);
+      if (!this.validate()) return;
+      let id = null;
+      try {
+        if (this.id > -1) {
+          api.measuring_units.update(this.entity);
+        } else {
+          id = api.measuring_units.create(this.entity);
+        }
+      } catch (e) {
+        this.$dialog.alert("Ошибка: Введите корректные данные");
+        return;
       }
+      if (id) this.$router.push(`/measuring_units/${id}`);
+      this.$dialog.success("Сохранено!");
     },
 
     back() {

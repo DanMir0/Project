@@ -11,26 +11,27 @@
             <v-row>
               <v-col cols="12" sm="6" md="1">
                 <v-text-field
-                    readonly
-                    v-model="entity.id"
-                    label="ID"
+                  readonly
+                  v-model="entity.id"
+                  label="ID"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                    v-model="entity.name"
-                    :rules="[$rules.required]"
-                    label="Наименование"
+                  v-model="entity.name"
+                  :rules="[$rules.required]"
+                  label="Наименование"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="5">
                 <v-select
-                    v-model="entity.product_id"
-                    :rules="[$rules.required]"
-                    :items="products"
-                    item-text="name"
-                    item-value="id"
-                    label="Готовая продукция">
+                  v-model="entity.product_id"
+                  :rules="[$rules.required]"
+                  :items="products"
+                  item-text="name"
+                  item-value="id"
+                  label="Готовая продукция"
+                >
                   <template v-slot:item="{ item }">
                     {{ item.id }} - {{ item.name }}
                   </template>
@@ -41,7 +42,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer/>
+          <v-spacer />
           <v-btn outlined @click="back">Назад</v-btn>
           <v-btn color="primary" @click="save">Сохранить</v-btn>
         </v-card-actions>
@@ -85,33 +86,33 @@ export default {
   },
   methods: {
     initialize() {
-      this.products = api.products.list()
+      this.products = api.products.list();
       if (this.id > -1) {
-        this.entity = api.tech_cards.show(this.id)
+        this.entity = api.tech_cards.show(this.id);
       } else {
-        this.entity = {...this.defaultItem}
+        this.entity = { ...this.defaultItem };
       }
     },
 
     save() {
-      if (!this.validate()) return
-      let id = null
+      if (!this.validate()) return;
+      let id = null;
       try {
         if (this.id > -1) {
-          api.tech_cards.update(this.entity)
+          api.tech_cards.update(this.entity);
         } else {
-          id = api.tech_cards.create(this.entity)
+          id = api.tech_cards.create(this.entity);
         }
       } catch (e) {
-        this.$dialog.alert('Error:' + e)
-        return
+        this.$dialog.alert("Ошибка: Введите корректные данные");
+        return;
       }
-      if (id) this.$router.push(`/tech_cards/${id}`)
-      this.$dialog.success('Saved!')
+      if (id) this.$router.push(`/tech_cards/${id}`);
+      this.$dialog.success("Сохранено!");
     },
 
     back() {
-      this.$router.push(`/tech_cards`)
+      this.$router.push(`/tech_cards`);
     },
   },
 };

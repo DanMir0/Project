@@ -107,11 +107,11 @@ export default {
           id = api.counterparties.create(this.entity);
         }
       } catch (e) {
-        this.$dialog.alert("Error:" + e);
+        this.$dialog.alert("Ошибка: Введите корректные данные.");
         return;
       }
       if (id) this.$router.push(`/counterparties/${id}`);
-      this.$dialog.success("Saved!");
+      this.$dialog.success("Сохранено!");
     },
 
     back() {
