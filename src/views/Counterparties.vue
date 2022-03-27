@@ -3,14 +3,22 @@
     <v-data-table
       :headers="headers"
       :items="items"
+      :search="search"
       sort-by="calories"
       class="elevation-1"
     >
       <template v-slot:top>
-        <v-text-field label="Поиск"></v-text-field>
         <v-toolbar flat>
           <v-toolbar-title>Контрагенты</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Поиск"
+            single-line
+            hide-details
+          ></v-text-field>
           <v-spacer></v-spacer>
           <v-btn @click="newItem()" color="primary">Добавить</v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
@@ -50,6 +58,7 @@ export default {
   name: "Counterparties",
   data: () => ({
     dialog: false,
+    search: "",
     dialogDelete: false,
     headers: [
       { text: "Id", value: "id" },
