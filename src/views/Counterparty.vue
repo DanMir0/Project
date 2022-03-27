@@ -40,7 +40,7 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   v-model="entity.inn"
-                  :rules="[$rules.required]"
+                  :rules="[$rules.required, $rules.inn]"
                   label="ИНН"
                 ></v-text-field>
               </v-col>

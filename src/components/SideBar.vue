@@ -57,7 +57,7 @@ export default {
           icon: "mdi-file-document-edit-outline",
           to: "/documents",
         },
-        { title: "Производство", icon: "mdi-call-made", to: "/productions" },
+        { title: "Заказы", icon: "mdi-call-made", to: "/orders" },
         { title: "Тех карты", icon: "mdi-credit-card-plus", to: "/tech_cards" },
         {
           title: "Типы документов",

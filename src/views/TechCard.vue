@@ -38,8 +38,15 @@
                 </v-select>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12">
+                <child-products v-model="entity.products"></child-products>
+              </v-col>
+            </v-row>
           </v-container>
         </v-card-text>
+
+
 
         <v-card-actions>
           <v-spacer />
@@ -54,9 +61,11 @@
 <script>
 import api from "@/services/api";
 import validations from "@/mixins/validations";
+import ChildProducts from "@/components/ChildProducts";
 
 export default {
   name: "TechCard",
+  components: {ChildProducts},
   mixins: [validations],
   props: {
     id: {},

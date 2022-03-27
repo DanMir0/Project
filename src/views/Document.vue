@@ -44,7 +44,7 @@
                   :rules="[$rules.required]"
                   item-text="name"
                   item-value="id"
-                  label="Контрагенты"
+                  label="Контрагент"
                 >
                   <template v-slot:item="{ item }"
                     >{{ item.id }} - {{ item.name }}
