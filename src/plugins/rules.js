@@ -13,7 +13,8 @@ const Plugin = {
       validationPhone(value) {
         if (!/(\d+)/g.test(value) || /[a-zA-Z]/.test(value))
           return "Телефон должен содержать только цифры.";
-        if (value.length != 11) return "Телефон должен содержать 11 цифр.";
+        value = "+7";
+        if (value.length != 17) return "Телефон должен содержать 11 цифр.";
         return true;
       },
     };

@@ -28,6 +28,7 @@
                   v-model="entity.contact_info"
                   :rules="[$rules.required, $rules.validationPhone]"
                   label="Контактные данные"
+                  v-mask="mask"
                   placeholder="+7 (000) 000-00-00"
                 ></v-text-field>
               </v-col>
@@ -77,6 +78,25 @@ export default {
       address: "",
       inn: "",
     },
+    mask: [
+      "+7",
+      " ",
+      "(",
+      /\d/,
+      /\d/,
+      /\d/,
+      ")",
+      " ",
+      /\d/,
+      /\d/,
+      /\d/,
+      "-",
+      /\d/,
+      /\d/,
+      "-",
+      /\d/,
+      /\d/,
+    ],
   }),
 
   computed: {
