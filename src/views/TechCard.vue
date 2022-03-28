@@ -5,7 +5,6 @@
         <v-card-title>
           <span class="text-h5">{{ formTitle }}</span>
         </v-card-title>
-
         <v-card-text>
           <v-container>
             <v-row>
@@ -38,6 +37,8 @@
                 </v-select>
               </v-col>
             </v-row>
+
+
             <v-row>
               <v-col cols="12">
                 <child-products v-model="entity.products"></child-products>
@@ -45,9 +46,6 @@
             </v-row>
           </v-container>
         </v-card-text>
-
-
-
         <v-card-actions>
           <v-spacer />
           <v-btn outlined @click="back">Назад</v-btn>

@@ -3,18 +3,13 @@
       :headers="headers"
       :items="value"
       sort-by="calories"
-      class="elevation-1"
+      class=""
   >
     <template v-slot:top>
       <v-toolbar
           flat
       >
         <v-toolbar-title>Материалы</v-toolbar-title>
-        <v-divider
-            class="mx-4"
-            inset
-            vertical
-        ></v-divider>
         <v-spacer></v-spacer>
         <v-dialog
             v-model="dialog"
@@ -22,7 +17,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-                color="primary"
+                color="secondary"
                 dark
                 class="mb-2"
                 v-bind="attrs"
@@ -187,10 +182,6 @@ export default {
     dialogDelete (val) {
       val || this.closeDelete()
     },
-  },
-
-  created () {
-    this.initialize()
   },
 
   methods: {
