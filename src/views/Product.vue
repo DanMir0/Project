@@ -19,16 +19,23 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   v-model="entity.name"
-                  :rules="[$rules.required]"
+                  :rules="[$rules.required, $rules.validationName]"
                   label="Наименование"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="entity.measuring_unit_id"
-                  :rules="[$rules.required]"
-                  label="Единица измерения"
-                ></v-text-field>
+                <v-select
+                    v-model="entity.measuring_unit_id"
+                    :rules="[$rules.required]"
+                    :items="measuring_units"
+                    item-text="name"
+                    item-value="id"
+                    label="Единица измерения"
+                >
+                  <template v-slot:item="{ item }">
+                    {{ item.id }} - {{ item.name }}
+                  </template>
+                </v-select>
               </v-col>
             </v-row>
           </v-container>
@@ -56,6 +63,7 @@ export default {
   },
   data: () => ({
     entity: {},
+    measuring_units: [],
     defaultItem: {
       name: "",
       measuring_unit_id: "",
@@ -78,6 +86,7 @@ export default {
   },
   methods: {
     initialize() {
+      this.measuring_units = api.measuring_units.list();
       if (this.id > -1) {
         this.entity = api.products.show(this.id);
       } else {

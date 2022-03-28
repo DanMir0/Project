@@ -11,20 +11,18 @@ export default {
   },
   update(model) {
     DB.prepare(
-      "UPDATE documents SET document_type_id=?, implementation=?, counterparty_id=? WHERE id=?"
+      "UPDATE documents SET document_type_id=?, counterparty_id=? WHERE id=?"
     ).run([
       model.document_type_id,
-      model.implementation,
       model.counterparty_id,
       model.id,
     ]);
   },
   create(model) {
     let info = DB.prepare(
-      "INSERT INTO documents(document_type_id,implementation,counterparty_id) VALUES (?, ?, ?)"
+      "INSERT INTO documents(document_type_id,counterparty_id) VALUES (?, ?)"
     ).run([
       model.document_type_id,
-      model.implementation,
       model.counterparty_id,
     ]);
     return info.lastInsertRowid;

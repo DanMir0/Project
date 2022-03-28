@@ -32,7 +32,6 @@ create table documents
         unique,
     document_type_id INTEGER not null
         references document_types,
-    implementation   TEXT    not null,
     counterparty_id  INTEGER not null
         references counterparties
 );
@@ -154,12 +153,12 @@ create unique index tech_cards_products_product_id_tech_card_id_uindex
 create unique index tech_cards_products_tech_card_id_product_id_uindex
     on tech_cards_products (tech_card_id, product_id);
 
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (1, 'ООО "ЕССО-Технолоджи"', '7 (8352) 62-38-81', 'г. Чебоксары, К. Маркса, дом 52, корпус 8', 7805716417);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (2, 'ООО "ЭЛЕКТРОЗАПЧАСТЬ"', '7 (985) 773-48-26', 'г. Москва, пер Погорельский, 6', 7706615785);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (3, 'ООО "Промтехматериалы"', '7 (999) 077-27-44', 'г. Москва, ул Ташкентская, д 28', 9723030130);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (4, 'ООО "Компания UNICUM"', '7 (343) 372-73-58', 'г. Екатеринбург, ул Чкалова, дом 250', 3706019489);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (5, 'ООО "Вертекс"', '7 (34147) 442-99', 'г. Сарапул, Гагарина , дом 55', 6670312310);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (6, 'ООО "Электро-Юг"', '7 (863) 232-79-39', 'г. Ростов-на-Дону, пер. Семашко , дом 117, корпус А', 6454108447);
+INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (1, 'ООО "ЕССО-Технолоджи"', '+7 (835) 262-38-81', 'г. Чебоксары, К. Маркса, дом 52, корпус 8', 7805716417);
+INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (2, 'ООО "ЭЛЕКТРОЗАПЧАСТЬ"', '+7 (985) 773-48-26', 'г. Москва, пер Погорельский, 6', 7706615785);
+INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (3, 'ООО "Промтехматериалы"', '+7 (999) 077-27-44', 'г. Москва, ул Ташкентская, д 28', 9723030130);
+INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (4, 'ООО "Компания UNICUM"', '+7 (343) 372-73-58', 'г. Екатеринбург, ул Чкалова, дом 250', 3706019489);
+INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (5, 'ООО "Вертекс"', '+7 (341) 474-42-99', 'г. Сарапул, Гагарина , дом 55', 6670312310);
+INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (6, 'ООО "Электро-Юг"', '+7 (863) 232-79-39', 'г. Ростов-на-Дону, пер. Семашко , дом 117, корпус А', 6454108447);
 
 INSERT INTO document_types (id, name) VALUES (1, 'Отгрузка');
 INSERT INTO document_types (id, name) VALUES (2, 'Заказ на производство');

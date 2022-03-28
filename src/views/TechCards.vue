@@ -53,7 +53,6 @@ export default {
     headers: [
       { text: "Id", value: "id" },
       { text: "Наименование", align: "start", value: "name" },
-      { text: "Id товара", align: "start", value: "product_id" },
       { text: "Готовая Продукция", align: "start", value: "product_name" },
       { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],

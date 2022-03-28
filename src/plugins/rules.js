@@ -16,6 +16,22 @@ const Plugin = {
         if (value.length != 18) return "Телефон должен содержать 11 цифр.";
         return true;
       },
+
+      validationName(value) {
+        if(value.length < 4) return "Слишком коротко";
+        if(/[0-9]/.test(value)) return "Наименование не должно содержать числа.";
+        return true;
+      },
+
+      validationAdress(value) {
+        if(value.length < 7) return "Слишком коротко";
+        return true;
+      },
+
+      validationMeasuringUnits(value) {
+        if(/[0-9]/.test(value)) return "Наименование не должно содержать числа.";
+        return true;
+      }
     };
   },
 };

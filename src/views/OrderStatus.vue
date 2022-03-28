@@ -20,7 +20,7 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   v-model="entity.name"
-                  :rules="[$rules.required]"
+                  :rules="[$rules.required, $rules.validationName]"
                   label="Наименование"
                 ></v-text-field>
               </v-col>
