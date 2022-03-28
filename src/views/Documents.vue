@@ -62,8 +62,7 @@ export default {
     dialogDelete: false,
     headers: [
       { text: "Id", value: "id" },
-      { text: "Id типу документа", align: "start", value: "document_type_id" },
-      { text: "Id контрагента", align: "start", value: "counterparty_id" },
+      { text: "Тип документа", align: "start", value: "document_type_name" },
       { text: "Контрагенты", align: "start", value: "counterparty_name" },
       { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
