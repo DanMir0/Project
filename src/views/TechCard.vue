@@ -23,25 +23,22 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="5">
-                <v-select
+                <select-products
                   v-model="entity.product_id"
                   :rules="[$rules.required]"
-                  :items="products"
-                  item-text="name"
-                  item-value="id"
                   label="Готовая продукция"
                 >
                   <template v-slot:item="{ item }">
                     {{ item.id }} - {{ item.name }}
                   </template>
-                </v-select>
+                </select-products>
               </v-col>
             </v-row>
 
 
             <v-row>
               <v-col cols="12">
-                <child-products v-model="entity.products"></child-products>
+                <child-products :products.sync="entity.products"></child-products>
               </v-col>
             </v-row>
           </v-container>
@@ -60,20 +57,26 @@
 import api from "@/services/api";
 import validations from "@/mixins/validations";
 import ChildProducts from "@/components/ChildProducts";
+import SelectProducts from "../components/SelectProducts";
 
 export default {
   name: "TechCard",
-  components: {ChildProducts},
+  components: {SelectProducts, ChildProducts},
   mixins: [validations],
   props: {
     id: {},
   },
   data: () => ({
-    entity: {},
-    products: [],
+
+
+
+    entity: {
+      products:[],
+    },
     defaultItem: {
       name: "",
       product_id: "",
+      products:[],
     },
   }),
 
@@ -93,11 +96,10 @@ export default {
   },
   methods: {
     initialize() {
-      this.products = api.products.list();
       if (this.id > -1) {
         this.entity = api.tech_cards.show(this.id);
       } else {
-        this.entity = { ...this.defaultItem };
+        this.entity = JSON.parse(JSON.stringify(this.defaultItem))
       }
     },
 
@@ -107,11 +109,12 @@ export default {
       try {
         if (this.id > -1) {
           api.tech_cards.update(this.entity);
+          this.initialize()
         } else {
           id = api.tech_cards.create(this.entity);
         }
       } catch (e) {
-        this.$dialog.alert("Ошибка: Введите корректные данные");
+        this.$dialog.alert(e);
         return;
       }
       if (id) this.$router.push(`/tech_cards/${id}`);

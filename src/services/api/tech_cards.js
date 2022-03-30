@@ -22,6 +22,20 @@ export default {
       model.product_id,
       model.id,
     ]);
+    model.products.forEach(item=>{
+      if (item.id){
+        DB.prepare("UPDATE tech_cards_products SET product_id=?, quantity=? WHERE id=?").run([
+          item.product_id,
+          item.quantity,
+          item.id,
+        ]);
+      } else {
+        DB.prepare(
+            "INSERT INTO tech_cards_products (product_id, tech_card_id, quantity) VALUES (?, ?, ?)"
+        ).run([item.product_id, model.id, item.quantity]);
+      }
+
+    })
   },
   create(model) {
     let info = DB.prepare(

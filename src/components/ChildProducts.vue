@@ -1,7 +1,7 @@
 <template>
   <v-data-table
       :headers="headers"
-      :items="value"
+      :items="products"
       sort-by="calories"
       class=""
   >
@@ -39,10 +39,9 @@
                       sm="6"
                       md="4"
                   >
-                    <v-text-field
-                        v-model="editedItem.name"
-                        label="Dessert name"
-                    ></v-text-field>
+                    <select-products
+                        v-model="editedItem.product_id">
+                    </select-products>
                   </v-col>
                   <v-col
                       cols="12"
@@ -50,28 +49,8 @@
                       md="4"
                   >
                     <v-text-field
-                        v-model="editedItem.calories"
-                        label="Calories"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <v-text-field
-                        v-model="editedItem.fat"
-                        label="Fat (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <v-text-field
-                        v-model="editedItem.carbs"
-                        label="Carbs (g)"
+                        v-model="editedItem.quantity"
+                        label="Количество"
                     ></v-text-field>
                   </v-col>
 
@@ -126,22 +105,16 @@
         mdi-delete
       </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn
-          color="primary"
-          @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
   </v-data-table>
 </template>
 
 <script>
+import SelectProducts from "./SelectProducts";
 export default {
   name: "ChildProducts",
+  components: {SelectProducts},
   props: {
-    value: {type: Array}
+    products: {type: Array},
   },
   data: () => ({
     dialog: false,
@@ -155,17 +128,13 @@ export default {
     editedIndex: -1,
     editedItem: {
       name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      quantity: 0,
+      product_id: null,
     },
     defaultItem: {
       name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      quantity: 0,
+      product_id: null,
     },
   }),
 
@@ -177,6 +146,7 @@ export default {
 
   watch: {
     dialog (val) {
+
       val || this.close()
     },
     dialogDelete (val) {
@@ -187,19 +157,19 @@ export default {
   methods: {
 
     editItem (item) {
-      this.editedIndex = this.value.indexOf(item)
+      this.editedIndex = this.products.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      this.editedIndex = this.value.indexOf(item)
+      this.editedIndex = this.products.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
     deleteItemConfirm () {
-      this.value.splice(this.editedIndex, 1)
+      this.products.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -221,9 +191,10 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.value[this.editedIndex], this.editedItem)
+        Object.assign(this.products[this.editedIndex], this.editedItem)
       } else {
-        this.value.push(this.editedItem)
+        this.$emit('change')
+        this.products.push(this.editedItem)
       }
       this.close()
     },
