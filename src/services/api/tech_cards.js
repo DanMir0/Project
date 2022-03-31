@@ -36,7 +36,7 @@ export default {
 
     getProducts(tech_card_id) {
         return DB.prepare(
-            `SELECT tcp.*, p.name, mu.name AS measuring_unit 
+            `SELECT tcp.*, p.name, mu.name AS measuring_unit_name 
                  FROM tech_cards_products tcp 
                      JOIN products p on tcp.product_id = p.id JOIN measuring_units mu on p.measuring_unit_id = mu.id 
                  WHERE tech_card_id=?`

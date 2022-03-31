@@ -2,8 +2,7 @@
   <v-data-table
       :headers="headers"
       :items="products"
-      sort-by="calories"
-      class=""
+      dense
   >
     <template v-slot:top>
       <v-toolbar
@@ -32,30 +31,32 @@
             </v-card-title>
 
             <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <select-products
-                        v-model="editedItem.product_id">
-                    </select-products>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <v-text-field
-                        v-model="editedItem.quantity"
-                        label="Количество"
-                    ></v-text-field>
-                  </v-col>
+              <v-form v-model="validForm" ref="form">
+                <v-container>
+                  <v-row>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="8">
+                      <select-products
+                          v-model="editedItem.product_id"
+                          :rules="[$rules.required]">
+                      </select-products>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4">
+                      <v-text-field
+                          v-model.number="editedItem.quantity"
+                          :rules="[$rules.greater(0)]">
+                          label="Количество"
+                      ></v-text-field>
+                    </v-col>
 
-                </v-row>
-              </v-container>
+                  </v-row>
+                </v-container>
+              </v-form>
             </v-card-text>
 
             <v-card-actions>
@@ -110,9 +111,13 @@
 
 <script>
 import SelectProducts from "./SelectProducts";
+import api from "@/services/api";
+import validations from "@/mixins/validations";
+
 export default {
   name: "ChildProducts",
   components: {SelectProducts},
+  mixins: [validations],
   props: {
     products: {type: Array},
   },
@@ -120,60 +125,62 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-      { text: 'Наименование', value: 'name' },
-      { text: 'Количество', value: 'quantity' },
-      { text: 'Единица измерения', value: 'measuring_unit' },
-      { text: '', value: 'actions', sortable: false },
+      {text: 'Наименование', value: 'name'},
+      {text: 'Количество', value: 'quantity'},
+      {text: 'Единица измерения', value: 'measuring_unit_name'},
+      {text: '', value: 'actions', sortable: false},
     ],
     editedIndex: -1,
     editedItem: {
       name: '',
+      measuring_unit_name: '',
       quantity: 0,
       product_id: null,
     },
     defaultItem: {
       name: '',
+      measuring_unit_name: '',
       quantity: 0,
       product_id: null,
     },
   }),
 
   computed: {
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
 
   watch: {
-    dialog (val) {
+    dialog(val) {
 
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete(val) {
       val || this.closeDelete()
     },
   },
 
   methods: {
 
-    editItem (item) {
+    editItem(item) {
       this.editedIndex = this.products.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
-    deleteItem (item) {
+    deleteItem(item) {
       this.editedIndex = this.products.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
+    deleteItemConfirm() {
       this.products.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
-    close () {
+    close() {
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -181,7 +188,7 @@ export default {
       })
     },
 
-    closeDelete () {
+    closeDelete() {
       this.dialogDelete = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -189,11 +196,14 @@ export default {
       })
     },
 
-    save () {
+    save() {
+      if (!this.validate()) return
+      const product = api.products.show(this.editedItem.product_id)
+      this.editedItem.name = product.name
+      this.editedItem.measuring_unit_name = product.measuring_unit_name
       if (this.editedIndex > -1) {
         Object.assign(this.products[this.editedIndex], this.editedItem)
       } else {
-        this.$emit('change')
         this.products.push(this.editedItem)
       }
       this.close()

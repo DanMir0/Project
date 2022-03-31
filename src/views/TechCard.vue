@@ -34,8 +34,6 @@
                 </select-products>
               </v-col>
             </v-row>
-
-
             <v-row>
               <v-col cols="12">
                 <child-products :products.sync="entity.products"></child-products>
@@ -67,9 +65,6 @@ export default {
     id: {},
   },
   data: () => ({
-
-
-
     entity: {
       products:[],
     },

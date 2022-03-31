@@ -31,6 +31,14 @@ const Plugin = {
       validationMeasuringUnits(value) {
         if(/[0-9]/.test(value)) return "Наименование не должно содержать числа.";
         return true;
+      },
+
+      greater(min) {
+        return function (value){
+          if(value>min) return true
+          return `Число должно быть больше ${min}`
+        }
+
       }
     };
   },

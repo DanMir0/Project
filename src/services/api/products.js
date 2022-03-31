@@ -2,10 +2,13 @@ import DB from "@/services/DB";
 
 export default {
   list() {
-    return DB.prepare("SELECT p.*,mu.name measuring_unit_name FROM products p JOIN measuring_units mu on p.measuring_unit_id=mu.id").all();
+    return DB.prepare(`SELECT p.*, mu.name measuring_unit_name 
+                             FROM products p JOIN measuring_units mu on p.measuring_unit_id=mu.id`).all();
   },
   show(id) {
-    return DB.prepare("SELECT * FROM products t WHERE t.id=?").get(id);
+    return DB.prepare(`SELECT p.*, mu.name measuring_unit_name 
+                             FROM products p JOIN measuring_units mu on mu.id = p.measuring_unit_id 
+                            WHERE p.id=?`).get(id);
   },
   update(model) {
     DB.prepare("UPDATE products SET name=?,measuring_unit_id=? WHERE id=?").run(
