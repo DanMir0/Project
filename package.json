@@ -5,11 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "wdio": "wdio run wdio.conf.js"
   },
   "main": "background.js",
   "dependencies": {
@@ -17,7 +19,7 @@
     "@mdi/font": "^6.5.95",
     "better-sqlite3": "^7.5.0",
     "core-js": "^3.6.5",
-    "sass": "^1.49.9",
+    "sass": "^1.32.13",
     "sass-loader": "^10.2.1",
     "v-mask": "^2.3.0",
     "vue": "^2.6.11",
@@ -25,21 +27,35 @@
     "vuetify": "^2.6.3"
   },
   "devDependencies": {
+    "@babel/register": "^7.17.7",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-unit-mocha": "^4.5.17",
     "@vue/cli-service": "~4.5.0",
+    "@vue/test-utils": "^1.0.3",
+    "@wdio/cli": "^7.19.3",
+    "@wdio/devtools-service": "^7.19.3",
+    "@wdio/local-runner": "^7.19.3",
+    "@wdio/mocha-framework": "^7.19.3",
+    "@wdio/spec-reporter": "^7.19.1",
     "babel-eslint": "^10.1.0",
+    "chai": "^4.1.2",
+    "chromedriver": "^91.0.1",
     "electron": "^13.0.0",
     "electron-devtools-installer": "^3.1.0",
     "electron-rebuild": "^3.2.7",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "mocha": "^9.2.2",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-electron-builder": "~2.1.1",
     "vue-cli-plugin-vuetify": "~2.4.7",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.0"
+    "vuetify-loader": "^1.7.0",
+    "wdio-chromedriver-service": "^7.3.2",
+    "wdio-electron-service": "^2.1.0",
+    "wdio-wait-for": "^2.2.5"
   },
   "eslintConfig": {
     "root": true,
@@ -53,7 +69,18 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {},
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "mocha": true
+        }
+      }
+    ]
   },
   "browserslist": [
     "> 1%",
