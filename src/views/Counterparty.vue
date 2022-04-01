@@ -46,6 +46,27 @@
                   label="ИНН"
                 ></v-text-field>
               </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="entity.created_at"
+                  :rules="[$rules.required]"
+                  label="Дата создания"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="entity.update_at"
+                  :rules="[$rules.required]"
+                  label="Обновленная дата"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="entity.timestamp"
+                  :rules="[$rules.required]"
+                  label="Временная отметка"
+                ></v-text-field>
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -77,6 +98,9 @@ export default {
       contact_info: "",
       address: "",
       inn: "",
+      created_at: "",
+      update_at: "",
+      timestamp: "",
     },
     mask: [
       "+",
@@ -132,7 +156,7 @@ export default {
           id = api.counterparties.create(this.entity);
         }
       } catch (e) {
-        this.$dialog.alert("Ошибка: Введите корректные данные.");
+        this.$dialog.alert(e);
         return;
       }
       if (id) this.$router.push(`/counterparties/${id}`);

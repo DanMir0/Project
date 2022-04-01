@@ -9,7 +9,7 @@ create table counterparties
     address      text    not null,
     inn          integer not null,
     created_at   date    not null,
-    update_at    date    not null,
+    updated_at    date    not null,
     timestamp    date default CURRENT_TIMESTAMP
 );
 
