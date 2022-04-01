@@ -11,13 +11,13 @@ export default {
   },
   update(model) {
     DB.prepare(
-      "UPDATE documents SET document_type_id=?, counterparty_id=? WHERE id=?"
-    ).run([model.document_type_id, model.counterparty_id, model.id]);
+      "UPDATE documents SET document_type_id=?, counterparty_id=?, created_at=?, updated_at=?, timestamp=? WHERE id=?"
+    ).run([model.document_type_id, model.counterparty_id, model.created_at, model.updated_at, model.timestamp, model.id]);
   },
   create(model) {
     let info = DB.prepare(
-      "INSERT INTO documents(document_type_id,counterparty_id) VALUES (?, ?)"
-    ).run([model.document_type_id, model.counterparty_id]);
+      "INSERT INTO documents(document_type_id,counterparty_id, created_at, updated_at, timestamp) VALUES (?, ?)"
+    ).run([model.document_type_id, model.counterparty_id, model.created_at, model.updated_at, model.timestamp]);
     return info.lastInsertRowid;
   },
   delete(id) {

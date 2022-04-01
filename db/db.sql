@@ -7,14 +7,11 @@ create table counterparties
         unique,
     contact_info text    not null,
     address      text    not null,
-    inn          integer not null
+    inn          integer not null,
+    created_at   date    not null,
+    update_at    date    not null,
+    timestamp    date default CURRENT_TIMESTAMP
 );
-
-create unique index counterparties_contact_info_uindex
-    on counterparties (contact_info);
-
-create unique index counterparties_inn_uindex
-    on counterparties (inn);
 
 create table document_types
 (
@@ -23,17 +20,6 @@ create table document_types
         unique,
     name TEXT    not null
         unique
-);
-
-create table documents
-(
-    id               INTEGER not null
-        primary key autoincrement
-        unique,
-    document_type_id INTEGER not null
-        references document_types,
-    counterparty_id  INTEGER not null
-        references counterparties
 );
 
 create table measuring_units
@@ -64,7 +50,26 @@ create table orders
     order_status_id INTEGER not null
         references order_statuses,
     counterparty_id integer not null
-        references counterparties
+        references counterparties,
+    created_at      date    not null,
+    update_at       date    not null,
+    timestamp       date default CURRENT_TIMESTAMP
+);
+
+create table documents
+(
+    id               INTEGER not null
+        primary key autoincrement
+        unique,
+    document_type_id INTEGER not null
+        references document_types,
+    counterparty_id  INTEGER not null
+        references counterparties,
+    order_id         integer
+        references orders,
+    created_at       date    not null,
+    update_at        date    not null,
+    timestamp        date default CURRENT_TIMESTAMP
 );
 
 create table products
@@ -93,21 +98,6 @@ create table documents_products
 create unique index documents_products_document_id_product_id_uindex
     on documents_products (document_id, product_id);
 
-create table sqlite_master
-(
-    type     text,
-    name     text,
-    tbl_name text,
-    rootpage int,
-    sql      text
-);
-
-create table sqlite_sequence
-(
-    name,
-    seq
-);
-
 create table tech_cards
 (
     id         INTEGER not null
@@ -117,7 +107,10 @@ create table tech_cards
     name       TEXT    not null
         unique,
     product_id integer not null
-        references products
+        references products,
+    created_at date    not null,
+    update_at  date    not null,
+    timestamp  date default CURRENT_TIMESTAMP
 );
 
 create table orders_tech_cards
@@ -153,12 +146,12 @@ create unique index tech_cards_products_product_id_tech_card_id_uindex
 create unique index tech_cards_products_tech_card_id_product_id_uindex
     on tech_cards_products (tech_card_id, product_id);
 
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (1, 'ООО "ЕССО-Технолоджи"', '+7 (835) 262-38-81', 'г. Чебоксары, К. Маркса, дом 52, корпус 8', 7805716417);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (2, 'ООО "ЭЛЕКТРОЗАПЧАСТЬ"', '+7 (985) 773-48-26', 'г. Москва, пер Погорельский, 6', 7706615785);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (3, 'ООО "Промтехматериалы"', '+7 (999) 077-27-44', 'г. Москва, ул Ташкентская, д 28', 9723030130);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (4, 'ООО "Компания UNICUM"', '+7 (343) 372-73-58', 'г. Екатеринбург, ул Чкалова, дом 250', 3706019489);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (5, 'ООО "Вертекс"', '+7 (341) 474-42-99', 'г. Сарапул, Гагарина , дом 55', 6670312310);
-INSERT INTO counterparties (id, name, contact_info, address, inn) VALUES (6, 'ООО "Электро-Юг"', '+7 (863) 232-79-39', 'г. Ростов-на-Дону, пер. Семашко , дом 117, корпус А', 6454108447);
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, update_at,timestamp) VALUES (1, 'ООО "ЕССО-Технолоджи"', '+7 (835) 262-38-81', 'г. Чебоксары, К. Маркса, дом 52, корпус 8', 7805716417, 2022-03-05, 2022-03-15);
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, update_at,timestamp) VALUES (2, 'ООО "ЭЛЕКТРОЗАПЧАСТЬ"', '+7 (985) 773-48-26', 'г. Москва, пер Погорельский, 6', 7706615785, 2022-03-05, 2022-03-15);
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, update_at,timestamp) VALUES (3, 'ООО "Промтехматериалы"', '+7 (999) 077-27-44', 'г. Москва, ул Ташкентская, д 28', 9723030130, 2022-03-05, 2022-03-15);
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, update_at,timestamp) VALUES (4, 'ООО "Компания UNICUM"', '+7 (343) 372-73-58', 'г. Екатеринбург, ул Чкалова, дом 250', 3706019489, 2022-03-05, 2022-03-15);
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, update_at,timestamp) VALUES (5, 'ООО "Вертекс"', '+7 (341) 474-42-99', 'г. Сарапул, Гагарина , дом 55', 6670312310, 2022-03-05, 2022-03-15);
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, update_at,timestamp) VALUES (6, 'ООО "Электро-Юг"', '+7 (863) 232-79-39', 'г. Ростов-на-Дону, пер. Семашко , дом 117, корпус А', 6454108447, 2022-03-05, 2022-03-15);
 
 INSERT INTO document_types (id, name) VALUES (1, 'Отгрузка');
 INSERT INTO document_types (id, name) VALUES (2, 'Заказ на производство');

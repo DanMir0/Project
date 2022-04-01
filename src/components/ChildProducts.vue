@@ -201,6 +201,7 @@ export default {
       const product = api.products.show(this.editedItem.product_id)
       this.editedItem.name = product.name
       this.editedItem.measuring_unit_name = product.measuring_unit_name
+
       if (this.editedIndex > -1) {
         Object.assign(this.products[this.editedIndex], this.editedItem)
       } else {
