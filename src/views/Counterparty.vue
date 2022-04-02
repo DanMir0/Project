@@ -55,7 +55,7 @@
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="entity.update_at"
+                  v-model="entity.updated_at"
                   :rules="[$rules.required]"
                   label="Обновленная дата"
                 ></v-text-field>
@@ -99,7 +99,7 @@ export default {
       address: "",
       inn: "",
       created_at: "",
-      update_at: "",
+      updated_at: "",
       timestamp: "",
     },
     mask: [

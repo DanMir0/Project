@@ -58,9 +58,9 @@ export default {
     search: "",
     dialogDelete: false,
     headers: [
-      { text: "Id", value: "id" },
       { text: "Тип документа", align: "start", value: "document_type_name" },
       { text: "Контрагенты", align: "start", value: "counterparty_name" },
+      { text: "Заказ", align: "start", value: "order_id" },
       { text: "Дата создания", align: "start", value: "created_at" },
       { text: "Обновленная дата", align: "start", value: "updated_at" },
       { text: "Временная отметка", align: "start", value: "timestamp" },

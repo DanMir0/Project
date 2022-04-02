@@ -33,8 +33,8 @@
               <v-col cols="12" sm="6" md="4">
                 <v-select
                   v-model="entity.counterparty_id"
-                  :items="counterparties"
                   :rules="[$rules.required]"
+                  :items="counterparties"
                   item-text="name"
                   item-value="id"
                   label="Контрагент"
@@ -43,6 +43,27 @@
                     >{{ item.id }} - {{ item.name }}
                   </template>
                 </v-select>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                    v-model="entity.created_at"
+                    :rules="[$rules.required]"
+                    label="Дата создания"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                    v-model="entity.updated_at"
+                    :rules="[$rules.required]"
+                    label="Обновленная дата"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                    v-model="entity.timestamp"
+                    :rules="[$rules.required]"
+                    label="Временная отметка"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -76,6 +97,9 @@ export default {
       document_type_id: "",
       implementation: "",
       counterparty_id: "",
+      created_at: "",
+      updated_at: "",
+      timestamp: "",
     },
   }),
 

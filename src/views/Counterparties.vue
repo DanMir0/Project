@@ -61,7 +61,6 @@ export default {
     search: "",
     dialogDelete: false,
     headers: [
-      { text: "Id", value: "id" },
       { text: "Наименование", align: "start", value: "name" },
       { text: "Контактные данные", align: "start", value: "contact_info" },
       { text: "Адрес", align: "start", value: "address" },
