@@ -15,7 +15,7 @@ export default {
     create(model) {
         let info = DB.prepare(
             "INSERT INTO order_statuses(name) VALUES (?)"
-        ).run([model.name,]);
+        ).run([model.name]);
         return info.lastInsertRowid;
     },
     delete(id) {

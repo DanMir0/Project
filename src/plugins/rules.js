@@ -7,7 +7,7 @@ const Plugin = {
         if (!/(\d+)/g.test(value) || /[a-zA-Z]/.test(value))
           return "ИНН должен содержать только цифры.";
         if (value.length != 10) return "ИНН должен содержать 10 цифр.";
-        return true;
+        else return true;
       },
 
       validationPhone(value) {

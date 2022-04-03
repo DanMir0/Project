@@ -10,6 +10,7 @@ import Document from "@/views/Document";
 import DocumentTypes from "@/views/DocumentTypes";
 import DocumentType from "@/views/DocumentType";
 import Orders from "@/views/Orders";
+import Order from "@/views/Order";
 import TechCards from "@/views/TechCards";
 import TechCard from "@/views/TechCard";
 import MeasuringUnits from "@/views/MeasuringUnits";
@@ -28,6 +29,7 @@ const routes = [
   { path: "/documents", component: Documents },
   { path: "/documents/:id", component: Document, props: true },
   { path: "/orders", component: Orders },
+  { path: "/orders/:id", component: Order, props:  true},
   { path: "/tech_cards", component: TechCards },
   { path: "/tech_cards/:id", component: TechCard, props:  true},
   { path: "/document_types", component: DocumentTypes },

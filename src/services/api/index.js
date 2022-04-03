@@ -1,10 +1,11 @@
 import counterparties from "@/services/api/counterparties";
 import products from "@/services/api/products";
 import tech_cards from "@/services/api/tech_cards";
-import  document_types from  "@/services/api/document_types";
+import document_types from  "@/services/api/document_types";
 import measuring_units from  "@/services/api/measuring_units";
 import order_statuses from "@/services/api/order_statuses";
 import documents from "@/services/api/documents";
+import orders from "@/services/api/orders";
 
 export default {
   counterparties,
@@ -14,4 +15,5 @@ export default {
   measuring_units,
   order_statuses,
   documents,
+  orders,
 };
