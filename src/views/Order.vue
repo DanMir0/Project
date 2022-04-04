@@ -101,11 +101,10 @@ export default {
     entity: {
       tech_cards:[],
     },
-
     order_statuses: [],
     counterparties: [],
     defaultItem: {
-      order_status_id: "",
+      order_type_id: "",
       counterparty_id: "",
       tech_cards: [],
       created_at: "",
