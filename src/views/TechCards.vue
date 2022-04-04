@@ -53,7 +53,10 @@ export default {
     headers: [
       { text: "Id", value: "id" },
       { text: "Наименование", align: "start", value: "name" },
-      { text: "Готовая Продукция", align: "start", value: "product_name" },
+      { text: "Готовая продукция", align: "start", value: "product_name" },
+      { text: "Дата создания", align: "start", value: "created_at" },
+      { text: "Обновленная дата", align: "start", value: "updated_at" },
+      { text: "Временная отметка", align: "start", value: "timestamp" },
       { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
     items: [],

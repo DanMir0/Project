@@ -1,11 +1,11 @@
 <template>
   <div class="orders">
     <v-data-table
-        :headers="headers"
-        :items="items"
-        :search="search"
-        sort-by="calories"
-        class="elevation-1"
+      :headers="headers"
+      :items="items"
+      :search="search"
+      sort-by="calories"
+      class="elevation-1"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -13,26 +13,26 @@
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Поиск"
-              single-line
-              hide-details
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Поиск"
+            single-line
+            hide-details
           ></v-text-field>
           <v-spacer></v-spacer>
           <v-btn @click="newItem()" color="primary">Добавить</v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
-              >Вы уверены, что хотите удалить этот элемент?
+                >Вы уверены, что хотите удалить этот элемент?
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete"
-                >Отмена
+                  >Отмена
                 </v-btn>
                 <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                >ОК
+                  >ОК
                 </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
@@ -55,7 +55,7 @@ export default {
   name: "Orders",
   data: () => ({
     dialog: false,
-    search: "",
+    search: "Поиск",
     dialogDelete: false,
     headers: [
       { text: "Статус заказа", align: "start", value: "order_status_name" },
