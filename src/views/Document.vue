@@ -45,6 +45,20 @@
                 </v-select>
               </v-col>
               <v-col cols="12" sm="6" md="4">
+                <v-select
+                    v-model="entity.order_id"
+                    :rules="[$rules.required]"
+                    :items="orders"
+                    item-text="name"
+                    item-value="id"
+                    label="Заказ"
+                >
+                  <template v-slot:item="{ item }"
+                  >{{ item.id }} - {{ item.name }}
+                  </template>
+                </v-select>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
                 <v-text-field
                     v-model="entity.created_at"
                     :rules="[$rules.required]"
@@ -93,10 +107,11 @@ export default {
     entity: {},
     counterparties: [],
     document_types: [],
+    orders: [],
     defaultItem: {
       document_type_id: "",
-      implementation: "",
       counterparty_id: "",
+      order_id: "",
       created_at: "",
       updated_at: "",
       timestamp: "",
@@ -121,6 +136,7 @@ export default {
     initialize() {
       this.counterparties = api.counterparties.list();
       this.document_types = api.document_types.list();
+      this.orders = api.orders.list();
       if (this.id > -1) {
         this.entity = api.documents.show(this.id);
       } else {

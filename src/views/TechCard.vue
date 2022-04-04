@@ -33,6 +33,27 @@
                   </template>
                 </select-products>
               </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                    v-model="entity.created_at"
+                    :rules="[$rules.required]"
+                    label="Дата создания"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                    v-model="entity.updated_at"
+                    :rules="[$rules.required]"
+                    label="Обновленная дата"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                    v-model="entity.timestamp"
+                    :rules="[$rules.required]"
+                    label="Временная отметка"
+                ></v-text-field>
+              </v-col>
             </v-row>
             <v-row>
               <v-col cols="12">
@@ -72,6 +93,9 @@ export default {
       name: "",
       product_id: "",
       products:[],
+      created_at: "",
+      updated_at: "",
+      timestamp: "",
     },
   }),
 

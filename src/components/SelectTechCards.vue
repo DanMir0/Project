@@ -2,10 +2,10 @@
   <v-select
       v-bind="$attrs"
       v-on="$listeners"
-      :items="products"
+      :items="tech_cards"
       item-text="name"
       item-value="id"
-      label="Товар"
+      label="Технологическая карта"
   >
     <template v-slot:item="{ item }">
       {{ item.id }} - {{ item.name }}
@@ -17,16 +17,16 @@
 import api from "../services/api";
 
 export default {
-  name: "SelectProducts",
+  name: "SelectTechCards",
   props: {
   },
   data() {
     return {
-      products: [],
+      tech_cards: [],
     }
   },
   created() {
-    this.products = api.products.list()
+    this.tech_cards = api.tech_cards.list()
   }
 
 }

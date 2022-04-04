@@ -58,8 +58,8 @@ export default {
     search: "",
     dialogDelete: false,
     headers: [
-      { text: "Статус заказа", align: "start", value: "order_status_id" },
-      { text: "Контрагент", align: "start", value: "counterparty_id" },
+      { text: "Статус заказа", align: "start", value: "order_status_name" },
+      { text: "Контрагент", align: "start", value: "counterparty_name" },
       { text: "Дата создания", align: "start", value: "created_at" },
       { text: "Обновленная дата", align: "start", value: "updated_at" },
       { text: "Временная отметка", align: "start", value: "timestamp" },

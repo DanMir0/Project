@@ -1,14 +1,14 @@
 <template>
   <v-data-table
       :headers="headers"
-      :items="products"
+      :items="tech_cards"
       dense
   >
     <template v-slot:top>
       <v-toolbar
           flat
       >
-        <v-toolbar-title>Материалы</v-toolbar-title>
+        <v-toolbar-title>Технологическая карта</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog
             v-model="dialog"
@@ -38,11 +38,10 @@
                         cols="12"
                         sm="6"
                         md="8">
-                      <elect-products
-                          v-model="editedItem.product_id"
+                      <select-tech-cards
+                          v-model="editedItem.tech_card_id"
                           :rules="[$rules.required]">
-
-                      </elect-products>
+                      </select-tech-cards>
                     </v-col>
                     <v-col
                         cols="12"
@@ -51,8 +50,8 @@
                       <v-text-field
                           v-model.number="editedItem.quantity"
                           :rules="[$rules.greater(0)]">
-                          label="Количество"
-                      ></v-text-field>
+                        label="Количество"
+                        ></v-text-field>
                     </v-col>
 
                   </v-row>
@@ -100,16 +99,16 @@
 </template>
 
 <script>
-import SelectProducts from "./SelectProducts";
+import SelectTechCards from "./SelectTechCards";
 import api from "@/services/api";
 import validations from "@/mixins/validations";
 
 export default {
-  name: "ChildProducts",
-  components: {SelectProducts},
+  name: "ChildTechCards",
+  components: {SelectTechCards},
   mixins: [validations],
   props: {
-    products: {type: Array},
+    tech_cards: {type: Array},
   },
   data: () => ({
     dialog: false,
@@ -117,21 +116,18 @@ export default {
     headers: [
       {text: 'Наименование', value: 'name'},
       {text: 'Количество', value: 'quantity'},
-      {text: 'Единица измерения', value: 'measuring_unit_name'},
       {text: '', value: 'actions', sortable: false},
     ],
     editedIndex: -1,
     editedItem: {
       name: '',
-      measuring_unit_name: '',
       quantity: 0,
-      product_id: null,
+      tech_card_id: null,
     },
     defaultItem: {
       name: '',
-      measuring_unit_name: '',
       quantity: 0,
-      product_id: null,
+      tech_card_id: null,
     },
   }),
 
@@ -151,15 +147,15 @@ export default {
   methods: {
 
     editItem(item) {
-      this.editedIndex = this.products.indexOf(item)
+      this.editedIndex = this.tech_cards.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem(item) {
-      this.editedIndex = this.products.indexOf(item)
+      this.editedIndex = this.tech_cards.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      this.products.splice(this.editedIndex, 1)
+      this.tech_cards.splice(this.editedIndex, 1)
     },
 
     close() {
@@ -172,14 +168,14 @@ export default {
 
     save() {
       if (!this.validate()) return
-      const product = api.products.show(this.editedItem.product_id)
-      this.editedItem.name = product.name
-      this.editedItem.measuring_unit_name = product.measuring_unit_name
+      const tech_card = api.tech_cards.show(this.editedItem.tech_card_id)
+      this.editedItem.name = tech_card.name
+      this.editedItem.quantity = tech_card.quantity
 
       if (this.editedIndex > -1) {
-        Object.assign(this.products[this.editedIndex], this.editedItem)
+        Object.assign(this.tech_cards[this.editedIndex], this.editedItem)
       } else {
-        this.products.push(this.editedItem)
+        this.tech_cards.push(this.editedItem)
       }
       this.close()
     },

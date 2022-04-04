@@ -20,7 +20,7 @@
                 <v-select
                     v-model="entity.order_status_id"
                     :rules="[$rules.required]"
-                    :items="orders_statuses"
+                    :items="order_statuses"
                     item-text="name"
                     item-value="id"
                     label="Статус производства"
@@ -66,6 +66,11 @@
                 ></v-text-field>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12">
+                <child-tech-cards :tech_cards.sync="entity.tech_cards"></child-tech-cards>
+              </v-col>
+            </v-row>
           </v-container>
         </v-card-text>
 
@@ -82,21 +87,27 @@
 <script>
 import api from "@/services/api";
 import validations from "@/mixins/validations";
+import ChildTechCards from "@/components/ChildTechCards";
+import SelectTechCards from "../components/SelectTechCards";
 
 export default {
   name: "Order",
+  components: {SelectTechCards, ChildTechCards},
   mixins: [validations],
   props: {
     id: {},
   },
   data: () => ({
-    entity: {},
-    measuring_units: [],
-    order_status_id: [],
+    entity: {
+      tech_cards:[],
+    },
+
+    order_statuses: [],
+    counterparties: [],
     defaultItem: {
-      name: "",
       order_status_id: "",
       counterparty_id: "",
+      tech_cards: [],
       created_at: "",
       updated_at: "",
       timestamp: "",
@@ -119,12 +130,12 @@ export default {
   },
   methods: {
     initialize() {
+      this.order_statuses = api.order_statuses.list();
       this.counterparties = api.counterparties.list();
-      this.order_status_id = api.order_status_id.list();
       if (this.id > -1) {
         this.entity = api.orders.show(this.id);
       } else {
-        this.entity = { ...this.defaultItem };
+        this.entity = JSON.parse(JSON.stringify(this.defaultItem))
       }
     },
 
@@ -134,11 +145,12 @@ export default {
       try {
         if (this.id > -1) {
           api.orders.update(this.entity);
+          this.initialize()
         } else {
           id = api.orders.create(this.entity);
         }
       } catch (e) {
-        this.$dialog.alert("Ошибка: Введите корректные данные");
+        this.$dialog.alert(e);
         return;
       }
       if (id) this.$router.push(`/orders/${id}`);
@@ -146,11 +158,7 @@ export default {
     },
 
     back() {
-      if (this.id > -1) {
-        this.$router.push(`/orders`);
-      } else {
-        this.$router.push(`/orders`);
-      }
+      this.$router.push(`/orders`);
     },
   },
 };
