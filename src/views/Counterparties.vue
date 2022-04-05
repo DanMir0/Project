@@ -1,38 +1,40 @@
 <template>
   <div class="counterparties">
     <v-data-table
-      :headers="headers"
-      :items="items"
-      :search="search"
-      sort-by="calories"
-      class="elevation-1"
+        :headers="headers"
+        :items="items"
+        :search="search"
+        sort-by="calories"
+        class="elevation-1"
     >
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>Контрагенты</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
+          <v-btn @click="newItem()" color="primary">Добавить
+            <v-icon right>mdi-account-plus</v-icon>
+          </v-btn>
           <v-spacer></v-spacer>
           <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Поиск"
-            single-line
-            hide-details
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Поиск"
+              single-line
+              hide-details
+              class="search"
           ></v-text-field>
-          <v-spacer></v-spacer>
-          <v-btn @click="newItem()" color="primary">Добавить</v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
-                >Вы уверены, что хотите удалить этот элемент?
+              >Вы уверены, что хотите удалить этот элемент?
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete"
-                  >Отмена
+                >Отмена
                 </v-btn>
                 <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                  >ОК
+                >ОК
                 </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
@@ -43,9 +45,6 @@
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)"> mdi-delete</v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset</v-btn>
       </template>
     </v-data-table>
   </div>
@@ -61,14 +60,13 @@ export default {
     search: "",
     dialogDelete: false,
     headers: [
-      { text: "Наименование", align: "start", value: "name" },
-      { text: "Контактные данные", align: "start", value: "contact_info" },
-      { text: "Адрес", align: "start", value: "address" },
-      { text: "ИНН", align: "start", value: "inn" },
-      { text: "Дата создания", align: "start", value: "created_at" },
-      { text: "Обновленная дата", align: "start", value: "updated_at" },
-      { text: "Временная Отметка", align: "start", value: "timestamp" },
-      { text: "Действия", value: "actions", sortable: false, align: "center" },
+      {text: "Наименование", align: "start", value: "name"},
+      {text: "Контактные данные", align: "start", value: "contact_info"},
+      {text: "Адрес", align: "start", value: "address"},
+      {text: "ИНН", align: "start", value: "inn"},
+      {text: "Дата создания", align: "start", value: "created_at"},
+      {text: "Обновленная дата", align: "start", value: "updated_at"},
+      {text: "Действия", value: "actions", sortable: false, align: "center"},
     ],
     items: [],
     editedIndex: -1,
@@ -152,3 +150,9 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.search {
+  max-width: 250px;
+}
+</style>

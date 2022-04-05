@@ -9,28 +9,22 @@ export default {
   },
   update(model) {
     DB.prepare(
-      "UPDATE counterparties SET name=?, contact_info=?, address=?, inn=?, created_at=?, updated_at=?, timestamp=? WHERE id=?"
+      "UPDATE counterparties SET name=?, contact_info=?, address=?, inn=?, updated_at=date('now') WHERE id=?"
     ).run([
       model.name,
       model.contact_info,
       model.address,
       model.inn,
-      model.created_at,
-      model.updated_at,
-      model.timestamp,
       model.id,
     ]);
   },
   create(model) {
     let info = DB.prepare(
-      "INSERT INTO counterparties(name,contact_info,address,inn,created_at, updated_at, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)"
+      "INSERT INTO counterparties(name,contact_info,address,inn) VALUES (?, ?, ?, ?)"
     ).run([
       model.name,
       model.contact_info,
       model.address,
-      model.created_at,
-      model.updated_at,
-      model.timestamp,
       model.inn,
     ]);
     return info.lastInsertRowid;

@@ -11,60 +11,55 @@
             <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  readonly
-                  v-model="entity.id"
-                  label="ID"
+                    readonly
+                    v-model="entity.id"
+                    label="ID"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="entity.name"
-                  :rules="[$rules.required, $rules.validationName]"
-                  label="Наименование"
+                    v-model="entity.name"
+                    :rules="[$rules.required, $rules.validationName]"
+                    label="Наименование"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="entity.contact_info"
-                  :rules="[$rules.required, $rules.validationPhone]"
-                  label="Контактные данные"
-                  v-mask="mask"
-                  placeholder="+7 (000) 000-00-00"
+                    v-model="entity.contact_info"
+                    :rules="[$rules.required, $rules.validationPhone]"
+                    label="Контактные данные"
+                    v-mask="mask"
+                    placeholder="+7 (000) 000-00-00"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="entity.address"
-                  :rules="[$rules.required, $rules.validationAdress]"
-                  label="Адрес"
+                    v-model="entity.address"
+                    :rules="[$rules.required, $rules.validationAdress]"
+                    label="Адрес"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="entity.inn"
-                  :rules="[$rules.required, $rules.validationInn]"
-                  label="ИНН"
+                    v-model="entity.inn"
+                    :rules="[$rules.required, $rules.validationInn]"
+                    label="ИНН"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="entity.created_at"
-                  :rules="[$rules.required]"
-                  label="Дата создания"
+                    type="date"
+                    disabled
+                    v-model="entity.created_at"
+                    label="Дата создания"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="entity.updated_at"
-                  :rules="[$rules.required]"
-                  label="Обновленная дата"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="entity.timestamp"
-                  :rules="[$rules.required]"
-                  label="Временная отметка"
+                    type="date"
+                    disabled
+                    v-model="entity.updated_at"
+                    label="Обновленная дата"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -72,7 +67,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer />
+          <v-spacer/>
           <v-btn outlined @click="back">Назад</v-btn>
           <v-btn color="primary" @click="save">Сохранить</v-btn>
         </v-card-actions>
@@ -142,7 +137,7 @@ export default {
       if (this.id > -1) {
         this.entity = api.counterparties.show(this.id);
       } else {
-        this.entity = { ...this.defaultItem };
+        this.entity = {...this.defaultItem};
       }
     },
 
