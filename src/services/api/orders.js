@@ -13,26 +13,20 @@ export default {
   },
   update(model) {
     DB.prepare(
-      "UPDATE orders SET order_status_id=?, counterparty_id=?, created_at=?, updated_at=?, timestamp=? WHERE id=?"
+      "UPDATE orders SET order_status_id=?, counterparty_id=?, updated_at=date('now') WHERE id=?"
     ).run([
       model.order_status_id,
       model.counterparty_id,
-      model.created_at,
-      model.updated_at,
-      model.timestamp,
       model.id,
     ]);
     this.updateTechCards(model.id, model.tech_cards);
   },
   create(model) {
     let info = DB.prepare(
-      "INSERT INTO orders(order_status_id, counterparty_id, created_at, updated_at, timestamp) VALUES (?, ?, ?, ?, ?)"
+      "INSERT INTO orders(order_status_id, counterparty_id) VALUES (?, ?)"
     ).run([
       model.order_status_id,
       model.counterparty_id,
-      model.created_at,
-      model.updated_at,
-      model.timestamp,
     ]);
     const id = info.lastInsertRowid;
     this.updateTechCards(id, model.tech_cards);

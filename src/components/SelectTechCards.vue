@@ -3,12 +3,12 @@
       v-bind="$attrs"
       v-on="$listeners"
       :items="tech_cards"
-      item-text="name"
+      item-text="product_name"
       item-value="id"
-      label="Технологическая карта"
+      label="Товар"
   >
     <template v-slot:item="{ item }">
-      {{ item.id }} - {{ item.name }}
+      {{ item.product_id }} - {{ item.product_name }}
     </template>
   </v-select>
 </template>

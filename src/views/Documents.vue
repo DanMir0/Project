@@ -11,6 +11,9 @@
         <v-toolbar flat>
           <v-toolbar-title>Документы</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
+          <v-btn @click="newItem()" color="primary">Добавить
+            <v-icon right>mdi-file-plus-outline</v-icon>
+          </v-btn>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -18,9 +21,8 @@
             label="Поиск"
             single-line
             hide-details
+            class="search"
           ></v-text-field>
-          <v-spacer></v-spacer>
-          <v-btn @click="newItem()" color="primary">Добавить</v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
@@ -58,29 +60,19 @@ export default {
     search: "",
     dialogDelete: false,
     headers: [
-      { text: "Тип документа", align: "start", value: "document_type_name" },
+      { text: "Код", align: "start", value: "id" },
+      { text: "Тип документа", align: "start", value: "document_type_name"},
       { text: "Контрагенты", align: "start", value: "counterparty_name" },
-      { text: "Заказ", align: "start", value: "order_id" },
       { text: "Дата создания", align: "start", value: "created_at" },
-      { text: "Обновленная дата", align: "start", value: "updated_at" },
-      { text: "Временная отметка", align: "start", value: "timestamp" },
       { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
     items: [],
     editedIndex: -1,
     editedItem: {
       name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
     },
     defaultItem: {
       name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
     },
   }),
 
@@ -148,3 +140,9 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.search {
+  max-width: 250px;
+}
+</style>

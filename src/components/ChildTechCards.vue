@@ -2,7 +2,7 @@
   <v-data-table :headers="headers" :items="tech_cards" dense>
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Технологическая карта</v-toolbar-title>
+        <v-toolbar-title>Товары</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
@@ -73,7 +73,7 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-      { text: "Наименование", value: "name" },
+      { text: "Наименование", value: "product_name" },
       { text: "Количество", value: "quantity" },
       { text: "", value: "actions", sortable: false },
     ],
@@ -126,7 +126,7 @@ export default {
     save() {
       if (!this.validate()) return;
       const tech_card = api.tech_cards.show(this.editedItem.tech_card_id);
-      this.editedItem.name = tech_card.name;
+      this.editedItem.product_name = tech_card.product_name;
       // this.editedItem.quantity = tech_card.quantity;
 
       if (this.editedIndex > -1) {

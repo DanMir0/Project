@@ -11,6 +11,9 @@
         <v-toolbar flat>
           <v-toolbar-title>Заказы</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
+          <v-btn @click="newItem()" color="primary">Добавить
+            <v-icon right>mdi-account-plus</v-icon>
+          </v-btn>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -18,9 +21,8 @@
             label="Поиск"
             single-line
             hide-details
+            class="search "
           ></v-text-field>
-          <v-spacer></v-spacer>
-          <v-btn @click="newItem()" color="primary">Добавить</v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
@@ -55,14 +57,14 @@ export default {
   name: "Orders",
   data: () => ({
     dialog: false,
-    search: "Поиск",
+    search: "",
     dialogDelete: false,
     headers: [
+      { text: "Код", align: "start", value: "id" },
       { text: "Статус заказа", align: "start", value: "order_status_name" },
       { text: "Контрагент", align: "start", value: "counterparty_name" },
       { text: "Дата создания", align: "start", value: "created_at" },
-      { text: "Обновленная дата", align: "start", value: "updated_at" },
-      { text: "Временная отметка", align: "start", value: "timestamp" },
+      { text: "Дата обновления", align: "start", value: "updated_at" },
       { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
     items: [],
@@ -147,3 +149,9 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.search {
+  max-width: 250px;
+}
+</style>

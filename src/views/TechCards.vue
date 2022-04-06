@@ -11,7 +11,9 @@
           <v-toolbar-title>Тех Карты</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <v-btn @click="newItem()" color="primary">Добавить</v-btn>
+          <v-btn @click="newItem()" color="primary">Добавить
+            <v-icon right>mdi-account-plus</v-icon>
+          </v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
@@ -51,12 +53,11 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-      { text: "Id", value: "id" },
+      { text: "Код", value: "id" },
       { text: "Наименование", align: "start", value: "name" },
       { text: "Готовая продукция", align: "start", value: "product_name" },
       { text: "Дата создания", align: "start", value: "created_at" },
       { text: "Обновленная дата", align: "start", value: "updated_at" },
-      { text: "Временная отметка", align: "start", value: "timestamp" },
       { text: "Действия", value: "actions", sortable: false, align: "center" },
     ],
     items: [],

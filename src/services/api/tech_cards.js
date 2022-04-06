@@ -7,21 +7,21 @@ export default {
         ).all();
     },
     show(id) {
-        let tech_card = DB.prepare("SELECT * FROM tech_cards t WHERE t.id=?").get(
+        let tech_card = DB.prepare("SELECT tc.*,p.name product_name FROM tech_cards tc join products p on tc.product_id=p.id WHERE tc.id=?").get(
             id
         );
         tech_card.products = this.getProducts(id);
         return tech_card;
     },
     update(model) {
-        DB.prepare("UPDATE tech_cards SET name=?, product_id=?, created_at=?, updated_at=?, timestamp=? WHERE id=?").run([model.name, model.product_id, model.created_at, model.updated_at, model.timestamp, model.id,]);
+        DB.prepare("UPDATE tech_cards SET name=?, product_id=?, updated_at=date('now') WHERE id=?").run([model.name, model.product_id, model.id,]);
 
         this.updateProducts(model.id, model.products)
     },
     create(model) {
         let info = DB.prepare(
-            "INSERT INTO tech_cards(name, product_id, created_at, updated_at, timestamp) VALUES (?, ?, ?, ?, ?)"
-        ).run([model.name, model.product_id, model.created_at, model.updated_at, model.timestamp])
+            "INSERT INTO tech_cards(name, product_id) VALUES (?, ?)"
+        ).run([model.name, model.product_id])
         const id = info.lastInsertRowid
         this.updateProducts(id, model.products)
         return id;

@@ -9,18 +9,18 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" sm="6" md="1">
                 <v-text-field
-                    readonly
+                    disabled
                     v-model="entity.id"
-                    label="ID"
+                    label="Код"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-select
                     v-model="entity.order_status_id"
-                    :rules="[$rules.required]"
                     :items="order_statuses"
+                    readonly
                     item-text="name"
                     item-value="id"
                     label="Статус производства"
@@ -46,23 +46,18 @@
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
+                    type="date"
                     v-model="entity.created_at"
-                    :rules="[$rules.required]"
+                    disabled
                     label="Дата создания"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
+                    type="date"
                     v-model="entity.updated_at"
-                    :rules="[$rules.required]"
+                    disabled
                     label="Обновленная дата"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                    v-model="entity.timestamp"
-                    :rules="[$rules.required]"
-                    label="Временная отметка"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -88,11 +83,10 @@
 import api from "@/services/api";
 import validations from "@/mixins/validations";
 import ChildTechCards from "@/components/ChildTechCards";
-import SelectTechCards from "../components/SelectTechCards";
 
 export default {
   name: "Order",
-  components: {SelectTechCards, ChildTechCards},
+  components: { ChildTechCards},
   mixins: [validations],
   props: {
     id: {},
@@ -104,12 +98,11 @@ export default {
     order_statuses: [],
     counterparties: [],
     defaultItem: {
-      order_type_id: "",
+      order_status_id: 1,
       counterparty_id: "",
       tech_cards: [],
       created_at: "",
       updated_at: "",
-      timestamp: "",
     },
   }),
 

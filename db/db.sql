@@ -31,7 +31,8 @@ create table document_types
         primary key autoincrement
         unique,
     name TEXT    not null
-        unique
+        unique,
+    in_out text not null
 );
 
 create table measuring_units
@@ -63,9 +64,8 @@ create table orders
         references order_statuses,
     counterparty_id integer not null
         references counterparties,
-    created_at      date    not null,
-    updated_at      date    not null,
-    timestamp       date default CURRENT_TIMESTAMP
+    created_at   date DEFAULT CURRENT_DATE not null,
+    updated_at   date DEFAULT CURRENT_DATE not null
 );
 
 create table documents
@@ -79,9 +79,8 @@ create table documents
         references counterparties,
     order_id         integer
         references orders,
-    created_at       date    not null,
-    updated_at       date    not null,
-    timestamp        date default CURRENT_TIMESTAMP
+    created_at   date DEFAULT CURRENT_DATE not null,
+    updated_at   date DEFAULT CURRENT_DATE not null
 );
 
 create table products
@@ -101,7 +100,7 @@ create table documents_products
         primary key autoincrement
         unique,
     document_id integer not null
-        references documents,
+        references documents on delete cascade,
     product_id  INTEGER not null
         references products,
     quantity    REAL    not null
@@ -120,9 +119,8 @@ create table tech_cards
         unique,
     product_id integer not null
         references products,
-    created_at date    not null,
-    updated_at date    not null,
-    timestamp  date default CURRENT_TIMESTAMP
+    created_at   date DEFAULT CURRENT_DATE not null,
+    updated_at   date DEFAULT CURRENT_DATE not null
 );
 
 create table orders_tech_cards
@@ -131,7 +129,7 @@ create table orders_tech_cards
         primary key autoincrement
         unique,
     order_id     INTEGER not null
-        references orders,
+        references orders on delete cascade,
     tech_card_id INTEGER not null
         references tech_cards,
     quantity     text    not null
@@ -146,7 +144,7 @@ create table tech_cards_products
         constraint tech_cards_products_pk
             primary key autoincrement,
     product_id   integer not null
-        references products,
+        references products on delete cascade,
     tech_card_id integer not null
         references tech_cards,
     quantity     real    not null
@@ -165,9 +163,9 @@ INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, up
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (5, 'ООО "Вертекс"', '+7 (341) 474-42-99', 'г. Сарапул, Гагарина , дом 55', 6670312310, '2022-03-05', '2022-03-15');
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (6, 'ООО "Электро-Юг"', '+7 (863) 232-79-39', 'г. Ростов-на-Дону, пер. Семашко , дом 117, корпус А', 6454108447, '2022-03-05', '2022-03-15');
 
-INSERT INTO document_types (id, name) VALUES (1, 'Отгрузка');
-INSERT INTO document_types (id, name) VALUES (2, 'Заказ на производство');
-INSERT INTO document_types (id, name) VALUES (3, 'Приемка');
+INSERT INTO document_types (id, name, in_out) VALUES (1, 'Отгрузка', 'OUT');
+INSERT INTO document_types (id, name, in_out) VALUES (2, 'Заказ на производство', 'OUT');
+INSERT INTO document_types (id, name, in_out) VALUES (3, 'Приемка', 'IN');
 
 INSERT INTO measuring_units (id, name) VALUES (1, 'кг');
 INSERT INTO measuring_units (id, name) VALUES (2, 'л');
@@ -176,9 +174,43 @@ INSERT INTO measuring_units (id, name) VALUES (4, 'шт');
 
 INSERT INTO products (id, name, measuring_unit_id) VALUES (1, 'Масло', 2);
 INSERT INTO products (id, name, measuring_unit_id) VALUES (2, 'Металл', 1);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (3, 'Трансформатор', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (3, 'Однофазный трансформатор', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (4, 'Пластмассовые щеки', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (5, 'Гайки', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (6, 'Болт', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (7, 'Фарфоровые тяговые изоляторы', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (8, 'Заземлитель', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (9, 'Алюминиевая труба', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (10, 'Алюминий', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (11, 'Гибкий проводник', 3);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (12, 'Металлический сердечник', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (13, 'Катушки', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (14, 'Шваллер', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (15, 'Рама разъединителя', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (16, 'Разъединитель', 4);
 
 INSERT INTO order_statuses (id, name) VALUES (1, 'новый');
 INSERT INTO order_statuses (id, name) VALUES (2, 'в производстве');
 INSERT INTO order_statuses (id, name) VALUES (3, 'готовый');
+
+INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (1,'Тех карта однофазный трансформатор',3,'2022-04-05','2022-04-06');
+INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (2,'Тех карта  заземлитель',8,'2022-04-06','2022-04-06');
+INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (3, 'Тех карта рамы разъединителя',15,'2022-04-06','2022-04-06');
+INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (4,'Тех карта разъединителя',16,'2022-04-06','2022-04-06');
+
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (1,13,1,2);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (2,12,1,1);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (3,9,2,2);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (4,14,3,2);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (5,15,4,1);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (6,8,4,2);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (7,7,4,3);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (8,6,4,28);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (9,5,4,28);
+
+
+
+
+
+
 

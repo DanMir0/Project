@@ -9,11 +9,11 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" sm="6" md="1">
                 <v-text-field
-                  readonly
+                    disabled
                   v-model="entity.id"
-                  label="ID"
+                  label="Код"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
@@ -44,40 +44,19 @@
                   </template>
                 </v-select>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-select
-                    v-model="entity.order_id"
-                    :rules="[$rules.required]"
-                    :items="orders"
-                    item-text="name"
-                    item-value="id"
-                    label="Заказ"
-                >
-                  <template v-slot:item="{ item }"
-                  >{{ item.id }} - {{ item.name }}
-                  </template>
-                </v-select>
-              </v-col>
+
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
+                    type="date"
                     v-model="entity.created_at"
-                    :rules="[$rules.required]"
+                    disabled
                     label="Дата создания"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                    v-model="entity.updated_at"
-                    :rules="[$rules.required]"
-                    label="Обновленная дата"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                    v-model="entity.timestamp"
-                    :rules="[$rules.required]"
-                    label="Временная отметка"
-                ></v-text-field>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <child-products :products.sync="entity.products"></child-products>
               </v-col>
             </v-row>
           </v-container>
@@ -96,25 +75,25 @@
 <script>
 import api from "@/services/api";
 import validations from "@/mixins/validations";
+import ChildProducts from "@/components/ChildProducts";
+
 
 export default {
   name: "Document",
+  components: {ChildProducts},
   mixins: [validations],
   props: {
     id: {},
   },
   data: () => ({
-    entity: {},
-    counterparties: [],
-    document_types: [],
-    orders: [],
+    entity: {
+      products: []
+    },
     defaultItem: {
-      document_type_id: "",
-      counterparty_id: "",
-      order_id: "",
-      created_at: "",
-      updated_at: "",
-      timestamp: "",
+      counterparties: [],
+      document_types: [],
+      products: [],
+
     },
   }),
 
@@ -136,11 +115,10 @@ export default {
     initialize() {
       this.counterparties = api.counterparties.list();
       this.document_types = api.document_types.list();
-      this.orders = api.orders.list();
       if (this.id > -1) {
         this.entity = api.documents.show(this.id);
       } else {
-        this.entity = { ...this.defaultItem };
+        this.entity = JSON.parse(JSON.stringify(this.defaultItem));
       }
     },
 
@@ -150,11 +128,12 @@ export default {
       try {
         if (this.id > -1) {
           api.documents.update(this.entity);
+          this.initialize()
         } else {
           id = api.documents.create(this.entity);
         }
       } catch (e) {
-        this.$dialog.alert("Ошибка: Введите корректные данные" + e);
+        this.$dialog.alert(e);
         return;
       }
       if (id) this.$router.push(`/documents/${id}`);
@@ -162,11 +141,7 @@ export default {
     },
 
     back() {
-      if (this.id > -1) {
         this.$router.push(`/documents`);
-      } else {
-        this.$router.push(`/documents`);
-      }
     },
   },
 };

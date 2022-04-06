@@ -10,9 +10,9 @@
             <v-row>
               <v-col cols="12" sm="6" md="1">
                 <v-text-field
-                  readonly
+                    disabled
                   v-model="entity.id"
-                  label="ID"
+                  label="Код"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
@@ -35,23 +35,18 @@
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
+                    type="date"
+                    disabled
                     v-model="entity.created_at"
-                    :rules="[$rules.required]"
                     label="Дата создания"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
+                    type="date"
+                    disabled
                     v-model="entity.updated_at"
-                    :rules="[$rules.required]"
                     label="Обновленная дата"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                    v-model="entity.timestamp"
-                    :rules="[$rules.required]"
-                    label="Временная отметка"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -93,9 +88,6 @@ export default {
       name: "",
       product_id: "",
       products:[],
-      created_at: "",
-      updated_at: "",
-      timestamp: "",
     },
   }),
 

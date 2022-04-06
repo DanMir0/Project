@@ -9,11 +9,11 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" sm="6" md="1">
                 <v-text-field
-                    readonly
+                    disabled
                     v-model="entity.id"
-                    label="ID"
+                    label="Код"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
@@ -59,7 +59,7 @@
                     type="date"
                     disabled
                     v-model="entity.updated_at"
-                    label="Обновленная дата"
+                    label="Дата обновления"
                 ></v-text-field>
               </v-col>
             </v-row>
