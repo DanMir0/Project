@@ -1,4 +1,7 @@
 import DB from "@/services/DB";
+import {STATUS_IN_PROGRESS} from "../../common/order_statuses";
+import api from "./index";
+import {ACCEPTANCE, SENDING} from "../../common/document_types";
 
 export default {
   list() {
@@ -38,9 +41,9 @@ export default {
 
   getTechCards(order_id) {
     return DB.prepare(
-      `SELECT otc.*,tc.name
+      `SELECT otc.*,tc.name, p.name product_name
                  FROM orders_tech_cards otc 
-                     JOIN tech_cards tc on otc.tech_card_id=tc.id 
+                     JOIN tech_cards tc on otc.tech_card_id=tc.id JOIN products p on tc.product_id=p.id
                  WHERE order_id=?`
     ).all(order_id);
   },
@@ -64,5 +67,19 @@ export default {
         ).run([order_id, item.tech_card_id, item.quantity]);
       }
     });
+  },
+
+  // getTechCardsProducts(order_id) {},
+
+  setStatus(order_id, status_id) {
+    let document = {counterparty_id: 1, order_id: order_id, document_type_id: null, products: []};
+    if  (status_id == STATUS_IN_PROGRESS) {
+      document.document_type_id = SENDING
+
+    } else {
+      document.document_type_id = ACCEPTANCE
+    }
+    api.documents.create(document)
+    DB.prepare("UPDATE orders SET order_status_id=? WHERE id=?").run([status_id, order_id,])
   },
 };

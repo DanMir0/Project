@@ -71,6 +71,11 @@
 
         <v-card-actions>
           <v-spacer />
+          <template v-if="!isNew">
+            <v-btn v-if="isNewStatus" outlined @click="setStatusProgress">В производство</v-btn>
+            <v-btn v-if="isProgressStatus" outlined @click="setStatusFinish">Готовый</v-btn>
+          </template>
+
           <v-btn outlined @click="back">Назад</v-btn>
           <v-btn color="primary" @click="save">Сохранить</v-btn>
         </v-card-actions>
@@ -83,6 +88,7 @@
 import api from "@/services/api";
 import validations from "@/mixins/validations";
 import ChildTechCards from "@/components/ChildTechCards";
+import {STATUS_NEW, STATUS_IN_PROGRESS, STATUS_FINISH} from "@/common/order_statuses";
 
 export default {
   name: "Order",
@@ -94,6 +100,10 @@ export default {
   data: () => ({
     entity: {
       tech_cards:[],
+      order_status_id: 1,
+      counterparty_id: "",
+      created_at: "",
+      updated_at: "",
     },
     order_statuses: [],
     counterparties: [],
@@ -108,8 +118,17 @@ export default {
 
   computed: {
     formTitle() {
-      return this.id == -1 ? "Добавить" : "Редактировать";
+      return this.id == -1 ? "Добавить" : "Редактировать"
     },
+    isNew() {
+      return this.id == -1
+    },
+    isNewStatus() {
+      return this.entity.order_status_id == STATUS_NEW
+    },
+    isProgressStatus() {
+      return this.entity.order_status_id == STATUS_IN_PROGRESS
+    }
   },
 
   created() {
@@ -152,6 +171,20 @@ export default {
     back() {
       this.$router.push(`/orders`);
     },
+
+    setStatus(status) {
+      api.orders.setStatus(this.id, status)
+      this.initialize()
+    },
+
+    setStatusProgress() {
+     this.setStatus(STATUS_IN_PROGRESS)
+    },
+
+    setStatusFinish() {
+      this.setStatus(STATUS_FINISH)
+    },
   },
+
 };
 </script>

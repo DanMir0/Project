@@ -89,9 +89,9 @@ export default {
     entity: {
       products: []
     },
+    document_types: [],
+    counterparties: [],
     defaultItem: {
-      counterparties: [],
-      document_types: [],
       products: [],
 
     },
