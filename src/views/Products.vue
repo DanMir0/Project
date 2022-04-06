@@ -1,10 +1,10 @@
 <template>
   <div class="products">
     <v-data-table
-      :headers="headers"
-      :items="items"
-      sort-by="calories"
-      class="elevation-1"
+        :headers="headers"
+        :items="items"
+        sort-by="calories"
+        class="elevation-1"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -15,20 +15,23 @@
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
-                >Вы уверены, что хотите удалить этот элемент?
+              >Вы уверены, что хотите удалить этот элемент?
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete"
-                  >Отмена
+                >Отмена
                 </v-btn>
                 <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                  >ОК
+                >ОК
                 </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
           </v-dialog>
+          <print-dialog>
+            <print-products/>
+          </print-dialog>
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -41,17 +44,21 @@
 
 <script>
 import api from "@/services/api";
+import PrintDialog from "@/components/PrintDialog";
+import PrintProducts from "@/components/print/PrintProducts";
+
 
 export default {
   name: "Products",
+  components: {PrintProducts, PrintDialog},
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
-      { text: "Id", value: "id" },
-      { text: "Наименование", align: "start", value: "name" },
-      { text: "Единица измерения", align: "center", value: "measuring_unit_name" },
-      { text: "Действия", value: "actions", sortable: false, align: "center" },
+      {text: "Id", value: "id"},
+      {text: "Наименование", align: "start", value: "name"},
+      {text: "Единица измерения", align: "center", value: "measuring_unit_name"},
+      {text: "Действия", value: "actions", sortable: false, align: "center"},
     ],
     items: [],
     editedIndex: -1,
