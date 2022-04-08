@@ -70,7 +70,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer />
+          <v-spacer/>
           <template v-if="!isNew">
             <v-btn v-if="isNewStatus" outlined @click="setStatusProgress">В производство</v-btn>
             <v-btn v-if="isProgressStatus" outlined @click="setStatusFinish">Готовый</v-btn>
@@ -92,14 +92,14 @@ import {STATUS_NEW, STATUS_IN_PROGRESS, STATUS_FINISH} from "@/common/order_stat
 
 export default {
   name: "Order",
-  components: { ChildTechCards},
+  components: {ChildTechCards},
   mixins: [validations],
   props: {
     id: {},
   },
   data: () => ({
     entity: {
-      tech_cards:[],
+      tech_cards: [],
       order_status_id: 1,
       counterparty_id: "",
       created_at: "",
@@ -173,12 +173,17 @@ export default {
     },
 
     setStatus(status) {
-      api.orders.setStatus(this.id, status)
+      try {
+        api.orders.setStatus(this.id, status)
+      } catch (e) {
+        this.$dialog.alert(e);
+        console.error(e)
+      }
       this.initialize()
     },
 
     setStatusProgress() {
-     this.setStatus(STATUS_IN_PROGRESS)
+      this.setStatus(STATUS_IN_PROGRESS)
     },
 
     setStatusFinish() {

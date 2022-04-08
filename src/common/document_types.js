@@ -1,2 +1,2 @@
-export const SENDING = 1;
-export const ACCEPTANCE = 3;
+export const OUTCOME = 1;
+export const INCOME = 3;

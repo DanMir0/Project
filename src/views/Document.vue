@@ -12,35 +12,35 @@
               <v-col cols="12" sm="6" md="1">
                 <v-text-field
                     disabled
-                  v-model="entity.id"
-                  label="Код"
+                    v-model="entity.id"
+                    label="Код"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-select
-                  v-model="entity.document_type_id"
-                  :rules="[$rules.required]"
-                  :items="document_types"
-                  item-text="name"
-                  item-value="id"
-                  label="Тип документа"
+                    v-model="entity.document_type_id"
+                    :rules="[$rules.required]"
+                    :items="document_types"
+                    item-text="name"
+                    item-value="id"
+                    label="Тип документа"
                 >
                   <template v-slot:item="{ item }"
-                    >{{ item.id }} - {{ item.name }}
+                  >{{ item.id }} - {{ item.name }}
                   </template>
                 </v-select>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-select
-                  v-model="entity.counterparty_id"
-                  :rules="[$rules.required]"
-                  :items="counterparties"
-                  item-text="name"
-                  item-value="id"
-                  label="Контрагент"
+                    v-model="entity.counterparty_id"
+                    :rules="[$rules.required]"
+                    :items="counterparties"
+                    item-text="name"
+                    item-value="id"
+                    label="Контрагент"
                 >
                   <template v-slot:item="{ item }"
-                    >{{ item.id }} - {{ item.name }}
+                  >{{ item.id }} - {{ item.name }}
                   </template>
                 </v-select>
               </v-col>
@@ -63,7 +63,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer />
+          <v-spacer/>
           <v-btn outlined @click="back">Назад</v-btn>
           <v-btn color="primary" @click="save">Сохранить</v-btn>
         </v-card-actions>
@@ -134,6 +134,7 @@ export default {
         }
       } catch (e) {
         this.$dialog.alert(e);
+        console.error(e)
         return;
       }
       if (id) this.$router.push(`/documents/${id}`);
@@ -141,7 +142,7 @@ export default {
     },
 
     back() {
-        this.$router.push(`/documents`);
+      this.$router.push(`/documents`);
     },
   },
 };
