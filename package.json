@@ -19,6 +19,7 @@
     "@mdi/font": "^6.5.95",
     "better-sqlite3": "^7.5.0",
     "core-js": "^3.6.5",
+    "printd": "^1.5.1",
     "sass": "^1.32.13",
     "sass-loader": "^10.2.1",
     "v-mask": "^2.3.0",

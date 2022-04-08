@@ -44,6 +44,7 @@ export default {
   name: "SideBar",
   data() {
     return {
+      printShow:false,
       items: [
         { title: "Главная", icon: "mdi-view-dashboard-outline", to: "/" },
         { title: "Товары", icon: "mdi-shopping", to: "/products" },
