@@ -6,6 +6,7 @@ import measuring_units from  "@/services/api/measuring_units";
 import order_statuses from "@/services/api/order_statuses";
 import documents from "@/services/api/documents";
 import orders from "@/services/api/orders";
+import settings from "@/services/api/settings";
 
 export default {
   counterparties,
@@ -16,4 +17,5 @@ export default {
   order_statuses,
   documents,
   orders,
+  settings,
 };

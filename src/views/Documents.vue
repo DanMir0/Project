@@ -14,6 +14,9 @@
           <v-btn @click="newItem()" color="primary">Добавить
             <v-icon right>mdi-file-plus-outline</v-icon>
           </v-btn>
+          <print-dialog>
+            <print-documents/>
+          </print-dialog>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -52,9 +55,11 @@
 
 <script>
 import api from "@/services/api";
+import PrintDocuments from "@/components/print/PrintDocuments";
 
 export default {
   name: "Documents",
+  components: {PrintDocuments},
   data: () => ({
     dialog: false,
     search: "",

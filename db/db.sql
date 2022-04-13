@@ -9,7 +9,18 @@ drop table tech_cards_products;
 drop table tech_cards;
 drop table products;
 drop table measuring_units;
+drop table settings;
 
+create table settings
+(
+    key   text
+        constraint settings_pk
+            primary key,
+    value text
+);
+
+create unique index settings_key_uindex
+    on settings (key);
 
 create table counterparties
 (
@@ -164,8 +175,7 @@ INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, up
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (6, 'ООО "Электро-Юг"', '+7 (863) 232-79-39', 'г. Ростов-на-Дону, пер. Семашко , дом 117, корпус А', 6454108447, '2022-03-05', '2022-03-15');
 
 INSERT INTO document_types (id, name, in_out) VALUES (1, 'Отгрузка', 'OUT');
-INSERT INTO document_types (id, name, in_out) VALUES (2, 'Заказ на производство', 'OUT');
-INSERT INTO document_types (id, name, in_out) VALUES (3, 'Приемка', 'IN');
+INSERT INTO document_types (id, name, in_out) VALUES (2, 'Приемка', 'IN');
 
 INSERT INTO measuring_units (id, name) VALUES (1, 'кг');
 INSERT INTO measuring_units (id, name) VALUES (2, 'л');
@@ -192,6 +202,7 @@ INSERT INTO products (id, name, measuring_unit_id) VALUES (16, 'Разъедин
 INSERT INTO order_statuses (id, name) VALUES (1, 'новый');
 INSERT INTO order_statuses (id, name) VALUES (2, 'в производстве');
 INSERT INTO order_statuses (id, name) VALUES (3, 'готовый');
+INSERT INTO order_statuses (id, name) VALUES (4, 'выдан');
 
 INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (1,'Тех карта однофазный трансформатор',3,'2022-04-05','2022-04-06');
 INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (2,'Тех карта  заземлитель',8,'2022-04-06','2022-04-06');
@@ -208,7 +219,8 @@ INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES 
 INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (8,6,4,28);
 INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (9,5,4,28);
 
-
+INSERT INTO settings (key, value) VALUES ('CUSTOMER_ID','1');
+INSERT INTO settings (key, value) VALUES ('LANG','RU');
 
 
 

@@ -17,6 +17,7 @@ import MeasuringUnits from "@/views/MeasuringUnits";
 import MeasuringUnit from "@/views/MeasuringUnit";
 import OrderStatuses from "@/views/OrderStatuses";
 import OrderStatus from "@/views/OrderStatus";
+import Settings from "@/views/Settings";
 
 Vue.use(VueRouter);
 
@@ -38,6 +39,7 @@ const routes = [
   { path: "/measuring_units/:id", component: MeasuringUnit, props: true },
   { path: "/order_statuses/", component: OrderStatuses, },
   { path: "/order_statuses/:id", component: OrderStatus, props: true },
+  { path: "/settings/", component: Settings, },
 ];
 
 const router = new VueRouter({

@@ -14,6 +14,9 @@
           <v-btn @click="newItem()" color="primary">Добавить
             <v-icon right>mdi-account-plus</v-icon>
           </v-btn>
+          <print-dialog>
+            <print-orders/>
+          </print-dialog>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -52,9 +55,11 @@
 
 <script>
 import api from "@/services/api";
+import PrintOrders from "@/components/print/PrintOrders";
 
 export default {
   name: "Orders",
+  components: {PrintOrders},
   data: () => ({
     dialog: false,
     search: "",

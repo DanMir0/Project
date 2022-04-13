@@ -43,7 +43,7 @@ export default {
         ).all(document_id);
     },
     updateProducts(document, products) {
-        const originProducts = this.getProducts(document.document_id);
+        const originProducts = this.getProducts(document.document_type_id);
         originProducts.forEach((item) => {
             if (!products.some((p) => +p.id === item.id)) {
                 DB.prepare("DELETE FROM documents_products WHERE id=?").run([item.id]);
@@ -65,7 +65,7 @@ export default {
             } else {
                 DB.prepare(
                     "INSERT INTO documents_products (document_id, product_id, quantity) VALUES (?,?,?)"
-                ).run([document.document_id, item.product_id, item.quantity]);
+                ).run([document.document_type_id, item.product_id, item.quantity]);
             }
         });
     },

@@ -14,7 +14,7 @@ export default {
     },
     show(id) {
         return DB.prepare(`SELECT p.*,
-                                  mu.name                                                                    measuring_unit_name,
+                                  mu.name measuring_unit_name,
                                   sum(case when dt.in_out = 'OUT' then -dp.quantity else dp.quantity end) as quantity
                            FROM products p
                                     JOIN measuring_units mu on p.measuring_unit_id = mu.id

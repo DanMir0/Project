@@ -67,6 +67,7 @@ export default {
         },
         { title: "Единицы измерения", icon: "mdi-credit-card-plus", to: "/measuring_units" },
         { title: "Статусы производства", icon: "mdi-credit-card-plus", to: "/order_statuses" },
+        { title: "Настройки", icon: "mdi-credit-card-plus", to: "/settings" },
       ],
       right: null,
     };

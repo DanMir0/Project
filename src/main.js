@@ -7,10 +7,12 @@ import vuetify from "./plugins/vuetify";
 import dialog from "./plugins/dialog";
 import rules from "./plugins/rules";
 import VueMask from "v-mask";
+import PrintDialog from "@/components/PrintDialog";
 
 Vue.use(dialog);
 Vue.use(rules);
 Vue.use(VueMask);
+Vue.component('PrintDialog',PrintDialog)
 
 Vue.config.productionTip = false;
 
