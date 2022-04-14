@@ -22,14 +22,12 @@ export default {
     this.updateTechCards(model.id, model.tech_cards);
   },
   create(model) {
-    return DB.transaction(() => {
       let info = DB.prepare(
         "INSERT INTO orders(order_status_id, counterparty_id) VALUES (?, ?)"
       ).run([model.order_status_id, model.counterparty_id]);
       const id = info.lastInsertRowid;
       this.updateTechCards(id, model.tech_cards);
       return id;
-    });
   },
   delete(id) {
     DB.prepare("DELETE FROM orders WHERE id=?").run([id]);

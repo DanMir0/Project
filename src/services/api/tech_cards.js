@@ -21,14 +21,12 @@ export default {
     this.updateProducts(model.id, model.products);
   },
   create(model) {
-    return DB.transaction(() => {
       let info = DB.prepare(
         "INSERT INTO tech_cards(name, product_id) VALUES (?, ?)"
       ).run([model.name, model.product_id]);
       const id = info.lastInsertRowid;
       this.updateProducts(id, model.products);
       return id;
-    });
   },
   delete(id) {
     DB.prepare("DELETE FROM tech_cards WHERE id=?").run([id]);
