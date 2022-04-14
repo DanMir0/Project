@@ -31,18 +31,12 @@
                 </v-select>
               </v-col>
               <v-col cols="12" sm="6" md="4">
-                <v-select
-                    v-model="entity.counterparty_id"
-                    :rules="[$rules.required]"
-                    :items="counterparties"
-                    item-text="name"
-                    item-value="id"
-                    label="Контрагент"
-                >
-                  <template v-slot:item="{ item }"
-                  >{{ item.id }} - {{ item.name }}
-                  </template>
-                </v-select>
+               <select-counterparties
+                 v-model="entity.counterparty_id"
+                 :rules="[$rules.required]"
+                 label="Контрагенты"
+                 >
+               </select-counterparties>
               </v-col>
 
               <v-col cols="12" sm="6" md="4">
@@ -76,11 +70,11 @@
 import api from "@/services/api";
 import validations from "@/mixins/validations";
 import ChildProducts from "@/components/ChildProducts";
-
+import SelectCounterparties from "@/components/SelectCounterparties";
 
 export default {
   name: "Document",
-  components: {ChildProducts},
+  components: {ChildProducts, SelectCounterparties},
   mixins: [validations],
   props: {
     id: {},

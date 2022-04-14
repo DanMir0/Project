@@ -1,5 +1,13 @@
 <template>
-
+  <div>
+    <select-counterparties
+        v-model="settings.CUSTOMER_ID"
+        :rules="[$rules.required]"
+        label="Контрагенты"
+    >
+    </select-counterparties>
+    <button @click="save()">SAVE</button>
+  </div>
 </template>
 
 <script>
@@ -10,12 +18,14 @@ export default {
   name: "Settings",
   data: () => ({
     settings: {},
-}),
-created() {
+  }),
+  created() {
     this.settings = api.settings.load();
-},
-  updated() {
-    this.settings = api.settings.update()
+  },
+  methods: {
+    save() {
+      api.settings.save(this.settings);
+    }
   }
 }
 

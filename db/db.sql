@@ -157,7 +157,7 @@ create table tech_cards_products
     product_id   integer not null
         references products on delete cascade,
     tech_card_id integer not null
-        references tech_cards,
+        references tech_cards on delete cascade,
     quantity     real    not null
 );
 
@@ -167,8 +167,8 @@ create unique index tech_cards_products_product_id_tech_card_id_uindex
 create unique index tech_cards_products_tech_card_id_product_id_uindex
     on tech_cards_products (tech_card_id, product_id);
 
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (1, 'ООО "ЕССО-Технолоджи"', '+7 (835) 262-38-81', 'г. Чебоксары, К. Маркса, дом 52, корпус 8', 7805716417, '2022-03-05', '2022-03-15');
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (2, 'ООО "ЭЛЕКТРОЗАПЧАСТЬ"', '+7 (985) 773-48-26', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (1, 'ЦЕХ "A"', '+7 (835) 262-38-81', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (2, 'ЦЕХ "B"', '+7 (935) 262-38-82', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (3, 'ООО "Промтехматериалы"', '+7 (999) 077-27-44', 'г. Москва, ул Ташкентская, д 28', 9723030130, '2022-03-05', '2022-03-15');
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (4, 'ООО "Компания UNICUM"', '+7 (343) 372-73-58', 'г. Екатеринбург, ул Чкалова, дом 250', 3706019489, '2022-03-05', '2022-03-15');
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (5, 'ООО "Вертекс"', '+7 (341) 474-42-99', 'г. Сарапул, Гагарина , дом 55', 6670312310, '2022-03-05', '2022-03-15');
@@ -185,19 +185,17 @@ INSERT INTO measuring_units (id, name) VALUES (4, 'шт');
 INSERT INTO products (id, name, measuring_unit_id) VALUES (1, 'Масло', 2);
 INSERT INTO products (id, name, measuring_unit_id) VALUES (2, 'Металл', 1);
 INSERT INTO products (id, name, measuring_unit_id) VALUES (3, 'Однофазный трансформатор', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (4, 'Пластмассовые щеки', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (5, 'Гайки', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (6, 'Болт', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (7, 'Фарфоровые тяговые изоляторы', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (8, 'Заземлитель', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (9, 'Алюминиевая труба', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (10, 'Алюминий', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (11, 'Гибкий проводник', 3);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (12, 'Металлический сердечник', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (13, 'Катушки', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (14, 'Шваллер', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (15, 'Рама разъединителя', 4);
-INSERT INTO products (id, name, measuring_unit_id) VALUES (16, 'Разъединитель', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (4, 'Гайки', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (5, 'Болт', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (6, 'Фарфоровые тяговые изоляторы', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (7, 'Заземлитель', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (8, 'Алюминиевая труба', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (9, 'Алюминий', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (10, 'Металлический сердечник', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (11, 'Катушки', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (12, 'Шваллер', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (13, 'Рама разъединителя', 4);
+INSERT INTO products (id, name, measuring_unit_id) VALUES (14, 'Разъединитель', 4);
 
 INSERT INTO order_statuses (id, name) VALUES (1, 'новый');
 INSERT INTO order_statuses (id, name) VALUES (2, 'в производстве');
@@ -206,23 +204,18 @@ INSERT INTO order_statuses (id, name) VALUES (4, 'выдан');
 
 INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (1,'Тех карта однофазный трансформатор',3,'2022-04-05','2022-04-06');
 INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (2,'Тех карта  заземлитель',8,'2022-04-06','2022-04-06');
-INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (3, 'Тех карта рамы разъединителя',15,'2022-04-06','2022-04-06');
-INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (4,'Тех карта разъединителя',16,'2022-04-06','2022-04-06');
+INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (3, 'Тех карта рамы разъединителя',13,'2022-04-06','2022-04-06');
+INSERT INTO tech_cards (id, name, product_id, created_at, updated_at) VALUES (4,'Тех карта разъединителя',14,'2022-04-06','2022-04-06');
 
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (1,13,1,2);
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (2,12,1,1);
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (3,9,2,2);
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (4,14,3,2);
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (5,15,4,1);
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (6,8,4,2);
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (7,7,4,3);
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (8,6,4,28);
-INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (9,5,4,28);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (1,10,1,2);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (2,11,1,1);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (3,8,2,2);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (4,12,3,2);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (5,6,4,1);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (6,4,4,28);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (7,5,4,28);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (8,7,4,2);
+INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (9,13,4,3);
 
 INSERT INTO settings (key, value) VALUES ('CUSTOMER_ID','1');
-INSERT INTO settings (key, value) VALUES ('LANG','RU');
-
-
-
-
 

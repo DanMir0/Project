@@ -6,8 +6,12 @@ export default {
         let loading = DB.prepare("SELECT * FROM settings").all();
         return array_to_object(loading)
     },
-    update(setting) {
-        let updated = DB.prepare("SELECT * FROM settings t WHERE t.id=?").get(setting);
-        return  Object.entries(updated)
+    save(settings) {
+        Object.entries(settings).forEach(item => {
+            DB.prepare("UPDATE settings SET value =? WHERE key=?"
+            ).run([item[1], item[0]])
+        })
+
+        console.log(settings)
     },
 };

@@ -11,7 +11,7 @@ export default {
     },
     show(id) {
         let document = DB.prepare("SELECT * FROM documents t WHERE t.id=?").get(id);
-        document.products = this.getProducts(id);
+        document.products = this.getProducts(document.id);
         return document
     },
     update(model) {
@@ -21,29 +21,33 @@ export default {
         this.updateProducts(model, model.products)
     },
     create(model) {
-        return DB.transaction(() => {
+       return DB.transaction(() => {
             let info = DB.prepare(
                 "INSERT INTO documents(document_type_id, counterparty_id) VALUES (?, ?)"
             ).run([model.document_type_id, model.counterparty_id]);
             let id = info.lastInsertRowid;
+            model.id = id;
             this.updateProducts(model, model.products)
             return id
-        })()
+       })()
     },
     delete(id) {
         DB.prepare("DELETE FROM documents WHERE id=?").run([id]);
     },
-    getProducts(document_id) {
+    /**
+     * @param document_id
+     * */
+    getProducts(id) {
         return DB.prepare(
             `SELECT dp.*, p.name, mu.name AS measuring_unit_name
              FROM documents_products dp
                       JOIN products p on dp.product_id = p.id
                       JOIN measuring_units mu on p.measuring_unit_id = mu.id
-             WHERE document_id = ?`
-        ).all(document_id);
+             WHERE dp.id=?`
+        ).all(id);
     },
     updateProducts(document, products) {
-        const originProducts = this.getProducts(document.document_type_id);
+        const originProducts = this.getProducts(document.id);
         originProducts.forEach((item) => {
             if (!products.some((p) => +p.id === item.id)) {
                 DB.prepare("DELETE FROM documents_products WHERE id=?").run([item.id]);
@@ -64,8 +68,8 @@ export default {
                 ).run([item.product_id, item.quantity, item.id]);
             } else {
                 DB.prepare(
-                    "INSERT INTO documents_products (document_id, product_id, quantity) VALUES (?,?,?)"
-                ).run([document.document_type_id, item.product_id, item.quantity]);
+                    "INSERT INTO documents_products (document_id, product_id, quantity) VALUES (?, ?, ?)"
+                ).run([document.id, item.product_id, item.quantity]);
             }
         });
     },

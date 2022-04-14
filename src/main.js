@@ -8,11 +8,13 @@ import dialog from "./plugins/dialog";
 import rules from "./plugins/rules";
 import VueMask from "v-mask";
 import PrintDialog from "@/components/PrintDialog";
+import SelectCounterparties from "@/components/SelectCounterparties";
 
 Vue.use(dialog);
 Vue.use(rules);
 Vue.use(VueMask);
 Vue.component('PrintDialog',PrintDialog)
+Vue.component('SelectCounterparties', SelectCounterparties)
 
 Vue.config.productionTip = false;
 

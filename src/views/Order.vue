@@ -31,18 +31,12 @@
                 </v-select>
               </v-col>
               <v-col cols="12" sm="6" md="4">
-                <v-select
+                <select-counterparties
                     v-model="entity.counterparty_id"
                     :rules="[$rules.required]"
-                    :items="counterparties"
-                    item-text="name"
-                    item-value="id"
-                    label="Контрагент"
+                    label="Контрагенты"
                 >
-                  <template v-slot:item="{ item }">
-                    {{ item.id }} - {{ item.name }}
-                  </template>
-                </v-select>
+                </select-counterparties>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
