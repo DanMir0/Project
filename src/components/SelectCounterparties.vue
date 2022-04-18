@@ -5,7 +5,6 @@
       :items="counterparties"
       item-text="name"
       item-value="id"
-      label="Контрагенты"
   >
     <template v-slot:item="{ item }">
       {{ item.id }} - {{ item.name }}

@@ -218,4 +218,5 @@ INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES 
 INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES (9,13,4,3);
 
 INSERT INTO settings (key, value) VALUES ('CUSTOMER_ID','1');
+INSERT INTO settings (key, value) VALUES ('PRODUCTION_HALL','2');
 

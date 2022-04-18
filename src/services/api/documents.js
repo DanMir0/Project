@@ -80,9 +80,11 @@ export default {
      * @param {integer} products.product_id
      * @param {integer} products.quantity
      * @param {integer} document_type_id
+     * @return
      */
     updateProducts(document_id, products, document_type_id) {
         const originProducts = this.getProducts(document_id);
+
         originProducts.forEach((item) => {
             if (!products.some(p => +p.id === +item.id)) {
                 DB.prepare("DELETE FROM documents_products WHERE id=?").run([item.id]);
@@ -94,7 +96,7 @@ export default {
             if (document_type_id === OUTCOME) {
                 const product = api.products.show(item.product_id)
                 if (product.quantity - item.quantity < 0) {
-                    throw new ErrorRedSaldo('Not available')
+                    throw new ErrorRedSaldo('Not available', product, Math.abs(product.quantity - item.quantity))
                 }
             }
             if (item.id) {

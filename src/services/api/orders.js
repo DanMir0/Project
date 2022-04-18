@@ -1,5 +1,5 @@
 import DB from "@/services/DB";
-import { STATUS_IN_PROGRESS } from "../../common/order_statuses";
+import {STATUS_FINISHED, STATUS_IN_PROGRESS, STATUS_ISSUED, STATUS_NEW} from "../../common/order_statuses";
 import api from "./index";
 import { INCOME, OUTCOME } from "../../common/document_types";
 import tech_cards from "@/services/api/tech_cards";
@@ -63,7 +63,10 @@ export default {
       }
     });
   },
-
+    /**
+     * Вовзращает массив материалов которые нужны для производства товара и их количество
+     * @param order_id
+     */
   getTechCardsProducts(order_id) {
     return DB.prepare(
       `select tcp.product_id,
@@ -78,7 +81,7 @@ export default {
 
   setStatus(order_id, status_id) {
     let document = {
-      counterparty_id: 1,
+      counterparty_id: api.settings.load().PRODUCTION_HALL,
       order_id: order_id,
       document_type_id: null,
       products: [],
@@ -86,12 +89,21 @@ export default {
     if (status_id == STATUS_IN_PROGRESS) {
       document.document_type_id = OUTCOME;
       document.products = this.getTechCardsProducts(order_id);
+    } else if(status_id == STATUS_FINISHED) {
+        document.document_type_id = INCOME;
+        document.products = this.getTechCards(order_id).map((tech_card) => ({
+            product_id: tech_card.product_id,
+            quantity: tech_card.quantity,
+        }));
+    }else if (status_id == STATUS_ISSUED) {
+        document.document_type_id = OUTCOME;
+        document.counterparty_id = this.show(order_id).counterparty_id
+        document.products = this.getTechCards(order_id).map((tech_card) => ({
+            product_id: tech_card.product_id,
+            quantity: tech_card.quantity,
+        }));
     } else {
-      document.document_type_id = INCOME;
-      document.products = this.getTechCards(order_id).map((tech_card) => ({
-        product_id: tech_card.product_id,
-        quantity: tech_card.quantity,
-      }));
+        throw new Error('Неизвестный статус!')
     }
     api.documents.create(document);
     DB.prepare("UPDATE orders SET order_status_id=? WHERE id=?").run([

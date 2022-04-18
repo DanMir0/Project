@@ -9,8 +9,9 @@ export default {
     save(settings) {
         Object.entries(settings).forEach(item => {
             DB.prepare("UPDATE settings SET value =? WHERE key=?"
-            ).run([item[1], item[0]])
+            ).run([''+item[1],item[0]])
         })
+
 
         console.log(settings)
     },

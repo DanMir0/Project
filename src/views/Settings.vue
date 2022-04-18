@@ -1,12 +1,18 @@
 <template>
   <div>
     <select-counterparties
-        v-model="settings.CUSTOMER_ID"
+        v-model="settings.PRODUCTION_HALL"
         :rules="[$rules.required]"
-        label="Контрагенты"
+        label="Производственный цех"
     >
     </select-counterparties>
-    <button @click="save()">SAVE</button>
+      <select-counterparties
+          v-model="settings.CUSTOMER_ID"
+          :rules="[$rules.required]"
+          label="Название организации"
+      >
+      </select-counterparties>
+    <button @click="save()">Сохранить</button>
   </div>
 </template>
 

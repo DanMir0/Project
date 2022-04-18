@@ -1,2 +1,2 @@
 export const OUTCOME = 1;
-export const INCOME = 3;
+export const INCOME = 2;
