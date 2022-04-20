@@ -29,10 +29,12 @@ export default {
      * @param {{id:integer, document_type_id:integer,counterparty_id:integer, products:[]}} model
      */
     update(model) {
-        DB.prepare(
-            "UPDATE documents SET document_type_id=?, counterparty_id=?, updated_at=date('now') WHERE id=?"
-        ).run([model.document_type_id, model.counterparty_id, model.id]);
-        this.updateProducts(model.id, model.products, model.document_type_id)
+        return DB.transaction(() => {
+            DB.prepare(
+                "UPDATE documents SET document_type_id=?, counterparty_id=?, updated_at=date('now') WHERE id=?"
+            ).run([model.document_type_id, model.counterparty_id, model.id]);
+            this.updateProducts(model.id, model.products, model.document_type_id)
+        })()
     },
 
     /**
