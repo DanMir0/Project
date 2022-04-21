@@ -10,7 +10,8 @@
             dark
             v-bind="attrs"
             v-on="on">
-          Печать
+           Печать
+            <v-icon right>mdi-printer </v-icon>
         </v-btn>
       </slot>
     </template>

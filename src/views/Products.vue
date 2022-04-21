@@ -31,9 +31,6 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          <print-dialog>
-            <print-products/>
-          </print-dialog>
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -46,13 +43,9 @@
 
 <script>
 import api from "@/services/api";
-import PrintDialog from "@/components/PrintDialog";
-import PrintProducts from "@/components/print/PrintProducts";
-
 
 export default {
   name: "Products",
-  components: {PrintProducts, PrintDialog},
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -66,18 +59,16 @@ export default {
     items: [],
     editedIndex: -1,
     editedItem: {
+        id: 0,
       name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+        measuring_unit_name: '',
+        quantity: 0,
     },
     defaultItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+        id: 0,
+        name: "",
+        measuring_unit_name: '',
+        quantity: 0,
     },
   }),
 

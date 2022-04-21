@@ -4,8 +4,11 @@
             <v-form v-model="validForm" ref="form">
                 <v-card-title>
                     <span class="text-h5">{{ formTitle }}</span>
+                    <v-spacer/>
+                    <print-dialog v-if="isPrint">
+                        <print-orders :order="entity"/>
+                    </print-dialog>
                 </v-card-title>
-
                 <v-card-text>
                     <v-container>
                         <v-row>
@@ -85,10 +88,11 @@ import validations from "@/mixins/validations";
 import ChildTechCards from "@/components/ChildTechCards";
 import {STATUS_NEW, STATUS_IN_PROGRESS, STATUS_FINISHED, STATUS_ISSUED} from "@/common/order_statuses";
 import {ErrorRedSaldo} from "@/services/api/errors/ErrorRedSaldo";
+import PrintOrders from "@/components/print/PrintOrders";
 
 export default {
     name: "Order",
-    components: {ChildTechCards},
+    components: {ChildTechCards, PrintOrders},
     mixins: [validations],
     props: {
         id: {},
@@ -127,6 +131,9 @@ export default {
         },
         isFinished() {
             return this.entity.order_status_id == STATUS_FINISHED
+        },
+        isPrint() {
+            return this.id != -1
         }
     },
 

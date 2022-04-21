@@ -4,6 +4,11 @@
       <v-form v-model="validForm" ref="form">
         <v-card-title>
           <span class="text-h5">{{ formTitle }}</span>
+            <v-spacer/>
+            <print-dialog v-if="isPrint">
+                <print-documents-income :document="entity" v-if="isIncome"/>
+                <print-documents-outcome :document="entity" v-else/>
+            </print-dialog>
         </v-card-title>
 
         <v-card-text>
@@ -55,7 +60,6 @@
             </v-row>
           </v-container>
         </v-card-text>
-
         <v-card-actions>
           <v-spacer/>
           <v-btn outlined @click="back">Назад</v-btn>
@@ -71,10 +75,13 @@ import api from "@/services/api";
 import validations from "@/mixins/validations";
 import ChildProducts from "@/components/ChildProducts";
 import SelectCounterparties from "@/components/SelectCounterparties";
+import PrintDocumentsIncome from "@/components/print/PrintDocumentsIncome";
+import PrintDocumentsOutcome from "@/components/print/PrintDocumentsOutcome";
+import {INCOME} from "@/common/document_types";
 
 export default {
   name: "Document",
-  components: {ChildProducts, SelectCounterparties},
+  components: {PrintDocumentsOutcome, ChildProducts, SelectCounterparties, PrintDocumentsIncome},
   mixins: [validations],
   props: {
     id: {},
@@ -87,7 +94,6 @@ export default {
     counterparties: [],
     defaultItem: {
       products: [],
-
     },
   }),
 
@@ -95,6 +101,12 @@ export default {
     formTitle() {
       return this.id == -1 ? "Добавить" : "Редактировать";
     },
+      isIncome() {
+        return this.entity.document_type_id == INCOME
+      },
+      isPrint() {
+        return this.id != -1
+      }
   },
 
   created() {
