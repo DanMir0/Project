@@ -1,6 +1,11 @@
 import DB from "@/services/DB";
 
 export default {
+    /**
+     * Инициализируем таблицу товары
+     *
+     * @return {*}
+     */
     list() {
         return DB.prepare(`SELECT p.*,
                                   mu.name                                                                    measuring_unit_name,
@@ -12,6 +17,12 @@ export default {
                                     LEFT JOIN document_types dt on d.document_type_id = dt.id
                            GROUP BY p.id, p.name, p.measuring_unit_id, mu.name`).all();
     },
+    /**
+     * Показываем запись в таблице товары по id
+     *
+     * @param {integer} id
+     * @return {*}
+     */
     show(id) {
         return DB.prepare(`SELECT p.*,
                                   mu.name measuring_unit_name,
@@ -24,17 +35,33 @@ export default {
                            WHERE p.id = ?
                            GROUP BY p.id, p.name, p.measuring_unit_id, mu.name`).get(id);
     },
+    /**
+     * Обновляем запись в таблице товары
+     *
+     * @param model
+     */
     update(model) {
         DB.prepare("UPDATE products SET name=?,measuring_unit_id=? WHERE id=?").run(
             [model.name, model.measuring_unit_id, model.id]
         );
     },
+    /**
+     * Создает добавление в таблицу товары
+     *
+     * @param model
+     * @return {*}
+     */
     create(model) {
         let info = DB.prepare(
             "INSERT INTO products(name,measuring_unit_id) VALUES (?,?)"
         ).run([model.name, model.measuring_unit_id]);
         return info.lastInsertRowid;
     },
+    /**
+     * Удаляет запись в таблице товары по id
+     *
+     * @param id
+     */
     delete(id) {
         DB.prepare("DELETE FROM products WHERE id=?").run([id]);
     },

@@ -1,11 +1,22 @@
 import DB from "@/services/DB";
 
 export default {
+    /**
+     * Инициализируем таблицу тех_карты
+     *
+     * @return {*}
+     */
     list() {
         return DB.prepare(
             "SELECT tc.*,p.name product_name FROM tech_cards tc join products p on tc.product_id=p.id"
         ).all();
     },
+    /**
+     * Показываем запись в таблице тех_карты по id
+     *
+     * @param id
+     * @return {*}
+     */
     show(id) {
         let tech_card = DB.prepare(
             "SELECT tc.*,p.name product_name FROM tech_cards tc join products p on tc.product_id=p.id WHERE tc.id=?"
@@ -13,6 +24,12 @@ export default {
         tech_card.products = this.getProducts(id);
         return tech_card;
     },
+    /**
+     * Обновляем запись в таблице тех_карты, через транзакцию
+     *
+     * @param model
+     * @return {*}
+     */
     update(model) {
         return DB.transaction(() => {
             DB.prepare(
@@ -22,6 +39,13 @@ export default {
             this.updateProducts(model.id, model.products);
         })();
     },
+    /**
+     * Создает добавление в таблицу тех_карты, через транзакцию
+     *
+     * @param model
+     * @return {integer} id
+     * @return {*}
+     */
     create(model) {
         return DB.transaction(() => {
             let info = DB.prepare(
@@ -32,10 +56,19 @@ export default {
             return id;
         })();
     },
+    /**
+     * Удаляет запись в таблице тех_карты по id
+     *
+     * @param id
+     */
     delete(id) {
         DB.prepare("DELETE FROM tech_cards WHERE id=?").run([id]);
     },
-
+    /**
+     * Полчуем продукт через id тех_карты
+     * @param tech_card_id
+     * @return {*}
+     */
     getProducts(tech_card_id) {
         return DB.prepare(
             `SELECT tcp.*, p.name, mu.name AS measuring_unit_name
@@ -45,6 +78,12 @@ export default {
              WHERE tech_card_id = ?`
         ).all(tech_card_id);
     },
+    /**
+     * Обновляем материалы в дочерней таблицы и если у нас есть материалы, то обновляем иначе добавляем материалы
+     *
+     * @param tech_card_id
+     * @param products
+     */
     updateProducts(tech_card_id, products) {
         const originProducts = this.getProducts(tech_card_id);
         originProducts.forEach((item) => {

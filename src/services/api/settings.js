@@ -25,6 +25,7 @@ export default {
         })
     },
     /**
+     * Получем имя контрагента, которому присвоен CUSTOMER_ID
      *
      * @param {text} counterparty_name
      * @param {text} key

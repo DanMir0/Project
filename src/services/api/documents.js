@@ -5,8 +5,9 @@ import {ErrorRedSaldo} from "@/services/api/errors/ErrorRedSaldo";
 
 export default {
     /**
+     * Инициализируем таблицу документы
      *
-     * @returns {[]}
+     * @returns {*}
      */
     list() {
         return DB.prepare(
@@ -15,6 +16,7 @@ export default {
     },
 
     /**
+     * Показываем запись в таблице документы по id
      *
      * @param {int} id
      * @returns {{id:integer, document_type_id:integer,counterparty_id:integer, products:[]}}
@@ -26,7 +28,15 @@ export default {
     },
 
     /**
-     * @param {{id:integer, document_type_id:integer,counterparty_id:integer, products:[]}} model
+     * Обновляем запись в таблице документы, через транзакцию
+     *
+     * @param {integer} id
+     * @param {intege} document_type_idr
+     * @param {integer} counterparty_id
+     * @param {[]} products
+     * @param model
+     *
+     * @return {*}
      */
     update(model) {
         return DB.transaction(() => {
@@ -38,9 +48,15 @@ export default {
     },
 
     /**
+     * Создает добавление в таблицу документы, через транзакцию
      *
-     * @param {{document_type_id:integer,counterparty_id:integer, products:[]}} model
-     * @returns int
+     * @param {integer} document_type_id
+     * @param {integer} counterparty_id
+     * @param {[]} products
+     * @param model
+     *
+     * @return {integer} id
+     * @return {*}
      */
     create(model) {
         return DB.transaction(() => {
@@ -54,6 +70,7 @@ export default {
     },
 
     /**
+     * Удаляет запись в таблице документы по id
      *
      * @param {integer} id Document id
      */
@@ -62,6 +79,7 @@ export default {
     },
 
     /**
+     * Полчуем продукт через id документа
      *
      * @param {integer} document_id Parent document id
      */
@@ -76,13 +94,13 @@ export default {
     },
 
     /**
+     * Обновляем продукты в дочерней таблицы и при этом проверяем условие на остаток, если остаток меньше 0 то выдаем ошибку.
      *
      * @param {integer} document_id
      * @param {array} products
      * @param {integer} products.product_id
      * @param {integer} products.quantity
      * @param {integer} document_type_id
-     * @return
      */
     updateProducts(document_id, products, document_type_id) {
         const originProducts = this.getProducts(document_id);

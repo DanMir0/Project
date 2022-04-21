@@ -5,16 +5,41 @@ import {INCOME, OUTCOME} from "../../common/document_types";
 import tech_cards from "@/services/api/tech_cards";
 
 export default {
+    /**
+     * Инициализируем таблицу заказы
+     *
+     * @param {} order
+     * @param {[]} order_statuses
+     * @param {[]} counterparties
+     * @returns {[]}
+     */
     list() {
         return DB.prepare(
             "SELECT o.*,os.name order_status_name, c.name counterparty_name FROM orders o join order_statuses os on o.order_status_id=os.id join counterparties c on o.counterparty_id=c.id"
         ).all();
     },
+    /**
+     * Показываем запись в таблице заказы по id order и дочернюю таблицу (товар) по id tech_cards
+     *
+     * @param {integer} id
+     * @return {{*}}
+     */
     show(id) {
         let order = DB.prepare("SELECT * FROM orders t WHERE t.id=?").get(id);
         order.tech_cards = this.getTechCards(id);
         return order;
     },
+    /**
+     * Обновляем запись в таблице заказы, через транзакцию (Обеспечение целотсности даннных)
+     *
+     * @param {integer} order_status_id
+     * @param {integer} counterparty_id
+     * @param {date} updated_at
+     * @param {[]} tech_cards
+     * @param model
+     *
+     * @return {*}
+     */
     update(model) {
         DB.transaction(() => {
             DB.prepare(
@@ -23,6 +48,17 @@ export default {
             this.updateTechCards(model.id, model.tech_cards);
         })();
     },
+    /**
+     * Создает добавление в таблицу заказы
+     *
+     * @param {integer} order_status_id
+     * @param {integer} counterparty_id
+     * @param {[]} tech_cards
+     * @param model
+     *
+     * @return {integer} id
+     * @return {*}
+     */
     create(model) {
         return DB.transaction(() => {
             let info = DB.prepare(
@@ -33,10 +69,19 @@ export default {
             return id;
         })();
     },
+    /**
+     * Удаляет запись в таблице документы по id
+     *
+     * @param {integer} id Order id
+     */
     delete(id) {
         DB.prepare("DELETE FROM orders WHERE id=?").run([id]);
     },
-
+    /**
+     * Получем тех карту Order id
+     *
+     * @param {integer} order_id Parent order id
+     */
     getTechCards(order_id) {
         return DB.prepare(
             `SELECT otc.*, tc.name, p.name product_name, tc.product_id
@@ -46,7 +91,14 @@ export default {
              WHERE order_id = ?`
         ).all(order_id);
     },
-
+    /**
+     * Обновляем тех_карты в дочерней таблицы.
+     *
+     * @param {integer} order_id
+     * @param {array} tech_cards
+     * @param {integer} tech_cards.product_id
+     * @param {integer} tech_cards.quantity
+     */
     updateTechCards(order_id, tech_cards) {
         const originTechCards = this.getTechCards(order_id);
         originTechCards.forEach((item) => {
@@ -69,7 +121,7 @@ export default {
     },
     /**
      * Вовзращает массив материалов которые нужны для производства товара и их количество
-     * @param order_id
+     * @param {integer} order_id
      */
     getTechCardsProducts(order_id) {
         return DB.prepare(
@@ -82,7 +134,12 @@ export default {
              group by product_id`
         ).all([order_id]);
     },
-
+    /**
+     * Проверяем статус производства, если в производсвтве отнимаем материалы, если готовый то принимаем, если выдаем то отнимаем.
+     *
+     * @param {integer} order_id
+     * @param {integer} status_id
+     */
     setStatus(order_id, status_id) {
         let document = {
             counterparty_id: api.settings.load().PRODUCTION_HALL,
