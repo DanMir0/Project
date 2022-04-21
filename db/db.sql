@@ -143,7 +143,7 @@ create table orders_tech_cards
         references orders on delete cascade,
     tech_card_id INTEGER not null
         references tech_cards,
-    quantity     text    not null
+    quantity     integer    not null
 );
 
 create unique index orders_tech_cards_order_id_tech_card_id_uindex
