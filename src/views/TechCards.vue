@@ -3,6 +3,7 @@
     <v-data-table
       :headers="headers"
       :items="items"
+      :search="search"
       sort-by="calories"
       class="elevation-1"
     >
@@ -10,9 +11,18 @@
         <v-toolbar flat>
           <v-toolbar-title>Тех Карты</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
+            <v-spacer></v-spacer>
+            <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Поиск"
+                single-line
+                hide-details
+                class="search"
+            ></v-text-field>
+            <v-spacer></v-spacer>
           <v-btn @click="newItem()" color="primary">Добавить
-            <v-icon right>mdi-account-plus</v-icon>
+            <v-icon right>mdi-credit-card-plus</v-icon>
           </v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
@@ -51,6 +61,7 @@ export default {
   name: "TechCards",
   data: () => ({
     dialog: false,
+      search: '',
     dialogDelete: false,
     headers: [
       { text: "Код", value: "id" },
@@ -142,3 +153,9 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.search {
+    max-width: 500px;
+}
+</style>

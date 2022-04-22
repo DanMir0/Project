@@ -4,7 +4,6 @@ import Products from "@/views/Products";
 import Product from "@/views/Product";
 import Counterparties from "@/views/Counterparties";
 import Counterparty from "@/views/Counterparty";
-import Dashboard from "@/views/Dashboard";
 import Documents from "@/views/Documents";
 import Document from "@/views/Document";
 import DocumentTypes from "@/views/DocumentTypes";
@@ -22,7 +21,6 @@ import Settings from "@/views/Settings";
 Vue.use(VueRouter);
 
 const routes = [
-  { path: "/", component: Dashboard },
   { path: "/products", component: Products },
   { path: "/products/:id", component: Product, props: true },
   { path: "/counterparties", component: Counterparties },

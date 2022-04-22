@@ -3,13 +3,6 @@ const Plugin = {
     Vue.prototype.$rules = {
       required: (v) => !!v || "Обязательное поле.",
 
-      validationInn(value) {
-        if (!/(\d+)/g.test(value) || /[a-zA-Z]/.test(value))
-          return "ИНН должен содержать только цифры.";
-        if (value.length != 10) return "ИНН должен содержать 10 цифр.";
-        else return true;
-      },
-
       validationPhone(value) {
         if (!/(\d+)/g.test(value) || /[a-zA-Z]/.test(value))
           return "Телефон должен содержать только цифры.";
@@ -18,10 +11,15 @@ const Plugin = {
       },
 
       validationName(value) {
-        if(value.length < 4) return "Слишком коротко";
+        // if(value.length < 4) return "Слишком коротко";
         if(/[0-9]/.test(value)) return "Наименование не должно содержать числа.";
         return true;
       },
+        validatinNumber(value) {
+            if (!/(\d+)/g.test(value) || /[a-zA-Z]/.test(value))
+                return "Поле должно содержать только цифры.";
+            return true
+        },
 
       validationAdress(value) {
         if(value.length < 7) return "Слишком коротко";

@@ -88,7 +88,7 @@ export default {
           id = api.document_types.create(this.entity);
         }
       } catch (e) {
-        this.$dialog.alert("Ошибка: Введите корректные данные");
+        this.$dialog.alert(e);
         return;
       }
       if (id) this.$router.push(`/document_types/${id}`);

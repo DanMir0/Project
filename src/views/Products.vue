@@ -13,7 +13,7 @@
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-btn @click="newItem()" color="primary">Добавить
-            <v-icon right>mdi-account-plus</v-icon>
+            <v-icon right>mdi-cart-plus</v-icon>
           </v-btn>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>

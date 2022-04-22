@@ -104,7 +104,7 @@ export default {
           id = api.products.create(this.entity);
         }
       } catch (e) {
-        this.$dialog.alert("Ошибка: Введите корректные данные");
+        this.$dialog.alert(e);
         return;
       }
       if (id) this.$router.push(`/products/${id}`);

@@ -46,7 +46,6 @@ export default {
     return {
       printShow:false,
       items: [
-        { title: "Главная", icon: "mdi-view-dashboard-outline", to: "/" },
         { title: "Товары", icon: "mdi-shopping", to: "/products" },
         {
           title: "Контрагенты",
@@ -59,7 +58,7 @@ export default {
           to: "/documents",
         },
         { title: "Заказы", icon: "mdi-chart-line", to: "/orders" },
-        { title: "Тех карты", icon: "mdi-credit-card-plus", to: "/tech_cards" },
+        { title: "Тех карты", icon: "mdi-credit-card", to: "/tech_cards" },
         {
           title: "Типы документов",
           icon: "mdi-file-document-multiple-outline",
