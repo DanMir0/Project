@@ -58,11 +58,37 @@
                                 ></v-text-field>
                             </v-col>
                         </v-row>
-                        <v-row>
-                            <v-col cols="12">
-                                <child-tech-cards :tech_cards.sync="entity.tech_cards"></child-tech-cards>
-                            </v-col>
-                        </v-row>
+                        <template>
+                            <v-card>
+                                <v-toolbar
+                                    flat
+                                    elevation="0"
+                                >
+                                    <template>
+                                        <v-tabs
+                                            v-model="tabs"
+                                            left
+                                        >
+                                            <v-tab
+                                                v-for="item in itemsTab"
+                                                :key="item"
+                                            >
+                                                {{ item }}
+                                            </v-tab>
+                                        </v-tabs>
+                                    </template>
+                                </v-toolbar>
+
+                                <v-tabs-items v-model="tabs">
+                                    <v-tab-item>
+                                            <child-tech-cards :tech_cards.sync="entity.tech_cards"></child-tech-cards>
+                                    </v-tab-item>
+                                    <v-tab-item>
+                                                <child-documents :order_id="id" :order_status_id="entity.order_status_id"></child-documents>
+                                    </v-tab-item>
+                                </v-tabs-items>
+                            </v-card>
+                        </template>
                     </v-container>
                 </v-card-text>
 
@@ -89,15 +115,18 @@ import ChildTechCards from "@/components/ChildTechCards";
 import {STATUS_NEW, STATUS_IN_PROGRESS, STATUS_FINISHED, STATUS_ISSUED} from "@/common/order_statuses";
 import {ErrorRedSaldo} from "@/services/api/errors/ErrorRedSaldo";
 import PrintOrders from "@/components/print/PrintOrders";
+import ChildDocuments from "@/components/ChildDocuments";
 
 export default {
     name: "Order",
-    components: {ChildTechCards, PrintOrders},
+    components: {ChildTechCards, PrintOrders, ChildDocuments},
     mixins: [validations],
     props: {
         id: {},
     },
     data: () => ({
+        itemsTab: ['Товары','Документы'],
+        tabs: null,
         entity: {
             tech_cards: [],
             order_status_id: 1,
@@ -183,13 +212,15 @@ export default {
                 api.orders.setStatus(this.id, status)
             } catch (e) {
                 if (e instanceof ErrorRedSaldo) {
-                    this.$dialog.alert(`Недостаточно материала «${e.product.name}» в объеме ${e.quantity} ${e.product.measuring_unit_name}`)
+                    this.$dialog.alert(`Недостаточно материала «${e.product.name}» в объеме ${e.quantity}
+                    ${e.product.measuring_unit_name}`)
                 } else {
                     this.$dialog.alert(e);
                 }
                 console.error(e)
             }
             this.initialize()
+
         },
 
         setStatusProgress() {

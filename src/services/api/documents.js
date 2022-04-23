@@ -5,14 +5,25 @@ import {ErrorRedSaldo} from "@/services/api/errors/ErrorRedSaldo";
 
 export default {
     /**
-     * Инициализируем таблицу документы
+     * Возвращает список документов
      *
      * @returns {*}
      */
-    list() {
+    list(filter = {}) {
+        let params = []
+        let filterStr = ''
+        if (filter.order_id) {
+            filterStr += ` and order_id=? `
+            params.push(filter.order_id)
+        }
+
         return DB.prepare(
-            "SELECT  d.*,c.name counterparty_name, dt.name document_type_name, dt.in_out FROM documents d join counterparties c on d.counterparty_id=c.id join document_types dt on d.document_type_id=dt.id"
-        ).all();
+            `SELECT  d.*,c.name counterparty_name, dt.name document_type_name, dt.in_out
+                    FROM documents d
+                    join counterparties c on d.counterparty_id=c.id
+                    join document_types dt on d.document_type_id=dt.id
+                    WHERE 1=1 ${filterStr}`
+        ).all(params);
     },
 
     /**
@@ -61,8 +72,8 @@ export default {
     create(model) {
         return DB.transaction(() => {
             let info = DB.prepare(
-                "INSERT INTO documents(document_type_id, counterparty_id) VALUES (?, ?)"
-            ).run([model.document_type_id, model.counterparty_id]);
+                "INSERT INTO documents(document_type_id, counterparty_id, order_id) VALUES (?, ?, ?)"
+            ).run([model.document_type_id, model.counterparty_id, model.order_id]);
             let id = info.lastInsertRowid;
             this.updateProducts(id, model.products, model.document_type_id)
             return id

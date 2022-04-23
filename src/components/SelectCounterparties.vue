@@ -1,5 +1,5 @@
 <template>
-  <v-select
+  <v-autocomplete
       v-bind="$attrs"
       v-on="$listeners"
       :items="counterparties"
@@ -9,7 +9,7 @@
     <template v-slot:item="{ item }">
       {{ item.id }} - {{ item.name }}
     </template>
-  </v-select>
+  </v-autocomplete>
 </template>
 
 <script>

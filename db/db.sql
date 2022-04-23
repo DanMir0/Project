@@ -167,8 +167,8 @@ create unique index tech_cards_products_product_id_tech_card_id_uindex
 create unique index tech_cards_products_tech_card_id_product_id_uindex
     on tech_cards_products (tech_card_id, product_id);
 
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (1, 'ЦЕХ "A"', '+7 (835) 262-38-81', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (2, 'ЦЕХ "B"', '+7 (935) 262-38-82', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (1, 'ООО "СЭЗ"', '+7 (835) 262-38-81', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (2, 'Производственные цех', '+7 (935) 262-38-82', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (3, 'ООО "Промтехматериалы"', '+7 (999) 077-27-44', 'г. Москва, ул Ташкентская, д 28', 9723030130, '2022-03-05', '2022-03-15');
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (4, 'ООО "Компания UNICUM"', '+7 (343) 372-73-58', 'г. Екатеринбург, ул Чкалова, дом 250', 3706019489, '2022-03-05', '2022-03-15');
 INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (5, 'ООО "Вертекс"', '+7 (341) 474-42-99', 'г. Сарапул, Гагарина , дом 55', 6670312310, '2022-03-05', '2022-03-15');
@@ -219,4 +219,6 @@ INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES 
 
 INSERT INTO settings (key, value) VALUES ('CUSTOMER_ID','1');
 INSERT INTO settings (key, value) VALUES ('PRODUCTION_HALL','2');
+
+
 
