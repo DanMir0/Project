@@ -1,7 +1,9 @@
 <template>
     <div class="container">
         <h1 align="center">Заказ на производство № {{ order.id }} от {{ order.created_at }}</h1>
-        <p class="font-italic font-weight-black">Заказчик: {{ counterparty.name }} Телефон: {{ counterparty.contact_info }}</p>
+        <p class="font-italic font-weight-black">Заказчик: {{ counterparty.name }} Телефон: {{
+                counterparty.contact_info
+            }}</p>
         <p class="font-italic font-weight-black">Производитель: {{ organization.name }}</p>
         <table>
             <thead></thead>
@@ -15,7 +17,7 @@
                 <td align="center">{{ item.product_id }}</td>
                 <td>{{ item.product_name }}</td>
                 <td align="center">{{ measuring_unit.measuring_unit_name }}</td>
-                <td align="right">{{ item.quantity}}</td>
+                <td align="right">{{ item.quantity }}</td>
             </tr>
         </table>
     </div>
@@ -29,7 +31,7 @@ export default {
     name: "PrintDocumentsOrders",
     props: {
         order: {
-            type:Object,
+            type: Object,
             required: true,
         },
     },
@@ -40,17 +42,16 @@ export default {
             counterparty: {},
         }
     },
-    watch:{
-        order:{
-            immediate:true,
-            handler(){
+    watch: {
+        order: {
+            immediate: true,
+            handler() {
                 this.measuring_unit = api.tech_cards.getProducts(this.order.tech_cards[0].tech_card_id)[0]
                 this.organization = api.settings.getOrganization()
                 this.counterparty = api.counterparties.show(this.order.counterparty_id)
             }
         }
     },
-
 
 
 }
@@ -60,6 +61,7 @@ export default {
 h1 {
     margin-bottom: 15px;
 }
+
 p {
     margin-left: 20px;
 }

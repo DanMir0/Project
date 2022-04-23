@@ -17,13 +17,11 @@ export default {
             params.push(filter.order_id)
         }
 
-        return DB.prepare(
-            `SELECT  d.*,c.name counterparty_name, dt.name document_type_name, dt.in_out
-                    FROM documents d
-                    join counterparties c on d.counterparty_id=c.id
-                    join document_types dt on d.document_type_id=dt.id
-                    WHERE 1=1 ${filterStr}`
-        ).all(params);
+        return DB.prepare(`SELECT d.*, c.name counterparty_name, dt.name document_type_name, dt.in_out
+                           FROM documents d
+                                    join counterparties c on d.counterparty_id = c.id
+                                    join document_types dt on d.document_type_id = dt.id
+                           WHERE 1 = 1 ${filterStr}`).all(params);
     },
 
     /**
@@ -51,9 +49,8 @@ export default {
      */
     update(model) {
         return DB.transaction(() => {
-            DB.prepare(
-                "UPDATE documents SET document_type_id=?, counterparty_id=?, updated_at=date('now') WHERE id=?"
-            ).run([model.document_type_id, model.counterparty_id, model.id]);
+            DB.prepare("UPDATE documents SET document_type_id=?, counterparty_id=?, updated_at=date('now') WHERE id=?")
+                .run([model.document_type_id, model.counterparty_id, model.id]);
             this.updateProducts(model.id, model.products, model.document_type_id)
         })()
     },
@@ -71,9 +68,8 @@ export default {
      */
     create(model) {
         return DB.transaction(() => {
-            let info = DB.prepare(
-                "INSERT INTO documents(document_type_id, counterparty_id, order_id) VALUES (?, ?, ?)"
-            ).run([model.document_type_id, model.counterparty_id, model.order_id]);
+            let info = DB.prepare("INSERT INTO documents(document_type_id, counterparty_id, order_id) VALUES (?, ?, ?)")
+                .run([model.document_type_id, model.counterparty_id, model.order_id]);
             let id = info.lastInsertRowid;
             this.updateProducts(id, model.products, model.document_type_id)
             return id
@@ -95,13 +91,11 @@ export default {
      * @param {integer} document_id Parent document id
      */
     getProducts(document_id) {
-        return DB.prepare(
-            `SELECT dp.*, p.name, mu.name AS measuring_unit_name
-             FROM documents_products dp
-                      JOIN products p on dp.product_id = p.id
-                      JOIN measuring_units mu on p.measuring_unit_id = mu.id
-             WHERE dp.document_id = ?`
-        ).all(document_id);
+        return DB.prepare(`SELECT dp.*, p.name, mu.name AS measuring_unit_name
+                           FROM documents_products dp
+                                    JOIN products p on dp.product_id = p.id
+                                    JOIN measuring_units mu on p.measuring_unit_id = mu.id
+                           WHERE dp.document_id = ?`).all(document_id);
     },
 
     /**
@@ -131,13 +125,11 @@ export default {
                 }
             }
             if (item.id) {
-                DB.prepare(
-                    "UPDATE documents_products SET product_id=?, quantity=? WHERE id=?"
-                ).run([item.product_id, item.quantity, item.id]);
+                DB.prepare("UPDATE documents_products SET product_id=?, quantity=? WHERE id=?")
+                    .run([item.product_id, item.quantity, item.id]);
             } else {
-                DB.prepare(
-                    "INSERT INTO documents_products (document_id, product_id, quantity) VALUES (?, ?, ?)"
-                ).run([document_id, item.product_id, item.quantity]);
+                DB.prepare("INSERT INTO documents_products (document_id, product_id, quantity) VALUES (?, ?, ?)")
+                    .run([document_id, item.product_id, item.quantity]);
             }
         });
     },

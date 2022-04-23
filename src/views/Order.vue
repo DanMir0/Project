@@ -81,10 +81,11 @@
 
                                 <v-tabs-items v-model="tabs">
                                     <v-tab-item>
-                                            <child-tech-cards :tech_cards.sync="entity.tech_cards"></child-tech-cards>
+                                        <child-tech-cards :tech_cards.sync="entity.tech_cards"></child-tech-cards>
                                     </v-tab-item>
                                     <v-tab-item>
-                                                <child-documents :order_id="id" :order_status_id="entity.order_status_id"></child-documents>
+                                        <child-documents :order_id="id"
+                                                         :order_status_id="entity.order_status_id"></child-documents>
                                     </v-tab-item>
                                 </v-tabs-items>
                             </v-card>
@@ -125,7 +126,7 @@ export default {
         id: {},
     },
     data: () => ({
-        itemsTab: ['Товары','Документы'],
+        itemsTab: ['Товары', 'Документы'],
         tabs: null,
         entity: {
             tech_cards: [],

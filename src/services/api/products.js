@@ -8,15 +8,16 @@ export default {
      */
     list() {
         return DB.prepare(`
-                SELECT t.*, case when quantity_null is null then 0 else quantity_null end as quantity  FROM (SELECT p.*,
-               mu.name                                                                    measuring_unit_name,
-                    sum(case when dt.in_out = 'OUT' then -dp.quantity else dp.quantity end) as quantity_null
-             FROM products p
-                      JOIN measuring_units mu on p.measuring_unit_id = mu.id
-                      LEFT JOIN documents_products dp on p.id = dp.product_id
-                      LEFT JOIN documents d on dp.document_id = d.id
-                      LEFT JOIN document_types dt on d.document_type_id = dt.id
-             GROUP BY p.id, p.name, p.measuring_unit_id, mu.name) t`).all();
+            SELECT t.*, case when quantity_null is null then 0 else quantity_null end as quantity
+            FROM (SELECT p.*,
+                         mu.name                                                                    measuring_unit_name,
+                         sum(case when dt.in_out = 'OUT' then -dp.quantity else dp.quantity end) as quantity_null
+                  FROM products p
+                           JOIN measuring_units mu on p.measuring_unit_id = mu.id
+                           LEFT JOIN documents_products dp on p.id = dp.product_id
+                           LEFT JOIN documents d on dp.document_id = d.id
+                           LEFT JOIN document_types dt on d.document_type_id = dt.id
+                  GROUP BY p.id, p.name, p.measuring_unit_id, mu.name) t`).all();
     },
     /**
      * Показываем запись в таблице товары по id
@@ -26,7 +27,7 @@ export default {
      */
     show(id) {
         return DB.prepare(`SELECT p.*,
-                                  mu.name measuring_unit_name,
+                                  mu.name                                                                    measuring_unit_name,
                                   sum(case when dt.in_out = 'OUT' then -dp.quantity else dp.quantity end) as quantity
                            FROM products p
                                     JOIN measuring_units mu on p.measuring_unit_id = mu.id

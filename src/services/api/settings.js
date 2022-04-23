@@ -35,4 +35,4 @@ export default {
     getOrganization() {
         return DB.prepare("SELECT  c.* FROM settings s join counterparties c on s.value = c.id WHERE s.key='CUSTOMER_ID'").all()[0];
     },
-    };
+};

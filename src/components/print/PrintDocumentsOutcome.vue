@@ -2,7 +2,8 @@
     <div class="container">
         <h1 align="center">Расходная накладная № {{ document.id }} от {{ document.created_at }}</h1>
         <p class="font-italic font-weight-black">Поставщик: {{ organization.name }}</p>
-        <p class="font-italic font-weight-black">Покупатель: {{ counterparty.name }}, {{ counterparty.address }}, ИНН {{ counterparty.inn }}</p>
+        <p class="font-italic font-weight-black">Покупатель: {{ counterparty.name }}, {{ counterparty.address }}, ИНН
+            {{ counterparty.inn }}</p>
         <p class="font-italic font-weight-black">Склад: Основной склад</p>
         <table>
             <thead></thead>
@@ -13,7 +14,7 @@
             <tr v-for="item in document.products" :key="item.id">
                 <td align="center">{{ item.product_id }}</td>
                 <td>{{ item.name }}</td>
-                <td align="center">{{ item.measuring_unit_name}}</td>
+                <td align="center">{{ item.measuring_unit_name }}</td>
                 <td align="right">{{ item.quantity }}</td>
             </tr>
         </table>
@@ -33,7 +34,7 @@ export default {
     name: "PrintDocumentsOutcome",
     props: {
         document: {
-            type:Object,
+            type: Object,
             required: true,
         },
     },
@@ -43,10 +44,10 @@ export default {
             counterparty: {}
         }
     },
-    watch:{
-        document:{
-            immediate:true,
-            handler(){
+    watch: {
+        document: {
+            immediate: true,
+            handler() {
                 this.organization = api.settings.getOrganization()
                 this.counterparty = api.counterparties.show(this.document.counterparty_id)
                 console.log('document')
@@ -62,30 +63,37 @@ export default {
 .container {
     color: black;
 }
+
 h1 {
     font-size: 1.5rem;
     margin-bottom: 10px;
 }
-.font-weight-black{
+
+.font-weight-black {
     font-size: 0.875rem;
     margin-left: 67px;
 }
+
 th {
     border: 1px solid black;
 }
-.сaption{
+
+.сaption {
     margin-top: 30px;
     display: flex;
     align-items: flex-start;
 }
+
 hr {
     color: black;
     margin-top: 20px;
     width: 50%;
 }
+
 .сaption p {
     margin: 0;
 }
+
 .indent {
     margin-right: 20px;
 }

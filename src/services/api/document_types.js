@@ -8,8 +8,7 @@ export default {
      */
     list() {
         return DB.prepare("SELECT * FROM document_types").all();
-    },
-    /**
+    }, /**
      * Показываем запись в таблице типы_документа по id
      *
      * @param {integer} id
@@ -17,8 +16,7 @@ export default {
      */
     show(id) {
         return DB.prepare("SELECT * FROM document_types t WHERE t.id=?").get(id);
-    },
-    /**
+    }, /**
      * Обновляем запись в таблице типы_документа
      *
      * @param {integer} id
@@ -28,12 +26,8 @@ export default {
      * @return {*}
      */
     update(model) {
-        DB.prepare("UPDATE document_types SET name=? WHERE id=?").run([
-            model.name,
-            model.id,
-        ]);
-    },
-    /**
+        DB.prepare("UPDATE document_types SET name=? WHERE id=?").run([model.name, model.id,]);
+    }, /**
      * Создает добавление в таблицу типы_документа
      *
      * @param {text} name
@@ -44,12 +38,9 @@ export default {
      * @return {lastInsertRowid}   Возвращает идентификатор строки последней вставки (INSERT) в базу данных.
      */
     create(model) {
-        let info = DB.prepare("INSERT INTO document_types(name) VALUES (?)").run([
-            model.name,
-        ]);
+        let info = DB.prepare("INSERT INTO document_types(name) VALUES (?)").run([model.name,]);
         return info.lastInsertRowid;
-    },
-    /**
+    }, /**
      * Удаляет запись в таблице типы_документа по id
      */
     delete(id) {

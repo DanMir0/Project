@@ -13,13 +13,13 @@ import SelectCounterparties from "@/components/SelectCounterparties";
 Vue.use(dialog);
 Vue.use(rules);
 Vue.use(VueMask);
-Vue.component('PrintDialog',PrintDialog)
+Vue.component('PrintDialog', PrintDialog)
 Vue.component('SelectCounterparties', SelectCounterparties)
 
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  vuetify,
-  render: (h) => h(App),
+    router,
+    vuetify,
+    render: (h) => h(App),
 }).$mount("#app");

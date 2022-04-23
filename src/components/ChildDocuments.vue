@@ -7,7 +7,7 @@
             </v-toolbar>
         </template>
         <template v-slot:item.actions="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+            <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil</v-icon>
         </template>
     </v-data-table>
 </template>
@@ -23,10 +23,10 @@ export default {
     ],
     data: () => ({
         headers: [
-            { text: "Тип документа", value: "document_type_name" },
-            { text: "Номер заказа", value: "order_id" },
-            { text: "Дата создания", value: "created_at" },
-            { text: "", value: "actions", sortable: false },
+            {text: "Тип документа", value: "document_type_name"},
+            {text: "Номер заказа", value: "order_id"},
+            {text: "Дата создания", value: "created_at"},
+            {text: "", value: "actions", sortable: false},
         ],
         documents: [],
     }),
@@ -43,7 +43,7 @@ export default {
     },
     methods: {
         initialize() {
-            this.documents = api.documents.list({ order_id: this.order_id })
+            this.documents = api.documents.list({order_id: this.order_id})
         },
         editItem(item) {
             this.$router.push(`/documents/${item.id}`);

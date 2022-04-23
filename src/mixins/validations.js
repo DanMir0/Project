@@ -3,8 +3,7 @@ export default {
         return {
             validForm: true,
         }
-    },
-    methods: {
+    }, methods: {
         validate() {
             this.$refs.form.validate()
             return this.validForm
