@@ -1,5 +1,5 @@
 <template>
-  <v-select
+  <v-autocomplete
       v-bind="$attrs"
       v-on="$listeners"
       :items="tech_cards"
@@ -10,7 +10,7 @@
     <template v-slot:item="{ item }">
       {{ item.product_id }} - {{ item.product_name }}
     </template>
-  </v-select>
+  </v-autocomplete>
 </template>
 
 <script>
