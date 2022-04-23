@@ -11,7 +11,6 @@ const Plugin = {
       },
 
       validationName(value) {
-        // if(value.length < 4) return "Слишком коротко";
         if(/[0-9]/.test(value)) return "Наименование не должно содержать числа.";
         return true;
       },
@@ -20,16 +19,6 @@ const Plugin = {
                 return "Поле должно содержать только цифры.";
             return true
         },
-
-      validationAdress(value) {
-        if(value.length < 7) return "Слишком коротко";
-        return true;
-      },
-
-      validationMeasuringUnits(value) {
-        if(/[0-9]/.test(value)) return "Наименование не должно содержать числа.";
-        return true;
-      },
 
       greater(min) {
         return function (value){
