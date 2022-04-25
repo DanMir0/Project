@@ -25,7 +25,7 @@
             </div>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="print">PRINT
+                <v-btn color="blue darken-1" text @click="print">ПЕЧАТЬ
                 </v-btn>
                 <v-spacer></v-spacer>
             </v-card-actions>
