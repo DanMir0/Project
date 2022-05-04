@@ -3,6 +3,7 @@
         <v-data-table
             :headers="headers"
             :items="items"
+            :search="search"
             sort-by="calories"
             class="elevation-1"
 
@@ -11,6 +12,15 @@
                 <v-toolbar flat>
                     <v-toolbar-title>Товары</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
+                    <v-spacer></v-spacer>
+                    <v-text-field
+                        v-model="search"
+                        append-icon="mdi-magnify"
+                        label="Поиск"
+                        single-line
+                        hide-details
+                        class="search"
+                    ></v-text-field>
                     <v-spacer></v-spacer>
                     <v-btn @click="newItem()" color="primary">Добавить
                         <v-icon right>mdi-cart-plus</v-icon>
@@ -58,6 +68,7 @@ export default {
             {text: "Действия", value: "actions", sortable: false},
         ],
         items: [],
+        search: "",
         editedIndex: -1,
         editedItem: {
             id: 0,
@@ -137,3 +148,9 @@ export default {
     },
 };
 </script>
+
+<style scoped lang="scss">
+.search {
+    max-width: 500px;
+}
+</style>
