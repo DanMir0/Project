@@ -57,6 +57,14 @@
                                     label="Обновленная дата"
                                 ></v-text-field>
                             </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                    type="date"
+                                    v-model="entity.finished_at"
+                                    disabled
+                                    label="Дата окончания"
+                                ></v-text-field>
+                            </v-col>
                         </v-row>
                         <template>
                             <v-card>
@@ -134,6 +142,7 @@ export default {
             counterparty_id: "",
             created_at: "",
             updated_at: "",
+            finished_at: "",
         },
         order_statuses: [],
         counterparties: [],
@@ -143,6 +152,7 @@ export default {
             tech_cards: [],
             created_at: "",
             updated_at: "",
+            finished_at: "",
         },
     }),
 

@@ -2,12 +2,12 @@ import DB from "@/services/DB";
 
 export default {
     /**
-     * Возвращает список единицы_измерения
+     * Возвращает список контактных лиц
      *
      * @returns {[]}
      */
     list() {
-        return DB.prepare("SELECT * FROM measuring_units").all();
+        return DB.prepare("SELECT * FROM contact_persons").all();
     },
     /**
      * Показываем запись в таблице единицы_измерения по id
@@ -16,7 +16,7 @@ export default {
      * @return {{id:integer, name:text}}
      */
     show(id) {
-        return DB.prepare("SELECT * FROM measuring_units t WHERE t.id=?").get(id);
+        return DB.prepare("SELECT * FROM contact_persons t WHERE t.id=?").get(id);
     },
     /**
      * Обновляем запись в таблице единицы_измерения
@@ -28,21 +28,23 @@ export default {
      * @return {*}
      */
     update(model) {
-        DB.prepare("UPDATE measuring_units SET name=? WHERE id=?").run([
-            model.name,
+        DB.prepare("UPDATE contact_persons SET full_name=?, contact_info=? WHERE id=?").run([
+            model.full_name,
+            model.contact_info,
             model.id,
         ]);
     },
     /**
      * Создает добавление в таблицу типы_документа
      *
-     * @param {text} name
+     * @param {text} full_name
      * @param model
      * @return {lastInsertRowid}   Возвращает идентификатор строки последней вставки (INSERT) в базу данных.
      */
     create(model) {
-        let info = DB.prepare("INSERT INTO measuring_units(name) VALUES (?)").run([
-            model.name,
+        let info = DB.prepare("INSERT INTO contact_persons (full_name, contact_info) VALUES (?,?)").run([
+            model.full_name,
+            model.contact_info,
         ]);
         return info.lastInsertRowid;
     },
@@ -50,6 +52,6 @@ export default {
      * Удаляет запись в таблице типы_документа по id
      */
     delete(id) {
-        DB.prepare("DELETE FROM measuring_units WHERE id=?").run([id]);
+        DB.prepare("DELETE FROM contact_persons WHERE id=?").run([id]);
     },
 };

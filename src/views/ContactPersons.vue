@@ -1,28 +1,18 @@
 <template>
-    <div class="counterparties">
+    <div class="contact_persons">
         <v-data-table
             :headers="headers"
             :items="items"
-            :search="search"
             sort-by="calories"
             class="elevation-1"
         >
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Контрагенты</v-toolbar-title>
+                    <v-toolbar-title>Контактные лица</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
-                    <v-text-field
-                        v-model="search"
-                        append-icon="mdi-magnify"
-                        label="Поиск"
-                        single-line
-                        hide-details
-                        class="search"
-                    ></v-text-field>
-                    <v-spacer></v-spacer>
                     <v-btn @click="newItem()" color="primary">Добавить
-                        <v-icon right>mdi-account-plus</v-icon>
+                        <v-icon right>mdi-plus</v-icon>
                     </v-btn>
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
@@ -55,20 +45,14 @@
 import api from "@/services/api";
 
 export default {
-    name: "Counterparties",
+    name: "ContactPersons",
     data: () => ({
         dialog: false,
-        search: "",
         dialogDelete: false,
         headers: [
-            {text: "Код", align: "start", value: "id"},
-            {text: "Наименование", align: "start", value: "name"},
-            {text: "Контактное лицо", align: "start", value: "contact_persons_name"},
+            {text: "Код", value: "id"},
+            {text: "ФИО", align: "start", value: "full_name"},
             {text: "Контактные данные", align: "start", value: "contact_info"},
-            {text: "Адрес", align: "start", value: "address"},
-            {text: "ИНН", align: "start", value: "inn"},
-            {text: "Дата создания", align: "start", value: "created_at"},
-            {text: "Дата обновления", align: "start", value: "updated_at"},
             {text: "Действия", value: "actions", sortable: false, align: "center"},
         ],
         items: [],
@@ -103,15 +87,15 @@ export default {
 
     methods: {
         initialize() {
-            this.items = api.counterparties.list();
+            this.items = api.contact_persons.list();
         },
 
         editItem(item) {
-            this.$router.push(`/counterparties/${item.id}`);
+            this.$router.push(`/contact_persons/${item.id}`);
         },
 
         newItem() {
-            this.$router.push(`/counterparties/-1`);
+            this.$router.push(`/contact_persons/-1`);
         },
 
         deleteItem(item) {
@@ -121,7 +105,7 @@ export default {
         },
 
         deleteItemConfirm() {
-            api.counterparties.delete(this.editedItem.id);
+            api.contact_persons.delete(this.editedItem.id);
             this.items.splice(this.editedIndex, 1);
             this.closeDelete();
         },
@@ -151,11 +135,9 @@ export default {
             this.close();
         },
     },
-};
+}
 </script>
 
-<style scoped lang="scss">
-.search {
-    max-width: 500px;
-}
+<style scoped>
+
 </style>

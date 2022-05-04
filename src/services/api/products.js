@@ -2,7 +2,7 @@ import DB from "@/services/DB";
 
 export default {
     /**
-     * Инициализируем таблицу товары
+     * Возвращает список товары
      *
      * @return {*}
      */

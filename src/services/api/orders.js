@@ -6,7 +6,7 @@ import tech_cards from "@/services/api/tech_cards";
 
 export default {
     /**
-     * Инициализируем таблицу заказы
+     * Возвращает список заказы
      *
      * @param {} order
      * @param {[]} order_statuses
@@ -151,11 +151,13 @@ export default {
             document.document_type_id = OUTCOME;
             document.products = this.getTechCardsProducts(order_id);
         } else if (status_id == STATUS_FINISHED) {
+            this.finished_at=Date.now();
             document.document_type_id = INCOME;
             document.products = this.getTechCards(order_id).map((tech_card) => ({
                 product_id: tech_card.product_id,
                 quantity: tech_card.quantity,
             }));
+
         } else if (status_id == STATUS_ISSUED) {
             document.document_type_id = OUTCOME;
             document.counterparty_id = this.show(order_id).counterparty_id

@@ -1,13 +1,14 @@
 <template>
-    <div class="counterparty">
+    <div class="contact_persons">
         <v-card>
-            <v-form v-model="validForm" ref="form">
+            <v-form v-model="validForm" ref="form"
+            >
                 <v-card-title>
                     <span class="text-h5">{{ formTitle }}</span>
                 </v-card-title>
 
                 <v-card-text>
-                    <v-container fluid>
+                    <v-container>
                         <v-row>
                             <v-col cols="12" sm="6" md="1">
                                 <v-text-field
@@ -18,55 +19,18 @@
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field
-                                    v-model="entity.name"
+                                    v-model="entity.full_name"
                                     :rules="[$rules.required, $rules.validationName]"
-                                    label="Наименование"
+                                    label="ФИО"
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field
                                     v-model="entity.contact_info"
                                     :rules="[$rules.required, $rules.validationPhone]"
-                                    label="Контактные данные"
                                     v-mask="mask"
                                     placeholder="+7 (000) 000-00-00"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field
-                                    v-model="entity.address"
-                                    :rules="[$rules.required]"
-                                    label="Адрес"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field
-                                    v-model="entity.inn"
-                                    :rules="[$rules.required, $rules.validatinNumber]"
-                                    label="ИНН"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <select-contact-person
-                                    v-model="entity.name"
-                                    :rules="[$rules.required, $rules.validationName]"
-                                    label="Контактное лицо"
-                                ></select-contact-person>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field
-                                    type="date"
-                                    disabled
-                                    v-model="entity.created_at"
-                                    label="Дата создания"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field
-                                    type="date"
-                                    disabled
-                                    v-model="entity.updated_at"
-                                    label="Дата обновления"
+                                    label="Контактные данные"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -84,13 +48,11 @@
 </template>
 
 <script>
-import api from "@/services/api";
 import validations from "@/mixins/validations";
-import SelectContactPerson from "@/components/SelectContactPerson";
+import api from "@/services/api";
 
 export default {
-    name: "Counterparty",
-    components: {SelectContactPerson},
+    name: "ContactPerson",
     mixins: [validations],
     props: {
         id: {},
@@ -98,13 +60,9 @@ export default {
     data: () => ({
         entity: {},
         defaultItem: {
-            name: "",
+            full_name: "",
             contact_info: "",
-            address: "",
-            inn: "",
-            created_at: "",
-            updated_at: "",
-            timestamp: "",
+            counterparty_id: "",
         },
         mask: [
             "+",
@@ -143,8 +101,9 @@ export default {
     },
     methods: {
         initialize() {
+            this.counterparties = api.counterparties.list();
             if (this.id > -1) {
-                this.entity = api.counterparties.show(this.id);
+                this.entity = api.contact_persons.show(this.id);
             } else {
                 this.entity = {...this.defaultItem};
             }
@@ -155,21 +114,25 @@ export default {
             let id = null;
             try {
                 if (this.id > -1) {
-                    api.counterparties.update(this.entity);
+                    api.contact_persons.update(this.entity);
                 } else {
-                    id = api.counterparties.create(this.entity);
+                    id = api.contact_persons.create(this.entity);
                 }
             } catch (e) {
                 this.$dialog.alert(e);
                 return;
             }
-            if (id) this.$router.push(`/counterparties/${id}`);
+            if (id) this.$router.push(`/contact_persons/${id}`);
             this.$dialog.success("Сохранено!");
         },
 
         back() {
-            this.$router.push(`/counterparties`);
+            this.$router.push(`/contact_persons`);
         },
     },
-};
+}
 </script>
+
+<style scoped>
+
+</style>

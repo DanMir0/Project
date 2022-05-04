@@ -66,6 +66,7 @@ export default {
             {text: "Контрагент", align: "start", value: "counterparty_name"},
             {text: "Дата создания", align: "start", value: "created_at"},
             {text: "Дата обновления", align: "start", value: "updated_at"},
+            {text: "Дата окончания", align: "start", value: "finished_at"},
             {text: "Действия", value: "actions", sortable: false, align: "center"},
         ],
         items: [],

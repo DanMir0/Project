@@ -10,40 +10,41 @@ drop table tech_cards;
 drop table products;
 drop table measuring_units;
 drop table settings;
+drop table contact_persons;
 
-create table settings
+create table contact_persons
 (
-    key   text
-        constraint settings_pk
-            primary key,
-    value text
+    id           integer not null
+        constraint contact_person_pk
+            primary key autoincrement,
+    full_name    text    not null,
+    contact_info integer not null
 );
-
-create unique index settings_key_uindex
-    on settings (key);
 
 create table counterparties
 (
-    id           INTEGER not null
+    id                 INTEGER not null
         primary key autoincrement
         unique,
-    name         TEXT    not null
+    name               TEXT    not null
         unique,
-    contact_info text    not null,
-    address      text    not null,
-    inn          integer not null,
-    created_at   date DEFAULT CURRENT_DATE not null,
-    updated_at   date DEFAULT CURRENT_DATE not null
+    contact_info       text    not null,
+    address            text    not null,
+    inn                integer not null,
+    contact_persons_id integer not null
+        references contact_persons,
+    created_at         date default CURRENT_DATE not null,
+    updated_at         date default CURRENT_DATE not null
 );
 
 create table document_types
 (
-    id   INTEGER not null
+    id     INTEGER not null
         primary key autoincrement
         unique,
-    name TEXT    not null
+    name   TEXT    not null
         unique,
-    in_out text not null
+    in_out text    not null
 );
 
 create table measuring_units
@@ -75,8 +76,9 @@ create table orders
         references order_statuses,
     counterparty_id integer not null
         references counterparties,
-    created_at   date DEFAULT CURRENT_DATE not null,
-    updated_at   date DEFAULT CURRENT_DATE not null
+    created_at      date default CURRENT_DATE not null,
+    updated_at      date default CURRENT_DATE not null,
+    finished_at      date default CURRENT_DATE not null
 );
 
 create table documents
@@ -90,8 +92,8 @@ create table documents
         references counterparties,
     order_id         integer
         references orders,
-    created_at   date DEFAULT CURRENT_DATE not null,
-    updated_at   date DEFAULT CURRENT_DATE not null
+    created_at       date default CURRENT_DATE not null,
+    updated_at       date default CURRENT_DATE not null
 );
 
 create table products
@@ -111,7 +113,8 @@ create table documents_products
         primary key autoincrement
         unique,
     document_id integer not null
-        references documents on delete cascade,
+        references documents
+            on delete cascade,
     product_id  INTEGER not null
         references products,
     quantity    REAL    not null
@@ -119,6 +122,17 @@ create table documents_products
 
 create unique index documents_products_document_id_product_id_uindex
     on documents_products (document_id, product_id);
+
+create table settings
+(
+    key   text
+        constraint settings_pk
+            primary key,
+    value text
+);
+
+create unique index settings_key_uindex
+    on settings (key);
 
 create table tech_cards
 (
@@ -130,8 +144,8 @@ create table tech_cards
         unique,
     product_id integer not null
         references products,
-    created_at   date DEFAULT CURRENT_DATE not null,
-    updated_at   date DEFAULT CURRENT_DATE not null
+    created_at date default CURRENT_DATE not null,
+    updated_at date default CURRENT_DATE not null
 );
 
 create table orders_tech_cards
@@ -140,10 +154,11 @@ create table orders_tech_cards
         primary key autoincrement
         unique,
     order_id     INTEGER not null
-        references orders on delete cascade,
+        references orders
+            on delete cascade,
     tech_card_id INTEGER not null
         references tech_cards,
-    quantity     integer    not null
+    quantity     integer not null
 );
 
 create unique index orders_tech_cards_order_id_tech_card_id_uindex
@@ -155,9 +170,11 @@ create table tech_cards_products
         constraint tech_cards_products_pk
             primary key autoincrement,
     product_id   integer not null
-        references products on delete cascade,
+        references products
+            on delete cascade,
     tech_card_id integer not null
-        references tech_cards on delete cascade,
+        references tech_cards
+            on delete cascade,
     quantity     real    not null
 );
 
@@ -167,12 +184,12 @@ create unique index tech_cards_products_product_id_tech_card_id_uindex
 create unique index tech_cards_products_tech_card_id_product_id_uindex
     on tech_cards_products (tech_card_id, product_id);
 
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (1, 'ООО "СЭЗ"', '+7 (835) 262-38-81', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (2, 'Производственные цех', '+7 (935) 262-38-82', 'г. Москва, пер Погорельский, 6', 7706615785, '2022-03-05', '2022-03-15');
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (3, 'ООО "Промтехматериалы"', '+7 (999) 077-27-44', 'г. Москва, ул Ташкентская, д 28', 9723030130, '2022-03-05', '2022-03-15');
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (4, 'ООО "Компания UNICUM"', '+7 (343) 372-73-58', 'г. Екатеринбург, ул Чкалова, дом 250', 3706019489, '2022-03-05', '2022-03-15');
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (5, 'ООО "Вертекс"', '+7 (341) 474-42-99', 'г. Сарапул, Гагарина , дом 55', 6670312310, '2022-03-05', '2022-03-15');
-INSERT INTO counterparties (id, name, contact_info, address, inn, created_at, updated_at) VALUES (6, 'ООО "Электро-Юг"', '+7 (863) 232-79-39', 'г. Ростов-на-Дону, пер. Семашко , дом 117, корпус А', 6454108447, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, contact_persons_id, created_at, updated_at) VALUES (1, 'ООО "СЭЗ"', '+7 (835) 262-38-81', 'г. Москва, пер Погорельский, 6', 7706615785, 1, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, contact_persons_id, created_at, updated_at) VALUES (2, 'Производственные цех', '+7 (935) 262-38-82', 'г. Москва, пер Погорельский, 6', 7706615785, 2, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, contact_persons_id, created_at, updated_at) VALUES (3, 'ООО "Промтехматериалы"', '+7 (999) 077-27-44', 'г. Москва, ул Ташкентская, д 28', 9723030130, 3, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, contact_persons_id, created_at, updated_at) VALUES (4, 'ООО "Компания UNICUM"', '+7 (343) 372-73-58', 'г. Екатеринбург, ул Чкалова, дом 250', 3706019489, 4, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, contact_persons_id, created_at, updated_at) VALUES (5, 'ООО "Вертекс"', '+7 (341) 474-42-99', 'г. Сарапул, Гагарина , дом 55', 6670312310, 5, '2022-03-05', '2022-03-15');
+INSERT INTO counterparties (id, name, contact_info, address, inn, contact_persons_id, created_at, updated_at) VALUES (6, 'ООО "Электро-Юг"', '+7 (863) 232-79-39', 'г. Ростов-на-Дону, пер. Семашко , дом 117, корпус А', 6454108447, 6, '2022-03-05', '2022-03-15');
 
 INSERT INTO document_types (id, name, in_out) VALUES (1, 'Отгрузка', 'OUT');
 INSERT INTO document_types (id, name, in_out) VALUES (2, 'Приемка', 'IN');
@@ -220,5 +237,9 @@ INSERT INTO tech_cards_products (id, product_id, tech_card_id, quantity) VALUES 
 INSERT INTO settings (key, value) VALUES ('CUSTOMER_ID','1');
 INSERT INTO settings (key, value) VALUES ('PRODUCTION_HALL','2');
 
-
-
+INSERT INTO contact_persons (full_name, contact_info) VALUES ('Попова Софья Дмитриевна','+7 (529) 163-06-11');
+INSERT INTO contact_persons (full_name, contact_info) VALUES ('Николаев Михаил Романович','+7 (684) 798-87-33');
+INSERT INTO contact_persons (full_name, contact_info) VALUES ('Марков Иван Олегович','+7 (300) 466-40-13');
+INSERT INTO contact_persons (full_name, contact_info) VALUES ('Медведев Артемий Максимович','+7 (166) 321-73-42');
+INSERT INTO contact_persons (full_name, contact_info) VALUES ('Климова Варвара Богдановна','+7 (230) 547-06-66');
+INSERT INTO contact_persons (full_name, contact_info) VALUES ('Климова Варвара Богдановна','+7 (489) 705-01-67');

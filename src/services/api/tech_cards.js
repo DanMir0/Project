@@ -2,7 +2,7 @@ import DB from "@/services/DB";
 
 export default {
     /**
-     * Инициализируем таблицу тех_карты
+     * Возвращает список тех_карты
      *
      * @return {*}
      */
