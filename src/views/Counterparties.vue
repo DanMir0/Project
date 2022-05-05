@@ -75,7 +75,7 @@ export default {
             {
                 text: "Контактное лицо",
                 align: "start",
-                value: "contact_persons_name",
+                value: "contact_persons",
             },
             {
                 text: "Контактные данные",
@@ -84,8 +84,6 @@ export default {
             },
             { text: "Адрес", align: "start", value: "address" },
             { text: "ИНН", align: "start", value: "inn" },
-            { text: "Дата создания", align: "start", value: "created_at" },
-            { text: "Дата обновления", align: "start", value: "updated_at" },
             {
                 text: "Действия",
                 value: "actions",

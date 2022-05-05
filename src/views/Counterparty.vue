@@ -48,19 +48,16 @@
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field
                                     v-model="entity.inn"
-                                    :rules="[
-                                        $rules.required,
-                                        $rules.validatinNumber,
-                                    ]"
+                                    :rules="[$rules.required, $rules.validatinNumber]"
                                     label="ИНН"
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
-                                <select-contact-person
-                                    v-model="entity.contact_persons_id"
-                                    :rules="[$rules.required]"
+                                <v-text-field
+                                    v-model="entity.contact_persons"
+                                    :rules="[$rules.required, $rules.validationName]"
                                     label="Контактное лицо"
-                                ></select-contact-person>
+                                ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field
@@ -95,11 +92,9 @@
 <script>
 import api from "@/services/api";
 import validations from "@/mixins/validations";
-import SelectContactPerson from "@/components/SelectContactPerson";
 
 export default {
     name: "Counterparty",
-    components: { SelectContactPerson },
     mixins: [validations],
     props: {
         id: {},
@@ -111,6 +106,7 @@ export default {
             contact_info: "",
             address: "",
             inn: "",
+            contact_persons: "",
             created_at: "",
             updated_at: "",
             timestamp: "",

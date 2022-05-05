@@ -52,7 +52,6 @@ export default {
                     icon: "mdi-account-group",
                     to: "/counterparties",
                 },
-                {title: "Контактные лица", icon: "mdi-account-tie-voice", to: "/contact_persons"},
                 {
                     title: "Документы",
                     icon: "mdi-file-document-outline",
