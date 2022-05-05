@@ -116,6 +116,10 @@ export default {
 
         save() {
             if (!this.validate()) return;
+            if (this.entity.products.length == 0) {
+                this.$dialog.alert("Укажите материалы!");
+                return
+            }
             let id = null;
             try {
                 if (this.id > -1) {

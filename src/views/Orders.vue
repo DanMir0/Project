@@ -132,21 +132,21 @@ export default {
         },
 
         deleteItem(item) {
+            this.editedIndex = this.items.indexOf(item);
+            this.editedItem = Object.assign({}, item);
+            this.dialogDelete = true;
+        },
+
+        deleteItemConfirm() {
             try {
-                this.editedIndex = this.items.indexOf(item);
-                this.editedItem = Object.assign({}, item);
-                this.dialogDelete = true;
+                api.orders.delete(this.editedItem.id);
+                this.items.splice(this.editedIndex, 1);
                 this.$dialog.success("Удалено!");
+                this.closeDelete();
             } catch (e) {
                 this.$dialog.alert(e);
                 return;
             }
-        },
-
-        deleteItemConfirm() {
-            api.orders.delete(this.editedItem.id);
-            this.items.splice(this.editedIndex, 1);
-            this.closeDelete();
         },
 
         close() {

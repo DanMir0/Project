@@ -144,8 +144,8 @@ export default {
             try {
                 api.counterparties.delete(this.editedItem.id);
                 this.items.splice(this.editedIndex, 1);
-                this.closeDelete();
                 this.$dialog.success("Удалено!");
+                this.closeDelete();
             } catch (e) {
                 this.$dialog.alert(e);
                 return;
