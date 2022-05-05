@@ -78,7 +78,7 @@ create table orders
         references counterparties,
     created_at      date default CURRENT_DATE not null,
     updated_at      date default CURRENT_DATE not null,
-    finished_at      date default CURRENT_DATE not null
+    finished_at      date null
 );
 
 create table documents

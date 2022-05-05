@@ -4,9 +4,9 @@
             <v-form v-model="validForm" ref="form">
                 <v-card-title>
                     <span class="text-h5">{{ formTitle }}</span>
-                    <v-spacer/>
+                    <v-spacer />
                     <print-dialog v-if="isPrint">
-                        <print-orders :order="entity"/>
+                        <print-orders :order="entity" />
                     </print-dialog>
                 </v-card-title>
                 <v-card-text>
@@ -68,15 +68,9 @@
                         </v-row>
                         <template>
                             <v-card>
-                                <v-toolbar
-                                    flat
-                                    elevation="0"
-                                >
+                                <v-toolbar flat elevation="0">
                                     <template>
-                                        <v-tabs
-                                            v-model="tabs"
-                                            left
-                                        >
+                                        <v-tabs v-model="tabs" left>
                                             <v-tab
                                                 v-for="item in itemsTab"
                                                 :key="item"
@@ -89,11 +83,17 @@
 
                                 <v-tabs-items v-model="tabs">
                                     <v-tab-item>
-                                        <child-tech-cards :tech_cards.sync="entity.tech_cards"></child-tech-cards>
+                                        <child-tech-cards
+                                            :tech_cards.sync="entity.tech_cards"
+                                        ></child-tech-cards>
                                     </v-tab-item>
                                     <v-tab-item>
-                                        <child-documents :order_id="id"
-                                                         :order_status_id="entity.order_status_id"></child-documents>
+                                        <child-documents
+                                            :order_id="id"
+                                            :order_status_id="
+                                                entity.order_status_id
+                                            "
+                                        ></child-documents>
                                     </v-tab-item>
                                 </v-tabs-items>
                             </v-card>
@@ -102,11 +102,26 @@
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-spacer/>
+                    <v-spacer />
                     <template v-if="!isNew">
-                        <v-btn v-if="isNewStatus" outlined @click="setStatusProgress">В производство</v-btn>
-                        <v-btn v-if="isProgressStatus" outlined @click="setStatusFinish">Готов</v-btn>
-                        <v-btn v-if="isFinished" outlined @click="setStatusIssued">Выдача</v-btn>
+                        <v-btn
+                            v-if="isNewStatus"
+                            outlined
+                            @click="setStatusProgress"
+                            >В производство</v-btn
+                        >
+                        <v-btn
+                            v-if="isProgressStatus"
+                            outlined
+                            @click="setStatusFinish"
+                            >Готов</v-btn
+                        >
+                        <v-btn
+                            v-if="isFinished"
+                            outlined
+                            @click="setStatusIssued"
+                            >Выдача</v-btn
+                        >
                     </template>
 
                     <v-btn outlined @click="back">Назад</v-btn>
@@ -121,20 +136,25 @@
 import api from "@/services/api";
 import validations from "@/mixins/validations";
 import ChildTechCards from "@/components/ChildTechCards";
-import {STATUS_NEW, STATUS_IN_PROGRESS, STATUS_FINISHED, STATUS_ISSUED} from "@/common/order_statuses";
-import {ErrorRedSaldo} from "@/services/api/errors/ErrorRedSaldo";
+import {
+    STATUS_NEW,
+    STATUS_IN_PROGRESS,
+    STATUS_FINISHED,
+    STATUS_ISSUED,
+} from "@/common/order_statuses";
+import { ErrorRedSaldo } from "@/services/api/errors/ErrorRedSaldo";
 import PrintOrders from "@/components/print/PrintOrders";
 import ChildDocuments from "@/components/ChildDocuments";
 
 export default {
     name: "Order",
-    components: {ChildTechCards, PrintOrders, ChildDocuments},
+    components: { ChildTechCards, PrintOrders, ChildDocuments },
     mixins: [validations],
     props: {
         id: {},
     },
     data: () => ({
-        itemsTab: ['Товары', 'Документы'],
+        itemsTab: ["Товары", "Документы"],
         tabs: null,
         entity: {
             tech_cards: [],
@@ -158,23 +178,23 @@ export default {
 
     computed: {
         formTitle() {
-            return this.id == -1 ? "Добавить" : "Редактировать"
+            return this.id == -1 ? "Добавить" : "Редактировать";
         },
         isNew() {
-            return this.id == -1
+            return this.id == -1;
         },
         isNewStatus() {
-            return this.entity.order_status_id == STATUS_NEW
+            return this.entity.order_status_id == STATUS_NEW;
         },
         isProgressStatus() {
-            return this.entity.order_status_id == STATUS_IN_PROGRESS
+            return this.entity.order_status_id == STATUS_IN_PROGRESS;
         },
         isFinished() {
-            return this.entity.order_status_id == STATUS_FINISHED
+            return this.entity.order_status_id == STATUS_FINISHED;
         },
         isPrint() {
-            return this.id != -1
-        }
+            return this.id != -1;
+        },
     },
 
     created() {
@@ -192,17 +212,21 @@ export default {
             if (this.id > -1) {
                 this.entity = api.orders.show(this.id);
             } else {
-                this.entity = JSON.parse(JSON.stringify(this.defaultItem))
+                this.entity = JSON.parse(JSON.stringify(this.defaultItem));
             }
         },
 
         save() {
             if (!this.validate()) return;
+            if (this.entity.tech_cards.length == 0) {
+                this.$dialog.alert("Укажите товар!");
+                return
+            }
             let id = null;
             try {
                 if (this.id > -1) {
                     api.orders.update(this.entity);
-                    this.initialize()
+                    this.initialize();
                 } else {
                     id = api.orders.create(this.entity);
                 }
@@ -220,31 +244,30 @@ export default {
 
         setStatus(status) {
             try {
-                api.orders.setStatus(this.id, status)
+                api.orders.setStatus(this.id, status);
             } catch (e) {
                 if (e instanceof ErrorRedSaldo) {
-                    this.$dialog.alert(`Недостаточно материала «${e.product.name}» в объеме ${e.quantity}
-                    ${e.product.measuring_unit_name}`)
+                    this.$dialog
+                        .alert(`Недостаточно материала «${e.product.name}» в объеме ${e.quantity}
+                    ${e.product.measuring_unit_name}`);
                 } else {
                     this.$dialog.alert(e);
                 }
-                console.error(e)
+                console.error(e);
             }
-            this.initialize()
-
+            this.initialize();
         },
 
         setStatusProgress() {
-            this.setStatus(STATUS_IN_PROGRESS)
+            this.setStatus(STATUS_IN_PROGRESS);
         },
 
         setStatusFinish() {
-            this.setStatus(STATUS_FINISHED)
+            this.setStatus(STATUS_FINISHED);
         },
         setStatusIssued() {
-            this.setStatus(STATUS_ISSUED)
-        }
+            this.setStatus(STATUS_ISSUED);
+        },
     },
-
 };
 </script>

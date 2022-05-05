@@ -1,8 +1,14 @@
 import DB from "@/services/DB";
-import {STATUS_FINISHED, STATUS_IN_PROGRESS, STATUS_ISSUED, STATUS_NEW} from "../../common/order_statuses";
+import {
+    STATUS_FINISHED,
+    STATUS_IN_PROGRESS,
+    STATUS_ISSUED,
+    STATUS_NEW,
+} from "../../common/order_statuses";
 import api from "./index";
-import {INCOME, OUTCOME} from "../../common/document_types";
+import { INCOME, OUTCOME } from "../../common/document_types";
 import tech_cards from "@/services/api/tech_cards";
+import { stat } from "original-fs";
 
 export default {
     /**
@@ -103,7 +109,9 @@ export default {
         const originTechCards = this.getTechCards(order_id);
         originTechCards.forEach((item) => {
             if (!tech_cards.some((t) => +t.id === item.id)) {
-                DB.prepare("DELETE FROM orders_tech_cards WHERE id=?").run([item.id]);
+                DB.prepare("DELETE FROM orders_tech_cards WHERE id=?").run([
+                    item.id,
+                ]);
             }
         });
 
@@ -150,28 +158,37 @@ export default {
         if (status_id == STATUS_IN_PROGRESS) {
             document.document_type_id = OUTCOME;
             document.products = this.getTechCardsProducts(order_id);
+            debugger;
         } else if (status_id == STATUS_FINISHED) {
-            this.finished_at=Date.now();
             document.document_type_id = INCOME;
-            document.products = this.getTechCards(order_id).map((tech_card) => ({
-                product_id: tech_card.product_id,
-                quantity: tech_card.quantity,
-            }));
-
+            document.products = this.getTechCards(order_id).map(
+                (tech_card) => ({
+                    product_id: tech_card.product_id,
+                    quantity: tech_card.quantity,
+                })
+            );
         } else if (status_id == STATUS_ISSUED) {
             document.document_type_id = OUTCOME;
-            document.counterparty_id = this.show(order_id).counterparty_id
-            document.products = this.getTechCards(order_id).map((tech_card) => ({
-                product_id: tech_card.product_id,
-                quantity: tech_card.quantity,
-            }));
+            document.counterparty_id = this.show(order_id).counterparty_id;
+            document.products = this.getTechCards(order_id).map(
+                (tech_card) => ({
+                    product_id: tech_card.product_id,
+                    quantity: tech_card.quantity,
+                })
+            );
         } else {
-            throw new Error('Неизвестный статус!')
+            throw new Error("Неизвестный статус!");
         }
         api.documents.create(document);
         DB.prepare("UPDATE orders SET order_status_id=? WHERE id=?").run([
             status_id,
             order_id,
         ]);
+
+        if (status_id == STATUS_FINISHED) {
+            DB.prepare(
+                "UPDATE orders SET finished_at=date('now') WHERE id=?"
+            ).run([order_id]);
+        }
     },
 };

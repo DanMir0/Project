@@ -16,34 +16,39 @@ import MeasuringUnits from "@/views/MeasuringUnits";
 import MeasuringUnit from "@/views/MeasuringUnit";
 import OrderStatuses from "@/views/OrderStatuses";
 import OrderStatus from "@/views/OrderStatus";
-import ContactPersons from "@/views/ContactPersons"
-import ContactPerson from "@/views/ContactPerson"
+import ContactPersons from "@/views/ContactPersons";
+import ContactPerson from "@/views/ContactPerson";
 import Settings from "@/views/Settings";
 
 Vue.use(VueRouter);
 
 const routes = [
-    {path: "/products", component: Products},
-    {path: "/products/:id", component: Product, props: true},
-    {path: "/counterparties", component: Counterparties},
-    {path: "/counterparties/:id", component: Counterparty, props: true},
-    {path: "/documents", component: Documents},
-    {path: "/documents/:id", component: Document, props: true},
-    {path: "/orders", component: Orders},
-    {path: "/orders/:id", component: Order, props: true},
-    {path: "/tech_cards", component: TechCards},
-    {path: "/tech_cards/:id", component: TechCard, props: true},
-    {path: "/document_types", component: DocumentTypes},
-    {path: "/document_types/:id", component: DocumentType, props: true},
-    {path: "/measuring_units", component: MeasuringUnits},
-    {path: "/measuring_units/:id", component: MeasuringUnit, props: true},
-    {path: "/order_statuses/", component: OrderStatuses,},
-    {path: "/order_statuses/:id", component: OrderStatus, props: true},
-    {path: "/contact_persons/", component: ContactPersons,},
-    {path: "/contact_persons/:id", component: ContactPerson, props: true},
-    {path: "/settings/", component: Settings,},
-];
+    { path: "/", redirect: "/products" },
 
+    { path: "/products", component: Products },
+    { path: "/products/:id", component: Product, props: true },
+    { path: "/counterparties", component: Counterparties },
+    { path: "/counterparties/:id", component: Counterparty, props: true },
+    { path: "/documents", component: Documents },
+    { path: "/documents/:id", component: Document, props: true },
+    { path: "/orders", component: Orders },
+    { path: "/orders/:id", component: Order, props: true },
+    { path: "/tech_cards", component: TechCards },
+    { path: "/tech_cards/:id", component: TechCard, props: true },
+    { path: "/document_types", component: DocumentTypes },
+    { path: "/document_types/:id", component: DocumentType, props: true },
+    { path: "/measuring_units", component: MeasuringUnits },
+    { path: "/measuring_units/:id", component: MeasuringUnit, props: true },
+    { path: "/order_statuses/", component: OrderStatuses },
+    { path: "/order_statuses/:id", component: OrderStatus, props: true },
+    { path: "/contact_persons/", component: ContactPersons },
+    { path: "/contact_persons/:id", component: ContactPerson, props: true },
+    { path: "/settings/", component: Settings },
+];
+// SOLID
+//KISS
+//YANGI
+//DRY
 const router = new VueRouter({
     routes,
 });
