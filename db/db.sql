@@ -242,4 +242,4 @@ INSERT INTO contact_persons (full_name, contact_info) VALUES ('Николаев 
 INSERT INTO contact_persons (full_name, contact_info) VALUES ('Марков Иван Олегович','+7 (300) 466-40-13');
 INSERT INTO contact_persons (full_name, contact_info) VALUES ('Медведев Артемий Максимович','+7 (166) 321-73-42');
 INSERT INTO contact_persons (full_name, contact_info) VALUES ('Климова Варвара Богдановна','+7 (230) 547-06-66');
-INSERT INTO contact_persons (full_name, contact_info) VALUES ('Климова Варвара Богдановна','+7 (489) 705-01-67');
+INSERT INTO contact_persons (full_name, contact_info) VALUES ('Медведев Родион Филиппович','+7 (489) 705-01-67');
