@@ -6,7 +6,6 @@
             :search="search"
             sort-by="calories"
             class="elevation-1"
-
         >
             <template v-slot:top>
                 <v-toolbar flat>
@@ -22,21 +21,28 @@
                         class="search"
                     ></v-text-field>
                     <v-spacer></v-spacer>
-                    <v-btn @click="newItem()" color="primary">Добавить
+                    <v-btn @click="newItem()" color="primary"
+                        >Добавить
                         <v-icon right>mdi-cart-plus</v-icon>
                     </v-btn>
-                    <v-dialog v-model="dialogDelete" max-width="500px">
+                    <v-dialog v-model="dialogDelete" max-width="550px">
                         <v-card>
                             <v-card-title class="text-h5"
-                            >Вы уверены, что хотите удалить этот элемент?
+                                >Вы уверены, что хотите удалить эту запись?
                             </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="closeDelete"
-                                >Отмена
+                                <v-btn
+                                    color="blue darken-1"
+                                    text
+                                    @click="closeDelete"
+                                    >Отмена
                                 </v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                                >ОК
+                                <v-btn
+                                    color="blue darken-1"
+                                    text
+                                    @click="deleteItemConfirm"
+                                    >ОК
                                 </v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
@@ -45,7 +51,9 @@
                 </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil</v-icon>
+                <v-icon small class="mr-2" @click="editItem(item)">
+                    mdi-pencil</v-icon
+                >
                 <v-icon small @click="deleteItem(item)"> mdi-delete</v-icon>
             </template>
         </v-data-table>
@@ -61,11 +69,15 @@ export default {
         dialog: false,
         dialogDelete: false,
         headers: [
-            {text: "Код", value: "id"},
-            {text: "Наименование", align: "start", value: "name"},
-            {text: "Единица измерения", align: "center", value: "measuring_unit_name"},
-            {text: "Остатки", value: "quantity"},
-            {text: "Действия", value: "actions", sortable: false},
+            { text: "Код", value: "id" },
+            { text: "Наименование", align: "start", value: "name" },
+            {
+                text: "Единица измерения",
+                align: "center",
+                value: "measuring_unit_name",
+            },
+            { text: "Остатки", value: "quantity" },
+            { text: "Действия", value: "actions", sortable: false },
         ],
         items: [],
         search: "",
@@ -73,13 +85,13 @@ export default {
         editedItem: {
             id: 0,
             name: "",
-            measuring_unit_name: '',
+            measuring_unit_name: "",
             quantity: 0,
         },
         defaultItem: {
             id: 0,
             name: "",
-            measuring_unit_name: '',
+            measuring_unit_name: "",
             quantity: 0,
         },
     }),

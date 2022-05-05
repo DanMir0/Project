@@ -14,10 +14,10 @@
                     <v-btn @click="newItem()" color="primary">Добавить
                         <v-icon right>mdi-plus</v-icon>
                     </v-btn>
-                    <v-dialog v-model="dialogDelete" max-width="500px">
+                    <v-dialog v-model="dialogDelete" max-width="550px">
                         <v-card>
                             <v-card-title class="text-h5"
-                            >Вы уверены, что хотите удалить этот элемент?
+                            >Вы уверены, что хотите удалить эту запись?
                             </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
