@@ -128,9 +128,15 @@ export default {
         },
 
         deleteItemConfirm() {
-            api.products.delete(this.editedItem.id);
-            this.items.splice(this.editedIndex, 1);
-            this.closeDelete();
+            try {
+                api.products.delete(this.editedItem.id);
+                this.items.splice(this.editedIndex, 1);
+                this.closeDelete();
+                this.$dialog.success("Удалено!");
+            } catch (e) {
+                this.$dialog.alert(e);
+                return;
+            }
         },
 
         close() {

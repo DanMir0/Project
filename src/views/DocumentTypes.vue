@@ -11,21 +11,28 @@
                     <v-toolbar-title>Типы документов</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
-                    <v-btn @click="newItem()" color="primary">Добавить
+                    <v-btn @click="newItem()" color="primary"
+                        >Добавить
                         <v-icon right>mdi-file-plus-outline</v-icon>
                     </v-btn>
                     <v-dialog v-model="dialogDelete" max-width="550px">
                         <v-card>
                             <v-card-title class="text-h5"
-                            >Вы уверены, что хотите удалить эту запись?
+                                >Вы уверены, что хотите удалить эту запись?
                             </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="closeDelete"
-                                >Отмена
+                                <v-btn
+                                    color="blue darken-1"
+                                    text
+                                    @click="closeDelete"
+                                    >Отмена
                                 </v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                                >ОК
+                                <v-btn
+                                    color="blue darken-1"
+                                    text
+                                    @click="deleteItemConfirm"
+                                    >ОК
                                 </v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
@@ -34,7 +41,9 @@
                 </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil</v-icon>
+                <v-icon small class="mr-2" @click="editItem(item)">
+                    mdi-pencil</v-icon
+                >
                 <v-icon small @click="deleteItem(item)"> mdi-delete</v-icon>
             </template>
             <template v-slot:no-data>
@@ -53,9 +62,14 @@ export default {
         dialog: false,
         dialogDelete: false,
         headers: [
-            {text: "Код", value: "id"},
-            {text: "Наименование", align: "start", value: "name"},
-            {text: "Действия", value: "actions", sortable: false, align: "center"},
+            { text: "Код", value: "id" },
+            { text: "Наименование", align: "start", value: "name" },
+            {
+                text: "Действия",
+                value: "actions",
+                sortable: false,
+                align: "center",
+            },
         ],
         items: [],
         editedIndex: -1,
@@ -107,9 +121,15 @@ export default {
         },
 
         deleteItemConfirm() {
-            api.document_types.delete(this.editedItem.id);
-            this.items.splice(this.editedIndex, 1);
-            this.closeDelete();
+            try {
+                api.document_types.delete(this.editedItem.id);
+                this.items.splice(this.editedIndex, 1);
+                this.closeDelete();
+                this.$dialog.success("Удалено!");
+            } catch (e) {
+                this.$dialog.alert(e);
+                return;
+            }
         },
 
         close() {
