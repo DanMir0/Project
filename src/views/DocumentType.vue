@@ -23,6 +23,20 @@
                                     label="Наименование"
                                 ></v-text-field>
                             </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                                <v-select
+                                    v-model="entity.in_out"
+                                    v-bind="$attrs"
+                                    v-on="$listeners"
+                                    :items="items"
+                                    item-text="name"
+                                    item-value="value"
+                                >
+                                    <template v-slot:item="{ item }">
+                                        {{ item.name }}
+                                    </template>
+                                </v-select>
+                            </v-col>
                         </v-row>
                     </v-container>
                 </v-card-text>
@@ -50,8 +64,10 @@ export default {
     },
     data: () => ({
         entity: {},
+        items : [ { name: "Приход", value: "IN" }, { name: "Расход", value: "OUT"}],
         defaultItem: {
             name: "",
+            in_out: "",
         },
     }),
 
@@ -63,6 +79,7 @@ export default {
 
     created() {
         this.initialize();
+        // this.items = api.document_types.list();
     },
     watch: {
         id() {

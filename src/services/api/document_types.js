@@ -26,7 +26,7 @@ export default {
      * @return {*}
      */
     update(model) {
-        DB.prepare("UPDATE document_types SET name=? WHERE id=?").run([model.name, model.id,]);
+        DB.prepare("UPDATE document_types SET name=?,in_out=? WHERE id=?").run([model.name, model.in_out, model.id,]);
     }, /**
      * Создает добавление в таблицу типы_документа
      *
@@ -38,7 +38,7 @@ export default {
      * @return {lastInsertRowid}   Возвращает идентификатор строки последней вставки (INSERT) в базу данных.
      */
     create(model) {
-        let info = DB.prepare("INSERT INTO document_types(name) VALUES (?)").run([model.name,]);
+        let info = DB.prepare("INSERT INTO document_types(name, in_out) VALUES (?,?)").run([model.name, model.in_out]);
         return info.lastInsertRowid;
     }, /**
      * Удаляет запись в таблице типы_документа по id
