@@ -35,6 +35,35 @@
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
+
+            <v-list-group
+                :value="true"
+                prepend-icon="mdi-book-open-page-variant-outline"
+            >
+                <template v-slot:activator>
+                    <v-list-item-content>
+                        <v-list-item-title>Справочник</v-list-item-title>
+                    </v-list-item-content>
+                </template>
+
+                <v-list-item
+                    v-for="item in handbook"
+                    :key="item.title"
+                    :to="item.to"
+                    link
+                    active-class="primary white--text"
+                >
+                    <v-list-item-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+
+                </v-list-item>
+            </v-list-group>
+
+
         </v-list>
     </v-navigation-drawer>
 </template>
@@ -59,14 +88,16 @@ export default {
                 },
                 {title: "Заказы", icon: "mdi-chart-line", to: "/orders"},
                 {title: "Тех карты", icon: "mdi-credit-card", to: "/tech_cards"},
+                {title: "Настройки", icon: "mdi-cog-outline", to: "/settings"},
+            ],
+            handbook: [
+                {title: "Единицы измерения", icon: "mdi-beaker-outline", to: "/measuring_units"},
+                {title: "Статусы производства", icon: "mdi-clipboard-pulse-outline", to: "/order_statuses"},
                 {
                     title: "Типы документов",
                     icon: "mdi-file-document-multiple-outline",
                     to: "/document_types",
                 },
-                {title: "Единицы измерения", icon: "mdi-beaker-outline", to: "/measuring_units"},
-                {title: "Статусы производства", icon: "mdi-clipboard-pulse-outline", to: "/order_statuses"},
-                {title: "Настройки", icon: "mdi-cog-outline", to: "/settings"},
             ],
             right: null,
         };
