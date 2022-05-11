@@ -47,12 +47,12 @@ export default {
      * @return {*}
      */
     update(model) {
-        DB.transaction(() => {
-            DB.prepare(
-                "UPDATE orders SET order_status_id=?, counterparty_id=?, updated_at=date('now') WHERE id=?"
-            ).run([model.order_status_id, model.counterparty_id, model.id]);
-            this.updateTechCards(model.id, model.tech_cards);
-        })();
+            DB.transaction(() => {
+                DB.prepare(
+                    "UPDATE orders SET order_status_id=?, counterparty_id=?, updated_at=date('now') WHERE id=?"
+                ).run([model.order_status_id, model.counterparty_id, model.id]);
+                this.updateTechCards(model.id, model.tech_cards);
+            })();
     },
     /**
      * Создает добавление в таблицу заказы
@@ -158,7 +158,6 @@ export default {
         if (status_id == STATUS_IN_PROGRESS) {
             document.document_type_id = OUTCOME;
             document.products = this.getTechCardsProducts(order_id);
-            debugger;
         } else if (status_id == STATUS_FINISHED) {
             document.document_type_id = INCOME;
             document.products = this.getTechCards(order_id).map(
