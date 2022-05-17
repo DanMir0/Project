@@ -80,7 +80,8 @@ create table documents
     counterparty_id  INTEGER not null
         references counterparties,
     order_id         integer
-        references orders,
+        references orders
+            on delete cascade,
     created_at       date default CURRENT_DATE not null,
     updated_at       date default CURRENT_DATE not null
 );
