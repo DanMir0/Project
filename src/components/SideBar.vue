@@ -37,7 +37,7 @@
             </v-list-item>
 
             <v-list-group
-                :value="true"
+                
                 prepend-icon="mdi-book-open-page-variant-outline"
             >
                 <template v-slot:activator>

@@ -23,7 +23,7 @@
                                 <v-select
                                     v-model="entity.order_status_id"
                                     :items="order_statuses"
-                                    readonly
+                                    disabled
                                     item-text="name"
                                     item-value="id"
                                     label="Статус производства"
@@ -125,7 +125,7 @@
                     </template>
 
                     <v-btn outlined @click="back">Назад</v-btn>
-                    <v-btn color="primary" @click="save">Сохранить</v-btn>
+                    <v-btn color="primary" @click="save" :disabled="!isNewStatus">Сохранить</v-btn>
                 </v-card-actions>
             </v-form>
         </v-card>
