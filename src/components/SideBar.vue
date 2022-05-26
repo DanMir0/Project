@@ -64,9 +64,9 @@
             </v-list-group>
 
             <v-list-item
-                         link
-                         @click="openHelp"
-                         active-class="primary white--text">
+                link
+                @click="openHelp"
+                active-class="primary white--text">
                 <v-list-item-icon>
                     <v-icon>mdi-help-circle</v-icon>
                 </v-list-item-icon>
@@ -81,7 +81,10 @@
 </template>
 
 <script>
-const { BrowserWindow } = require('electron').remote
+import path from 'path'
+
+const {BrowserWindow} = require('electron').remote
+
 export default {
     name: "SideBar",
     data() {
@@ -102,7 +105,7 @@ export default {
                 {title: "Заказы", icon: "mdi-chart-line", to: "/orders"},
                 {title: "Тех карты", icon: "mdi-credit-card", to: "/tech_cards"},
                 {title: "Настройки", icon: "mdi-cog-outline", to: "/settings"},
-               /* {title: "Помощь", icon: "mdi-help-circle", to: "/help"},*/
+                /* {title: "Помощь", icon: "mdi-help-circle", to: "/help"},*/
             ],
             handbook: [
                 {title: "Единицы измерения", icon: "mdi-beaker-outline", to: "/measuring_units"},
@@ -118,11 +121,15 @@ export default {
     },
     methods: {
         openHelp() {
-            console.log(BrowserWindow);
-            const win = new BrowserWindow({ width: 800, height: 600 })
+            const win = new BrowserWindow({
+                width: 800, height: 600, autoHideMenuBar: true,
+            })
 
-            // Or load a local HTML file
-            win.loadFile('../db/help/Help.htm')
+            if (process.env.NODE_ENV === 'development') {
+                win.loadFile('../db/help/Help.htm')
+            } else {
+                win.loadFile(path.join(process.resourcesPath, './../db/help/Help.htm'))
+            }
         }
     }
 };
