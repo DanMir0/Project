@@ -20,18 +20,24 @@
                         <v-form>
                             <v-card-text>
                                 <v-container>
-                                    <select-counterparties
-                                        v-model="settings.PRODUCTION_HALL"
-                                        :rules="[$rules.required]"
-                                        label="Производственный цех"
-                                    >
-                                    </select-counterparties>
-                                    <select-counterparties
-                                        v-model="settings.CUSTOMER_ID"
-                                        :rules="[$rules.required]"
-                                        label="Название организации"
-                                    >
-                                    </select-counterparties>
+                                    <v-row>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <select-counterparties
+                                                v-model="settings.PRODUCTION_HALL"
+                                                :rules="[$rules.required]"
+                                                label="Производственный цех"
+                                            >
+                                            </select-counterparties>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <select-counterparties
+                                                v-model="settings.CUSTOMER_ID"
+                                                :rules="[$rules.required]"
+                                                label="Название организации"
+                                            >
+                                            </select-counterparties>
+                                        </v-col>
+                                    </v-row>
                                 </v-container>
                             </v-card-text>
                             <v-card-actions>
@@ -142,4 +148,5 @@ p {
     white-space: normal;
     margin-top: 30px;
 }
+
 </style>

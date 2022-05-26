@@ -37,9 +37,9 @@ const routes = [
     { path: "/document_types/:id", component: DocumentType, props: true },
     { path: "/measuring_units", component: MeasuringUnits },
     { path: "/measuring_units/:id", component: MeasuringUnit, props: true },
-    { path: "/order_statuses/", component: OrderStatuses },
+    { path: "/order_statuses", component: OrderStatuses },
     { path: "/order_statuses/:id", component: OrderStatus, props: true },
-    { path: "/settings/", component: Settings },
+    { path: "/settings", component: Settings },
 ];
 // SOLID
 //KISS

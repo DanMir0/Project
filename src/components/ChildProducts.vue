@@ -30,8 +30,8 @@
                                             <v-text-field
                                                 v-model.number="editedItem.quantity"
                                                 :rules="[$rules.greater(0)]"
+                                                label="Количество"
                                             >
-                                                label="Количество" >
                                             </v-text-field
                                             >
                                         </v-col>

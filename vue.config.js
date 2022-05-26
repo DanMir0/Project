@@ -58,7 +58,12 @@ module.exports = {
                         "to": "./db",
                         "filter": ["**/*"]
                     },
-                ]
+                    {
+                        "from": "./help",
+                        "to": "./help",
+                        "filter": ["**/*"]
+                    },
+                ],
             },
             externals: ['better-sqlite3'],
         }
