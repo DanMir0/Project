@@ -42,7 +42,7 @@ module.exports = {
                 "productName": "warehouse",
                 "appId": "warehouse.id",
                 "win": {
-                    "target": ["portable"]
+                    "target": ["portable"] // установка
                 },
                 "portable": {
                     "artifactName": "warehouse_portable.exe"

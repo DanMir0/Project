@@ -63,6 +63,7 @@
 
 <script>
 import api from "@/services/api";
+import {STATUS_NEW} from "@/common/order_statuses";
 
 export default {
     name: "Orders",
@@ -132,9 +133,15 @@ export default {
         },
 
         deleteItem(item) {
-            this.editedIndex = this.items.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialogDelete = true;
+            if (item.order_status_id == STATUS_NEW) {
+                this.editedIndex = this.items.indexOf(item);
+                this.editedItem = Object.assign({}, item);
+                this.dialogDelete = true;
+            }
+            else {
+                this.$dialog.alert("Удаление невозможно!")
+
+            }
         },
 
         deleteItemConfirm() {

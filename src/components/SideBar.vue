@@ -105,7 +105,6 @@ export default {
                 {title: "Заказы", icon: "mdi-chart-line", to: "/orders"},
                 {title: "Тех карты", icon: "mdi-credit-card", to: "/tech_cards"},
                 {title: "Настройки", icon: "mdi-cog-outline", to: "/settings"},
-                /* {title: "Помощь", icon: "mdi-help-circle", to: "/help"},*/
             ],
             handbook: [
                 {title: "Единицы измерения", icon: "mdi-beaker-outline", to: "/measuring_units"},
