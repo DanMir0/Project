@@ -104,7 +104,7 @@ export default {
                     id = api.products.create(this.entity);
                 }
             } catch (e) {
-                this.$dialog.alert(`Товар уже существует!`);
+                this.$dialog.alert(`Запись уже существует!`);
                 return;
             }
             if (id) this.$router.push(`/products/${id}`);
