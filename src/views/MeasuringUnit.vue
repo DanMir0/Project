@@ -87,7 +87,7 @@ export default {
                     id = api.measuring_units.create(this.entity);
                 }
             } catch (e) {
-                this.$dialog.alert(e);
+                this.$dialog.alert('Единица измерения уже существует!');
                 return;
             }
             if (id) this.$router.push(`/measuring_units/${id}`);

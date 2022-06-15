@@ -105,7 +105,7 @@ export default {
                     id = api.document_types.create(this.entity);
                 }
             } catch (e) {
-                this.$dialog.alert(e);
+                this.$dialog.alert('Тип документа уже существует!');
                 return;
             }
             if (id) this.$router.push(`/document_types/${id}`);

@@ -88,7 +88,7 @@ export default {
                     id = api.order_statuses.create(this.entity);
                 }
             } catch (e) {
-                this.$dialog.alert(e);
+                this.$dialog.alert('Статус уже существует!');
                 return;
             }
             if (id) this.$router.push(`/order_statuses/${id}`);

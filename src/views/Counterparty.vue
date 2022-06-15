@@ -165,7 +165,7 @@ export default {
                     id = api.counterparties.create(this.entity);
                 }
             } catch (e) {
-                this.$dialog.alert(e);
+                this.$dialog.alert('Контрагент уже существует!');
                 return;
             }
             if (id) this.$router.push(`/counterparties/${id}`);

@@ -129,7 +129,7 @@ export default {
                     id = api.tech_cards.create(this.entity);
                 }
             } catch (e) {
-                this.$dialog.alert(e);
+                this.$dialog.alert('Тех карта уже существует!');
                 return;
             }
             if (id) this.$router.push(`/tech_cards/${id}`);
