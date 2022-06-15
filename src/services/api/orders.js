@@ -155,7 +155,6 @@ export default {
             document_type_id: null,
             products: [],
         };
-        debugger
         if (status_id == STATUS_IN_PROGRESS) {
             document.document_type_id = OUTCOME;
             document.products = this.getTechCardsProducts(order_id);
@@ -168,11 +167,9 @@ export default {
                     quantity: tech_card.quantity,
                 })
             );
-            debugger;
         } else if (status_id == STATUS_ISSUED) {
             document.document_type_id = OUTCOME;
             document.counterparty_id = this.show(order_id).counterparty_id;
-            debugger;
             document.products = this.getTechCards(order_id).map(
                 (tech_card) => ({
                     product_id: tech_card.product_id,
