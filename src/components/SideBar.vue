@@ -13,7 +13,7 @@
                         <v-icon color="white" large>mdi-store</v-icon>
                     </v-avatar>
                     <div class="ml-3">
-                        <v-list-item-title><h2>Склад</h2></v-list-item-title>
+                        <v-list-item-title><h2>Учет заказов</h2></v-list-item-title>
                         <v-list-item-subtitle class="caption">версия 0.1</v-list-item-subtitle>
                     </div>
                 </div>
